@@ -2,9 +2,14 @@ using LojaSonhoDeCafe.Client.Pages;
 using LojaSonhoDeCafe.Components;
 using LojaSonhoDeCafe.Components.Account;
 using LojaSonhoDeCafe.Data;
+using LojaSonhoDeCafe.Repositories.Carrinho;
+using LojaSonhoDeCafe.Repositories.Produtos;
+using LojaSonhoDeCafe.Services.CarrinhoCompraServices;
+using LojaSonhoDeCafe.Services.ProdutoServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SonhoDeCafe.Server.Repositories.Produtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +48,15 @@ builder.Services.AddDbContext<BancoDeDados>(options =>
 
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
+
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<ICarrinhoCompraService, CarrinhoCompraService>();
+
+builder.Services.AddScoped<CarrinhoCompraRepository>();
+builder.Services.AddScoped<ProdutoRepository>();
 
 
 
