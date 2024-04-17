@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaSonhoDeCafe", "LojaSonhoDeCafe\LojaSonhoDeCafe.csproj", "{760D021A-C49F-41A6-B3F9-BE117E8A428E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaSonhoDeCafe", "LojaSonhoDeCafe\LojaSonhoDeCafe.csproj", "{760D021A-C49F-41A6-B3F9-BE117E8A428E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaSonhoDeCafe.Client", "LojaSonhoDeCafe.Client\LojaSonhoDeCafe.Client.csproj", "{3AD465DD-02CA-4928-B5FE-530B68541C1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaSonhoDeCafe.Client", "LojaSonhoDeCafe.Client\LojaSonhoDeCafe.Client.csproj", "{3AD465DD-02CA-4928-B5FE-530B68541C1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaSonhoDeCafe.Models", "LojaSonhoDeCafe.Models\LojaSonhoDeCafe.Models.csproj", "{60C13FC8-AFA8-43AA-BDC5-7D04A783C2F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaSonhoDeCafe.Models", "LojaSonhoDeCafe.Models\LojaSonhoDeCafe.Models.csproj", "{60C13FC8-AFA8-43AA-BDC5-7D04A783C2F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
