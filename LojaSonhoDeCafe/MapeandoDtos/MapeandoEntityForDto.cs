@@ -72,7 +72,7 @@ namespace SonhoDeCafe.Server.MapeandoDto
         }
 
         public static CarrinhoItemDto ConverterCarrinhoItemParaDto(this CarrinhoItem carrinhoItem,
-                                               Produto produto)
+                                            Produto produto)
         {
             return new CarrinhoItemDto
             {
@@ -88,7 +88,8 @@ namespace SonhoDeCafe.Server.MapeandoDto
             };
         }
 
-        public static CarrinhoItemDto ToDto(this CarrinhoItem carrinhoItem, Produto produto)
+        public static CarrinhoItemDto ConverteCarrinhoItemParaCarrinhoDto(this CarrinhoItem carrinhoItem,
+                                                                            Produto produto)
         {
             return new CarrinhoItemDto
             {
@@ -103,5 +104,7 @@ namespace SonhoDeCafe.Server.MapeandoDto
                 PrecoTotal = (produto?.Preco ?? 0) * carrinhoItem.Quantidade
             };
         }
+
+        
     }
 }
