@@ -16,28 +16,24 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
 
         private async Task<bool> CarrinhoItemJaExiste(int carrinhoId, Guid produtoId)
         {
-            return await _context.CarrinhoItens
-                                 .AnyAsync(c => c.CarrinhoId == carrinhoId
-                                                       &&
-                                           c.ProdutoId == produtoId);
+            return await _context.CarrinhoItens.AnyAsync(c => c.CarrinhoId == carrinhoId &&
+                                                              c.ProdutoId == produtoId);
         }
-
-
 
         public async Task<CarrinhoItem> AdicionaItem(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
         {
-
-            if (await CarrinhoItemJaExiste(
-                carrinhoItemAdicionaDto.CarrinhoId,
+            if (await CarrinhoItemJaExiste(carrinhoItemAdicionaDto.CarrinhoId,
                 carrinhoItemAdicionaDto.ProdutoId) == false)
             {
+                //verifica se o produto existe 
+                //cria um novo item no carrinho
                 var item = await (from produto in _context.Produtos
                                   where produto.Id == carrinhoItemAdicionaDto.ProdutoId
                                   select new CarrinhoItem
                                   {
                                       CarrinhoId = carrinhoItemAdicionaDto.CarrinhoId,
                                       ProdutoId = produto.Id,
-                                      Quantidade = carrinhoItemAdicionaDto.Quantidade,
+                                      Quantidade = carrinhoItemAdicionaDto.Quantidade
                                   }).SingleOrDefaultAsync();
 
                 //se o item existe então incluir o item no carrinho
@@ -56,9 +52,19 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
             throw new NotImplementedException();
         }
 
-        public Task<CarrinhoItem> DeletaItem(int id)
+        public async Task<CarrinhoItem> DeletaItem(int id)
         {
-            throw new NotImplementedException();
+            var item = await _context.CarrinhoItens.FindAsync(id);
+
+            if(item is not null)
+            {
+
+                _context.CarrinhoItens.Remove(item);
+                await _context.SaveChangesAsync();
+            }
+
+            return item!;
+
         }
 
         public async Task<CarrinhoItem> ObtemItemDoCarrinho(int id)
@@ -76,6 +82,7 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
                           }).SingleOrDefaultAsync() ?? null!;
         }
 
+
         public async Task<IEnumerable<CarrinhoItem>> ObtemItensDoCarinho(string usuarioId)
         {
             return await (from carrinho in _context.Carrinhos
@@ -89,6 +96,12 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
                               Quantidade = carrinhoItem.Quantidade,
                               CarrinhoId = carrinhoItem.CarrinhoId
                           }).ToListAsync();
+        }
+
+        public async Task<Usuario> ObterUsuario(Guid id)
+        {
+            return await _context.Usuarios.FirstOrDefaultAsync(i => i.Id == id) ?? null!;
+           
         }
     }
 }

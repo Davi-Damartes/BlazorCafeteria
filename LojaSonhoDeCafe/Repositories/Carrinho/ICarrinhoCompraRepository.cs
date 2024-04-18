@@ -5,8 +5,7 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
 {
     public interface ICarrinhoCompraRepository
     {
-        Task<CarrinhoItem> AdicionaItem(
-                    CarrinhoItemAdicionaDto carrinhoItemAdicionaDto);
+        Task<CarrinhoItem> AdicionaItem(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto);
 
         Task<CarrinhoItem> AtualizaQuantidade(int id, 
             CarrinhoItemAtualizaQuantidadeDto ca);
@@ -16,5 +15,6 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
         Task<CarrinhoItem> ObtemItemDoCarrinho(int id);
 
         Task<IEnumerable<CarrinhoItem>> ObtemItensDoCarinho(string usuarioId);
+
     }
 }
