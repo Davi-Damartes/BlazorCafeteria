@@ -1,5 +1,6 @@
 ﻿using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Repositories.Produtos;
+using SonhoDeCafe.Server.MapeandoDto;
 
 namespace LojaSonhoDeCafe.Services.ProdutoServices
 {

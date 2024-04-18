@@ -1,5 +1,6 @@
 ﻿using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Repositories.Carrinho;
+using SonhoDeCafe.Server.MapeandoDto;
 using SonhoDeCafe.Server.Repositories.Produtos;
 
 namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
