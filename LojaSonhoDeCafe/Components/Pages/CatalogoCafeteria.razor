@@ -1,0 +1,48 @@
+﻿@page "/produtos"
+
+
+<PageTitle>Produtos</PageTitle>
+@if(@Produtos == null)
+{
+   @*  <ExibirSpinner /> *@
+}
+
+@if (Produtos != null && Produtos.Any())
+{
+        <h3 class="mb-5"> Produtos</h3>
+        @if (Produtos.Count() > 0)
+        {
+            var produtosPorCategoria = from produto in Produtos
+                                       group produto by produto.CategoriaId into prodPorCatGrupo
+                                       orderby prodPorCatGrupo.Key
+                                       select prodPorCatGrupo;
+
+            @foreach (var prodGrup in produtosPorCategoria)
+            {
+                 <h4>@prodGrup.FirstOrDefault(pg => pg.CategoriaId == prodGrup.Key)!.CategoriaNome</h4>
+                <div class="row mt-3">
+                     <ExibirProdutos Produtos="@prodGrup" />
+                </div>
+                <hr />
+            }
+
+        }
+}
+else
+{
+    <p>Nenhum produto encontrado.</p>
+}
+
+@code {
+    [Inject]
+    private IProdutoService? ProdutoService { get; set; }
+
+    public IEnumerable<ProdutoDto>? Produtos { get; set; }
+
+    protected override async Task OnInitializedAsync( )
+    {
+        var produto = await ProdutoService!.ObterProdutos();
+
+        Produtos = produto;
+    }
+}
