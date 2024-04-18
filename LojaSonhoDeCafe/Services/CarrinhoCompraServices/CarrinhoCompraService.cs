@@ -1,4 +1,5 @@
-﻿using LojaSonhoDeCafe.Models.Dtos;
+﻿using LojaSonhoDeCafe.Entities;
+using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Repositories.Carrinho;
 using SonhoDeCafe.Server.MapeandoDto;
 using SonhoDeCafe.Server.Repositories.Produtos;
@@ -25,11 +26,11 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
             try
             {
                 var itemAdicionado = await _carrinhocompraRepository.AdicionaItem(carrinhoItemAdicionaDto);
+                var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItemAdicionaDto.ProdutoId);
                 if (itemAdicionado == null)
                 {
-                    _logger.LogError("Erro ao buscar Produto");
+                    _logger.LogError("Erro ao Adicionar Produto");
                 }
-                var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItemAdicionaDto.ProdutoId);
 
                 var itemAdicionadoDto = itemAdicionado!.ConverterCarrinhoItemParaDto(produto);
 
@@ -43,27 +44,48 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
             }
         }
 
-
-
-
-        public async Task<List<CarrinhoItemDto>> obterItens(string usuarioId)
+        public async Task<CarrinhoItemDto> DeletaItem(int id)
         {
+            var carrinhoItem = await _carrinhocompraRepository.DeletaItem(id);
+            if(carrinhoItem == null)
+            {
+                _logger.LogError("Erro ao Deletar Produto");
+            }
+            var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItem.ProdutoId);
+
+            var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+
+            return carrinhoItemDto;
+
+        }
+
+
+
+
+
+        public async Task<List<CarrinhoItemDto>> ObterItens(string usuarioId)
+        {
+ 
             var carrinhoItens = await _carrinhocompraRepository.ObtemItensDoCarinho(usuarioId);
             if (carrinhoItens == null)
             {
                 _logger.LogError("Erro ao buscar item do carrinho");
             }
 
-            var carrinhoItensDto = new List<CarrinhoItemDto>();
-            foreach (var carrinhoItem in carrinhoItens!)
-            {
+            var produtoIds = carrinhoItens.Select(item => item.ProdutoId).ToList();
+            var produtos = await _produtoRepository.ObterTodosOsProdutos();
 
-                carrinhoItensDto.Add(carrinhoItem.ToDto());
+            // Converter cada item do carrinho em um DTO
+            var carrinhoItemDtos = new List<CarrinhoItemDto>();
+            foreach (var carrinhoItem in carrinhoItens)
+            {
+                var produto = produtos.FirstOrDefault(p => p.Id == carrinhoItem.ProdutoId);
+                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+                carrinhoItemDtos.Add(carrinhoItemDto);
             }
 
-            return carrinhoItensDto;
+            return carrinhoItemDtos;
 
         }
-
     }
 }
