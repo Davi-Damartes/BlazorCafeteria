@@ -14,28 +14,32 @@ else
     <h3 class="mb-5">Carrinho</h3>
     @if (CarrinhoCompraItens?.Count > 0)
     {
-            <div class="row mb-5">
-                <div class="col-md-9">
-                @foreach (var item in CarrinhoCompraItens)
+        <div class="row mb-5">
+            <div class="col-md-9">
+                @foreach (var item in CarrinhoCompraItens!)
                 {
                     <div class="row mb-3">
                         <div class="col-md-3">
-                            <img src="@item.ProdutoFotoUrl" width="350" class="img-thumbnail">
+                            <img src="@item.ProdutoFotoUrl" width="250" class="img-thumbnail">
                         </div>
                         <div class="col-md-9">
                             <h5>@item.ProdutoNome</h5>
-                            @item.ProdutoDescricao
-                            <span>Preço: <b>@item.Preco.ToString("C")</b></span>
-                            <div>
-                                <button class="btn btn-danger" @onclick="()=> DeletaCarrinhoItem_Click(item.Id)">Excluir</button>
+                            <div class="mb-4">
+                                @item.ProdutoDescricao
                             </div>
+
+                            <span>Preço: <b>@item.Preco.ToString("C")</b></span>
+                                <br />
+                                <button class="btn btn-danger" @onclick="()=> DeletaCarrinhoItem_Click(item.Id)">
+                                    Excluir
+                                </button>
                         </div>
                     </div>
                 }
             </div>
-            </div>
+           
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h5>Carrinho - Resumo</h5>
                 <div class="mt-2">
                     <div><b>Total:</b></div>
@@ -46,6 +50,7 @@ else
                     </a>
                 </div>
             </div>
+        </div>
 
     }
     else
