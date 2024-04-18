@@ -1,11 +1,9 @@
 ﻿@page "/ProdutosDetalhes/{Id:guid}"
 
 
-
-
 @if (Produto is null && MensagemErro is null)
 {
-    @* <ExibirSpinner /> *@
+   <ExibirSpinner />
     <p>Loadding ...</p>
 }
 else if (MensagemErro is not null)
