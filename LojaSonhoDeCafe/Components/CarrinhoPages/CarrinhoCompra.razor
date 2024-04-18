@@ -1,0 +1,104 @@
+﻿@page "/CarrinhoCompra"
+@using LojaSonhoDeCafe.Entities
+
+@if (CarrinhoCompraItens is null && MensagemErro is null)
+{
+    <ExibirSpinner />
+}
+else if (MensagemErro is not null)
+{
+    <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+}
+else
+{
+    <h3 class="mb-5">Carrinho</h3>
+    @if (CarrinhoCompraItens?.Count > 0)
+    {
+            <div class="row mb-5">
+                <div class="col-md-9">
+                @foreach (var item in CarrinhoCompraItens)
+                {
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <img src="@item.ProdutoFotoUrl" width="350" class="img-thumbnail">
+                        </div>
+                        <div class="col-md-9">
+                            <h5>@item.ProdutoNome</h5>
+                            @item.ProdutoDescricao
+                            <span>Preço: <b>@item.Preco.ToString("C")</b></span>
+                            <div>
+                                <button class="btn btn-danger" @onclick="()=> DeletaCarrinhoItem_Click(item.Id)">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            </div>
+
+            <div class="col-md-4">
+                <h5>Carrinho - Resumo</h5>
+                <div class="mt-2">
+                    <div><b>Total:</b></div>
+                    <a href="#" class="btn btn-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-2-back-fill" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1z" />
+                        </svg>&nbsp;Continuar
+                    </a>
+                </div>
+            </div>
+
+    }
+    else
+    {
+        <div>
+            <h3><b>Carrinho De Compra vazio...</b>.</h3>
+        </div>
+    }
+
+
+}
+
+@code {
+    [Inject]
+    public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+
+    public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
+
+    public string? MensagemErro { get; set; }
+
+    protected override async Task OnInitializedAsync( )
+    {
+        try
+        {
+
+            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+
+        }
+
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+    }
+
+
+    protected async Task DeletaCarrinhoItem_Click(int id)
+    {
+        var carrinhoItemDto = await CarrinhoCompraService!.DeletaItem(id);
+
+
+        //Remove item da coleção de memória do client
+        await RemoveCarrinhoItem(id);
+    }
+
+    private CarrinhoItemDto ObtemItemDoCarrinho(int id)
+    {
+        return CarrinhoCompraItens!.FirstOrDefault(i => i.Id == id) ?? null!;
+    }
+
+    private async Task RemoveCarrinhoItem(int id)
+    {
+        var carrinhoDto = ObtemItemDoCarrinho(id);
+        CarrinhoCompraItens.Remove(carrinhoDto);
+    }
+}
