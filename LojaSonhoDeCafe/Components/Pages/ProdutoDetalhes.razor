@@ -4,7 +4,6 @@
 @if (Produto is null && MensagemErro is null)
 {
    <ExibirSpinner />
-    <p>Loadding ...</p>
 }
 else if (MensagemErro is not null)
 {
@@ -74,9 +73,10 @@ else
     {
         try
         {
+            
             var carrinhoItemDto = await CarrinhoCompraService!.AdicionaItemDto(carrinhoItemAdicionaDto);
         
-            NavigationManager!.NavigateTo("/");
+            NavigationManager!.NavigateTo("/CarrinhoCompra");
         }
 
         catch (Exception ex)
