@@ -17,23 +17,7 @@ namespace LojaSonhoDeCafe.Entities
         public Carrinho? Carrinho { get; set; }
         public Produto? Produto { get; set; }
 
-        public CarrinhoItemDto ToDto( )
-        {
-            var carrinhoItemDto = new CarrinhoItemDto
-            {
-                Id = this.Id,
-                CarrinhoId = this.CarrinhoId,
-                ProdutoId = this.ProdutoId,
-                Quantidade = this.Quantidade,
 
-                ProdutoNome = this.Produto?.Nome,
-                ProdutoDescricao = this.Produto?.Descricao,
-                ProdutoFotoUrl = this.Produto?.FotoUrl,
-                Preco = this.Produto?.Preco ?? 0,
-                PrecoTotal = (this.Produto?.Preco ?? 0) * this.Quantidade  
-            };
 
-            return carrinhoItemDto;
-        }
     }
 }

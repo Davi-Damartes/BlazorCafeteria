@@ -10,6 +10,5 @@ namespace LojaSonhoDeCafe.Entities
         public ICollection<CarrinhoItem> Itens { get; set; } =
            new List<CarrinhoItem>();
 
-
     }
 }
