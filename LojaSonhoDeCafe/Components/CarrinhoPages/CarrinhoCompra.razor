@@ -28,11 +28,28 @@ else
                                 @item.ProdutoDescricao
                             </div>
 
-                            <span>Preço: <b>@item.Preco.ToString("C")</b></span>
-                                <br />
-                                <button class="btn btn-danger" @onclick="()=> DeletaCarrinhoItem_Click(item.Id)">
-                                    Excluir
+                            <span>Preço: <b>@item.Preco.ToString("C")</b>
+
+
+
+
+                                <input type="number" @bind="@item.Quantidade" />
+
+                                <button class="btn  btn-info btn-sm" @onclick="(()=>
+                                    AtualizarQuantidadeCarrinho_Click(item.Id, item.Quantidade))">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0" />
+                                    </svg>
                                 </button>
+                                <br />
+                                <button @onclick="(()=> DeletaCarrinhoItem_Click(item.Id))" class="btn btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                    </svg>
+                                </button>
+
+                            </span>
                         </div>
                     </div>
                 }
@@ -42,7 +59,7 @@ else
             <div class="col-md-3">
                 <h5>Carrinho - Resumo</h5>
                 <div class="mt-2">
-                    <div><b>Total:</b></div>
+                    <div><b>Total - (@QuantidadeTotal items)&nbsp;</b><b>@PrecoTotal</b></div>
                     <a href="#" class="btn btn-success">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-2-back-fill" viewBox="0 0 16 16">
                             <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5H0zm11.5 1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zM0 11v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1z" />
@@ -71,6 +88,10 @@ else
 
     public string? MensagemErro { get; set; }
 
+    protected string? PrecoTotal { get; set; }
+    protected int QuantidadeTotal { get; set; }
+
+
     protected override async Task OnInitializedAsync( )
     {
         try
@@ -78,12 +99,56 @@ else
 
             CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
 
+            CalculaResumoCarrinhoTotal();
+
         }
 
         catch (Exception ex)
         {
             MensagemErro = ex.Message;
         }
+    }
+
+    private CarrinhoItemDto ObtemItemDoCarrinho(int id)
+    {
+        return CarrinhoCompraItens!.FirstOrDefault(i => i.Id == id) ?? null!;
+    }
+
+    protected async Task AtualizarQuantidadeCarrinho_Click(int id, int quantidade)
+    {
+        try
+        {
+            if(quantidade > 0)
+            {
+                var atualizaCarrinhoDto = new CarrinhoItemAtualizaQuantidadeDto
+                    {
+                        CarrinhoId = id,
+                        Quantidade = quantidade
+                    };
+
+                var retornaItemAtualizadoDto = await CarrinhoCompraService!
+                        .AtualizarQuantidade(atualizaCarrinhoDto.CarrinhoId, atualizaCarrinhoDto);
+
+                AtualizarPrecoTotalItem(retornaItemAtualizadoDto);
+                CalculaResumoCarrinhoTotal();
+            }
+            else
+            {
+                var item = CarrinhoCompraItens!.FirstOrDefault(x => x.Id == id);
+                if(item is not null)
+                {
+                    item.Quantidade = 1;
+                    item.PrecoTotal = item.Preco;
+                }
+            }
+
+        }
+
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+
     }
 
 
@@ -94,16 +159,43 @@ else
 
         //Remove item da coleção de memória do client
         await RemoveCarrinhoItem(id);
+
+        CalculaResumoCarrinhoTotal();
     }
 
-    private CarrinhoItemDto ObtemItemDoCarrinho(int id)
-    {
-        return CarrinhoCompraItens!.FirstOrDefault(i => i.Id == id) ?? null!;
-    }
 
     private async Task RemoveCarrinhoItem(int id)
     {
         var carrinhoDto = ObtemItemDoCarrinho(id);
         CarrinhoCompraItens.Remove(carrinhoDto);
     }
+
+
+    private void SetPrecoTotal( )
+    {
+        PrecoTotal = CarrinhoCompraItens!.Sum(p => p.PrecoTotal).ToString("C");
+    }
+
+    private void SetQuantidadeTotal( )
+    {
+        QuantidadeTotal = CarrinhoCompraItens!.Sum(P => P.Quantidade);
+    }
+
+    private void CalculaResumoCarrinhoTotal( )
+    {
+        SetPrecoTotal();
+        SetQuantidadeTotal(); 
+    }
+
+    private void AtualizarPrecoTotalItem(CarrinhoItemDto carrinhoItemDto)
+    {
+        var item = ObtemItemDoCarrinho(carrinhoItemDto.Id);
+
+        if(item is not null)
+        {
+            item.PrecoTotal = carrinhoItemDto.Preco * carrinhoItemDto.Quantidade;
+        }
+
+    }
+
 }
