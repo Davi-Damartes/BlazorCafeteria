@@ -16,7 +16,53 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
             _logger = logger;
         }
 
-        public async Task<IEnumerable<ProdutoDto>> ObterProdutos( )
+        public async Task<IEnumerable<CategoriaDto>> BuscarCategorias()
+        {
+            try
+            {
+                var categorias = await _produtoRepository.ObterCategorias();
+
+
+                var categoriasDto = categorias.ConverterCategoriasParaDto();
+
+                return categoriasDto;
+            }
+
+            catch (Exception)
+            {
+                _logger.LogError("Erro ao obter Categorias");
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<ProdutoDto>> BuscarItensPorCategoria(int categoriaId)
+        {
+            try
+            {
+                var itensPorCategoria = await _produtoRepository
+                                    .ObterTodosProdutosPorCategoria(categoriaId);
+
+                if (itensPorCategoria == null)
+                {
+
+                    _logger.LogError("Erro ao obter Produtos pela Categorias");
+                }
+
+                var itensPorCategoriaDto = itensPorCategoria!.ConvertProdutosParaDto();
+                
+                return itensPorCategoriaDto;
+
+            }
+
+            catch (Exception)
+            {
+                _logger.LogError("Erro ao obter Categorias");
+                throw;
+            }
+        }
+
+
+        public async Task<IEnumerable<ProdutoDto>> ObterProdutos()
         {
             try
             {
@@ -38,7 +84,6 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
             }
 
         }
-
 
         public async Task<ProdutoDto> ObterUmProduto(Guid Id)
         {
