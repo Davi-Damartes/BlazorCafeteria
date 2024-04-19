@@ -100,7 +100,7 @@ namespace SonhoDeCafe.Server.MapeandoDto
                 ProdutoNome = produto?.Nome,
                 ProdutoDescricao = produto?.Descricao,
                 ProdutoFotoUrl = produto?.FotoUrl,
-                Preco = produto?.Preco ?? 0,
+                Preco = produto!.Preco,
                 PrecoTotal = (produto?.Preco ?? 0) * carrinhoItem.Quantidade
             };
         }

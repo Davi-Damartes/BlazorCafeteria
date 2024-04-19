@@ -43,29 +43,9 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
                 throw;
             }
         }
-
-        public async Task<CarrinhoItemDto> DeletaItem(int id)
-        {
-            var carrinhoItem = await _carrinhocompraRepository.DeletaItem(id);
-            if(carrinhoItem == null)
-            {
-                _logger.LogError("Erro ao Deletar Produto");
-            }
-            var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItem.ProdutoId);
-
-            var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
-
-            return carrinhoItemDto;
-
-        }
-
-
-
-
-
         public async Task<List<CarrinhoItemDto>> ObterItens(string usuarioId)
         {
- 
+
             var carrinhoItens = await _carrinhocompraRepository.ObtemItensDoCarinho(usuarioId);
             if (carrinhoItens == null)
             {
@@ -87,5 +67,54 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
             return carrinhoItemDtos;
 
         }
+
+        public async Task<CarrinhoItemDto> AtualizarQuantidade(int id, CarrinhoItemAtualizaQuantidadeDto atualizaQuantidadeDto)
+        {
+            try
+            {
+                var carrinhoItem = await _carrinhocompraRepository
+                                            .AtualizaQuantidade(id, atualizaQuantidadeDto);
+
+                if (carrinhoItem == null)
+                {
+                    _logger.LogError("Erro ao Atualizar item do carrinho");
+                }
+
+                var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItem!.ProdutoId);
+
+                var carrinhoItemDto = carrinhoItem.ConverteCarrinhoItemParaCarrinhoDto(produto);
+
+
+                return carrinhoItemDto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro no {ex.Message}");
+                throw;
+            }
+        }
+
+
+
+
+        public async Task<CarrinhoItemDto> DeletaItem(int id)
+        {
+            var carrinhoItem = await _carrinhocompraRepository.DeletaItem(id);
+            if (carrinhoItem == null)
+            {
+                _logger.LogError("Erro ao Deletar Produto");
+            }
+            var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItem.ProdutoId);
+
+            var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+
+            return carrinhoItemDto;
+
+        }
+
+
+
+
+
     }
 }
