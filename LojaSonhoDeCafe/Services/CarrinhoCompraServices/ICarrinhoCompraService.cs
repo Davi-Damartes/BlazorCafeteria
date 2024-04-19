@@ -9,6 +9,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
 
         Task<CarrinhoItemDto> DeletaItem (int id);
        
-
+        Task<CarrinhoItemDto> AtualizarQuantidade(int id, 
+                                        CarrinhoItemAtualizaQuantidadeDto atualizaQuantidadeDto);
     }
 }
