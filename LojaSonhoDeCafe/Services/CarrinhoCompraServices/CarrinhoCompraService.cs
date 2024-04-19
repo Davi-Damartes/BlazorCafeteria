@@ -12,6 +12,8 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
         private readonly CarrinhoCompraRepository _carrinhocompraRepository;
         private readonly ProdutoRepository _produtoRepository;
 
+        public event Action<int>? OnCarrinhoCompraChanged;
+
         public CarrinhoCompraService(ILogger<CarrinhoCompraService> logger,
                                     CarrinhoCompraRepository carrinhocompraRepository,
                                     ProdutoRepository produtoRepository)
@@ -95,8 +97,6 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
         }
 
 
-
-
         public async Task<CarrinhoItemDto> DeletaItem(int id)
         {
             var carrinhoItem = await _carrinhocompraRepository.DeletaItem(id);
@@ -114,7 +114,14 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
 
 
 
+        public void RaiseEventCarrinhoCompraChanged(int totalQuantidade)
+        {
+            if (OnCarrinhoCompraChanged != null)
+            {
+                OnCarrinhoCompraChanged.Invoke(totalQuantidade);
+            }
 
 
+        }
     }
 }

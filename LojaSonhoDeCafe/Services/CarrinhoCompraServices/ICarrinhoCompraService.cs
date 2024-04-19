@@ -11,5 +11,8 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
        
         Task<CarrinhoItemDto> AtualizarQuantidade(int id, 
                                         CarrinhoItemAtualizaQuantidadeDto atualizaQuantidadeDto);
+
+        event Action<int> OnCarrinhoCompraChanged;
+        void RaiseEventCarrinhoCompraChanged(int totalQuantidade);
     }
 }
