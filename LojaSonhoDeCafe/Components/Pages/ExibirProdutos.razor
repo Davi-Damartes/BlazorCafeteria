@@ -1,15 +1,18 @@
-﻿@foreach (var produto in Produtos)
+﻿@foreach (var produto in Produtos!)
 {
     <div class="card" style="width: 18rem;">
         <a href="/ProdutosDetalhes/@produto.Id">
-        <div class="card-body">
-            <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
+            <div class="card-body">
+                <a href="/ProdutosDetalhes/@produto.Id">
+                    <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
+                </a>
                 <h5 class="card-title">@produto.Nome</h5>
                 <p class="card-text">@produto.Descricao.</p>
-                <h5 class="card-title mb-3">
-                    @produto.Preco.ToString("c")
-                </h5>
-                <a href="#" class="btn btn-primary">Adicionar ao Carrinho</a>
+                <a href="/ProdutosDetalhes/@produto.Id">
+                    <h5 class="card-title mb-3">
+                        @produto.Preco.ToString("c")
+                    </h5>
+                </a>
             </div>
         </a>
     </div>
