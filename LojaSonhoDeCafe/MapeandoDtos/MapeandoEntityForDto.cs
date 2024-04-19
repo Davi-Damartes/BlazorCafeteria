@@ -5,16 +5,15 @@ namespace SonhoDeCafe.Server.MapeandoDto
 {
     public static class MapeandoDto
     {
-        public static IEnumerable<CategoriaDto> ConvertCategoriasParaDto(
-                                                this IEnumerable<Categoria> categorias)
+        public static IEnumerable<CategoriaDto> ConverterCategoriasParaDto(
+                                           this IEnumerable<Categoria> categorias)
         {
             return (from categoria in categorias
                     select new CategoriaDto
                     {
-
                         Id = categoria.Id,
                         Nome = categoria.Nome,
-                        IconeCss = categoria.IconeCss,
+                        IconeCss = categoria.IconeCss
                     }).ToList();
         }
 
