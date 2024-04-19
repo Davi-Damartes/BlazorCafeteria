@@ -1,5 +1,6 @@
 ﻿@page "/CarrinhoCompra"
-@using LojaSonhoDeCafe.Entities
+
+
 
 @if (CarrinhoCompraItens is null && MensagemErro is null)
 {
@@ -31,17 +32,17 @@ else
                             <span>Preço: <b>@item.Preco.ToString("C")</b>
 
 
-
-
                                 <input type="number" @bind="@item.Quantidade" />
 
-                                <button class="btn  btn-info btn-sm" @onclick="(()=>
+                                <button class="btn btn-info btn-sm EscondeButtonAtualizaQnt" @onclick="(()=>
                                     AtualizarQuantidadeCarrinho_Click(item.Id, item.Quantidade))">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
                                         <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0" />
                                     </svg>
                                 </button>
+
                                 <br />
+
                                 <button @onclick="(()=> DeletaCarrinhoItem_Click(item.Id))" class="btn btn-danger">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
@@ -89,6 +90,7 @@ else
     public string? MensagemErro { get; set; }
 
     protected string? PrecoTotal { get; set; }
+
     protected int QuantidadeTotal { get; set; }
 
 
@@ -99,7 +101,8 @@ else
 
             CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
 
-            CalculaResumoCarrinhoTotal();
+            //CalculaResumoCarrinhoTotal();
+            CarrinhoChanged();
 
         }
 
@@ -108,6 +111,8 @@ else
             MensagemErro = ex.Message;
         }
     }
+
+
 
     private CarrinhoItemDto ObtemItemDoCarrinho(int id)
     {
@@ -130,8 +135,9 @@ else
                         .AtualizarQuantidade(atualizaCarrinhoDto.CarrinhoId, atualizaCarrinhoDto);
 
                 AtualizarPrecoTotalItem(retornaItemAtualizadoDto);
-                CalculaResumoCarrinhoTotal();
-            }
+                //CalculaResumoCarrinhoTotal();
+                CarrinhoChanged();
+            }           
             else
             {
                 var item = CarrinhoCompraItens!.FirstOrDefault(x => x.Id == id);
@@ -160,7 +166,8 @@ else
         //Remove item da coleção de memória do client
         await RemoveCarrinhoItem(id);
 
-        CalculaResumoCarrinhoTotal();
+        //CalculaResumoCarrinhoTotal();
+        CarrinhoChanged();
     }
 
 
@@ -196,6 +203,13 @@ else
             item.PrecoTotal = carrinhoItemDto.Preco * carrinhoItemDto.Quantidade;
         }
 
+    }
+
+
+    private void CarrinhoChanged()
+    {
+        CalculaResumoCarrinhoTotal();
+        CarrinhoCompraService!.RaiseEventCarrinhoCompraChanged(QuantidadeTotal);
     }
 
 }
