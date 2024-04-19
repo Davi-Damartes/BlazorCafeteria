@@ -12,7 +12,7 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
         {
             _bancoDeDados = bancoDeDados;
         }
-
+      
         public async Task<Produto> ObterProdutoPorId(Guid Id)
         {
             var produto = await _bancoDeDados
@@ -51,13 +51,14 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
                               .Where(x => x.CategoriaId == id)
                               .ToListAsync();
 
-
-            if (produtos == null)
-            {
-                return Enumerable.Empty<Produto>();
-            }
-
             return produtos;
+        }
+
+        public async Task<IEnumerable<Categoria>> ObterCategorias( )
+        {
+            var categorias = await _bancoDeDados.Categorias.ToListAsync();
+
+            return categorias;
         }
     }
 }

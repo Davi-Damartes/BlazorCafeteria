@@ -9,5 +9,7 @@ namespace LojaSonhoDeCafe.Repositories.Produtos
 
         Task<IEnumerable<Produto>> ObterTodosProdutosPorCategoria(int id);
 
+        Task<IEnumerable<Categoria>> ObterCategorias( );
+
     }
 }
