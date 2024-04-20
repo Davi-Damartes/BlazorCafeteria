@@ -1,4 +1,4 @@
-using LojaSonhoDeCafe.Client.Pages;
+using Blazored.LocalStorage;
 using LojaSonhoDeCafe.Components;
 using LojaSonhoDeCafe.Components.Account;
 using LojaSonhoDeCafe.Data;
@@ -59,7 +59,7 @@ builder.Services.AddScoped<CarrinhoCompraRepository>();
 builder.Services.AddScoped<ProdutoRepository>();
 
 
-
+builder.Services.AddBlazoredLocalStorage();
 
 
 
