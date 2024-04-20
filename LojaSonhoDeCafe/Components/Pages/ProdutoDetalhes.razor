@@ -47,42 +47,74 @@ else
     private ICarrinhoCompraService? CarrinhoCompraService { get; set; }
 
     [Inject]
+    public ILocalStorageProdutosService? GerenciaProdutoLocalStorage { get; set; }
+    [Inject]
+    public ILocalStorageCarrinhoItensService? GerenciaCarrinhoLocalStorage { get; set; }
+
+    [Inject]
     public NavigationManager? NavigationManager { get; set; }
+
+    private List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
 
     [Parameter]
     public Guid Id { get; set; }
 
+
     public ProdutoDto? Produto { get; set; }
 
+
     public string? MensagemErro {get;set;}
+
 
     protected override async Task OnInitializedAsync( )
     {
         try
         {
-            Produto = await ProdutoService!.ObterUmProduto(Id);
+            CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage.GetCollection();
+
+            // Produto = await ProdutoService!.ObterUmProduto(Id);
+            Produto = await GetProdutoPorId(Id);
         }
 
-        catch (Exception ex)
+            catch (Exception ex)
+            {
+                MensagemErro = ex.Message;
+            }
+        }
+
+        protected async Task AdicionarAoCarrinho_Click(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
         {
-            MensagemErro = ex.Message;
-        }
-    }
+            try
+            {
 
-    protected async Task AdicionarAoCarrinho_Click(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
-    {
-        try
+                var carrinhoItemDto = await CarrinhoCompraService!.AdicionaItemDto(carrinhoItemAdicionaDto);
+
+                if (carrinhoItemDto != null)
+                {
+                    CarrinhoCompraItens!.Add(carrinhoItemDto);
+                    await GerenciaCarrinhoLocalStorage!.SaveCollection(CarrinhoCompraItens);
+                }
+
+
+                NavigationManager!.NavigateTo("/CarrinhoCompra");
+            }
+
+            catch (Exception ex)
+            {
+                MensagemErro = ex.Message;
+            }
+
+
+        }
+
+        private async Task<ProdutoDto> GetProdutoPorId(Guid id)
         {
-            
-            var carrinhoItemDto = await CarrinhoCompraService!.AdicionaItemDto(carrinhoItemAdicionaDto);
-        
-            NavigationManager!.NavigateTo("/CarrinhoCompra");
-        }
+            var produtosDto = await GerenciaProdutoLocalStorage!.GetCollection();
 
-        catch (Exception ex)
-        {
-            MensagemErro = ex.Message;
+            if(produtosDto != null)
+            {
+                return produtosDto.SingleOrDefault(p => p.Id == id) ?? null!;
+            }
+            return null!;
         }
-    }
-
 }

@@ -29,6 +29,12 @@ else
     [Inject]
     public IProdutoService? ProdutoService { get; set; }
 
+    [Inject]
+    public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+
+    [Inject]
+    public ILocalStorageProdutosService? GerenciaProdutoLocalStorage { get; set; }
+
     public IEnumerable<ProdutoDto>? ProdutosDto { get; set; }
 
     public string? NomeCategoria { get; set; }
@@ -38,8 +44,9 @@ else
     {
         try
         {
-            ProdutosDto = await ProdutoService!
-                                .BuscarItensPorCategoria(CategoriaId);
+            //ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
+            ProdutosDto = await GetColecaoProdutosPorCategoria(CategoriaId);
+
 
             if(ProdutosDto != null && ProdutosDto.Count() > 0)
             {
@@ -55,6 +62,20 @@ else
         catch (Exception ex)
         {
             MensagemErro = ex.Message;
+        }
+    }
+
+    private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
+    {
+        var listaDeProdutos = await GerenciaProdutoLocalStorage.GetCollection();
+
+        if(listaDeProdutos != null)
+        {
+            return listaDeProdutos.Where(p => p.CategoriaId == categoriaId);
+        }
+        else
+        {
+            return await ProdutoService!.BuscarItensPorCategoria(categoriaId);
         }
     }
 }
