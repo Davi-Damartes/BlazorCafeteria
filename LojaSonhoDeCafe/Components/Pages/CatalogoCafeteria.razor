@@ -39,19 +39,45 @@ else
     [Inject]
     public ICarrinhoCompraService?  CarrinhoCompraService { get; set; }
 
+    [Inject]
+    public ILocalStorageProdutosService? GerenciaProdutoLocalStorage { get; set; }
+    [Inject]
+    public ILocalStorageCarrinhoItensService? GerenciaCarrinhoLocalStorage { get; set; }
+
     public IEnumerable<ProdutoDto>? Produtos { get; set; }
+
+    private string? MensagemErro { get; set; }
 
     protected override async Task OnInitializedAsync( )
     {
-        Produtos = await ProdutoService!.ObterProdutos();
+        try
+        {
+            await LimpaLocalStorage();
 
-        var carrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
-        var totalQuantidade = carrinhoCompraItens.Sum(i => i.Quantidade);
+            //Produtos = await ProdutoService!.ObterProdutos();
+            Produtos = await GerenciaProdutoLocalStorage!.GetCollection();
 
-        CarrinhoCompraService.RaiseEventCarrinhoCompraChanged(totalQuantidade);
+
+            //var carrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            var carrinhoCompraItens = await GerenciaCarrinhoLocalStorage!
+                                            .GetCollection();
+
+
+            var totalQuantidade = carrinhoCompraItens.Sum(i => i.Quantidade);
+
+            CarrinhoCompraService!.RaiseEventCarrinhoCompraChanged(totalQuantidade);
+
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
     }
 
-
-
+        private async Task LimpaLocalStorage( )
+        {
+            await GerenciaProdutoLocalStorage!.RemoveCollection();
+            await GerenciaCarrinhoLocalStorage!.RemoveCollection();
+        }
 
 }
