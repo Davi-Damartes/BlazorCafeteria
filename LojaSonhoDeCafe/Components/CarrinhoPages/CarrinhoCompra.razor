@@ -76,6 +76,9 @@ else
     [Inject]
     public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
 
+    [Inject]
+    public ILocalStorageCarrinhoItensService? GerenciaCarrinhoLocalStorage { get; set; }
+
     public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
 
     public string? MensagemErro { get; set; }
@@ -90,7 +93,7 @@ else
         try
         {
 
-            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage!.GetCollection();
 
             //CalculaResumoCarrinhoTotal();
             CarrinhoChanged();
@@ -102,7 +105,6 @@ else
             MensagemErro = ex.Message;
         }
     }
-
 
 
     private CarrinhoItemDto ObtemItemDoCarrinho(int id)
@@ -166,6 +168,8 @@ else
     {
         var carrinhoDto = ObtemItemDoCarrinho(id);
         CarrinhoCompraItens.Remove(carrinhoDto);
+
+        await GerenciaCarrinhoLocalStorage!.SaveCollection(CarrinhoCompraItens);
     }
 
 
@@ -185,7 +189,7 @@ else
         SetQuantidadeTotal(); 
     }
 
-    private void AtualizarPrecoTotalItem(CarrinhoItemDto carrinhoItemDto)
+    private async Task AtualizarPrecoTotalItem(CarrinhoItemDto carrinhoItemDto)
     {
         var item = ObtemItemDoCarrinho(carrinhoItemDto.Id);
 
@@ -193,6 +197,8 @@ else
         {
             item.PrecoTotal = carrinhoItemDto.Preco * carrinhoItemDto.Quantidade;
         }
+
+        await GerenciaCarrinhoLocalStorage!.SaveCollection(CarrinhoCompraItens!);
 
     }
 
