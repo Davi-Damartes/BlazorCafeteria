@@ -10,6 +10,8 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
 
         Task<IEnumerable<CategoriaDto>> BuscarCategorias();
 
-        Task<IEnumerable<ProdutoDto>> BuscarItensPorCategoria(int categoriaId);   
+        Task<IEnumerable<ProdutoDto>> BuscarItensPorCategoria(int categoriaId);
+        
+        Task AdicionarProduto(ProdutoDto produto);
     }
 }
