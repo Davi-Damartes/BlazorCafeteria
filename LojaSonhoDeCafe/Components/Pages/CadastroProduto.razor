@@ -1,0 +1,54 @@
+﻿@page "/CadastroProduto"
+<h3>Cadastro de Produto</h3>
+
+<EditForm Model="@produtoDto" OnValidSubmit="Teste">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-4">
+        <label for="Nome">Nome do Produto: </label>
+        <InputText id="Nome" class="form-control" @bind-Value="produtoDto.Nome"></InputText>
+    </div>
+    <div class="mb-4">
+        <label for="Descricao">Descricao: </label>
+        <InputText id="Descricao" class="form-control" @bind-Value="produtoDto.Descricao"></InputText>
+    </div>
+    <div class="mb-4">
+        <label for="FotoUrl">Imagem: </label>
+        <InputText id="FotoUrl" class="form-control" @bind-Value="produtoDto.FotoUrl"></InputText>
+    </div>
+    <div class="mb-3">
+        <label for="formFile" class="form-label">Imagem: </label>
+        <InputFile id="formFile" class="form-control" ></InputFile>
+    </div>
+
+    <div class="mb-4">
+        <label for="Preco">Preco: </label>
+        <InputNumber id="Preco" class="form-control" @bind-Value="produtoDto.Preco"></InputNumber>
+    </div>
+    <div class="mb-4">
+        <label for="QuantidadeEmEstoque">QuantidadeEmEstoque: </label>
+        <InputNumber id="QuantidadeEmEstoque" class="form-control" @bind-Value="produtoDto.QuantidadeEmEstoque"></InputNumber>
+    </div>
+    <div class="mb-4">
+        <label for="CategoriaId">CategoriaId: </label>
+        <InputNumber id="CategoriaId" class="form-control" @bind-Value="produtoDto.CategoriaId"></InputNumber>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+</EditForm>
+
+
+
+@code {
+    ProdutoDto produtoDto = new();
+
+    [Inject]
+    public NavigationManager? navigationManager { get; set; }
+
+    public void Teste()
+    {
+        navigationManager!.NavigateTo("/ ");
+    }
+
+}
