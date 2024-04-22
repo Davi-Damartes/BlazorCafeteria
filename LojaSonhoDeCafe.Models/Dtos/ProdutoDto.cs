@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LojaSonhoDeCafe.Models.Dtos
 {
@@ -13,15 +11,18 @@ namespace LojaSonhoDeCafe.Models.Dtos
         public string? Nome { get; set; }
 
         [Required]
-        [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)
+        [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string? Descricao { get; set; }
 
+        
         public string? FotoUrl { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!!!")]
+
         public decimal Preco { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!!!")]
+        [Range(1, 150, ErrorMessage = "O campo {0} deve estar entre {1} e {2}.")]
         public int QuantidadeEmEstoque { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!!!")]
