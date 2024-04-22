@@ -1,54 +1,183 @@
 ﻿@page "/CadastroProduto"
-<h3>Cadastro de Produto</h3>
+@using Microsoft.Extensions.Logging
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment Environment
+@inject IConfiguration config
 
-<EditForm Model="@produtoDto" OnValidSubmit="Teste">
+<h3>Cadastro de Produto</h3>
+<EditForm Model="ProdutoDto" OnValidSubmit="SubmitForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
+
     <div class="mb-4">
         <label for="Nome">Nome do Produto: </label>
-        <InputText id="Nome" class="form-control" @bind-Value="produtoDto.Nome"></InputText>
+        <InputText id="Nome" class="form-control" @bind-Value="ProdutoDto.Nome"></InputText>
     </div>
     <div class="mb-4">
         <label for="Descricao">Descricao: </label>
-        <InputText id="Descricao" class="form-control" @bind-Value="produtoDto.Descricao"></InputText>
+        <InputText id="Descricao" class="form-control" @bind-Value="ProdutoDto.Descricao"></InputText>
     </div>
     <div class="mb-4">
-        <label for="FotoUrl">Imagem: </label>
-        <InputText id="FotoUrl" class="form-control" @bind-Value="produtoDto.FotoUrl"></InputText>
-    </div>
-    <div class="mb-3">
-        <label for="formFile" class="form-label">Imagem: </label>
-        <InputFile id="formFile" class="form-control" ></InputFile>
+        <label for="FotoProduto">Foto do Produto: </label>
+        <InputFile OnChange="LoadFiles" class="form-control" id="FotoUrl" @bind-Value="ProdutoDto.FotoUrl"></InputFile>
     </div>
 
     <div class="mb-4">
         <label for="Preco">Preco: </label>
-        <InputNumber id="Preco" class="form-control" @bind-Value="produtoDto.Preco"></InputNumber>
+        <InputNumber id="Preco" class="form-control" @bind-Value="ProdutoDto.Preco"></InputNumber>
     </div>
     <div class="mb-4">
         <label for="QuantidadeEmEstoque">QuantidadeEmEstoque: </label>
-        <InputNumber id="QuantidadeEmEstoque" class="form-control" @bind-Value="produtoDto.QuantidadeEmEstoque"></InputNumber>
-    </div>
-    <div class="mb-4">
-        <label for="CategoriaId">CategoriaId: </label>
-        <InputNumber id="CategoriaId" class="form-control" @bind-Value="produtoDto.CategoriaId"></InputNumber>
+        <InputNumber id="QuantidadeEmEstoque" class="form-control" @bind-Value="ProdutoDto.QuantidadeEmEstoque"></InputNumber>
     </div>
 
+    <div class="mb-4">
+        <label for="CategoriaId">Categoria: </label>
+        <select id="CategoriaId" class="form-control" @bind="@ProdutoDto.CategoriaId">
+            @foreach (var categoria in Categorias)
+            {
+                <option value="@categoria.Id">@categoria.Nome</option>
+            }
+        </select>
+    </div>
+  
 
     <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
 </EditForm>
 
-
+@if (erros.Count > 0)
+{
+    <h2>Erros</h2>
+    <ul class="text-danger"> 
+        @foreach(var error in erros)
+        {
+            <li>@error</li>
+        }
+    </ul>
+}
 
 @code {
-    ProdutoDto produtoDto = new();
 
     [Inject]
     public NavigationManager? navigationManager { get; set; }
 
-    public void Teste()
+    [Inject]
+    public IProdutoService? ProdutoService { get; set; }
+
+    public IEnumerable<CategoriaDto>? Categorias { get; set; } = new List<CategoriaDto>();
+
+    private ProdutoDto? ProdutoDto = new();
+
+    private IBrowserFile? file;
+    private const long maxFileSize = 1024 * 1024 * 3;
+    private const int maxAllowedFiles = 1;
+    private bool isLoading;
+    private List<string> erros = new();
+
+
+    protected override async Task OnInitializedAsync()
     {
-        navigationManager!.NavigateTo("/ ");
+        Categorias = await ProdutoService!.BuscarCategorias();
+
     }
 
+    private async Task SubmitForm()
+    {
+        try
+        {
+            string relativePath = await CaputurarImagem();
+            ProdutoDto.FotoUrl = relativePath;
+
+            if(ProdutoDto.FotoUrl != null)
+            {
+                await ProdutoService!.AdicionarProduto(ProdutoDto);
+                StateHasChanged();
+                navigationManager!.NavigateTo("/ ");
+            }
+        }
+        catch (Exception ex)
+        {
+            erros.Add($"Erro: {ex.Message}");
+        }
+    }
+
+
+    private void LoadFiles(InputFileChangeEventArgs evento)
+    {
+        file = evento.File;
+
+    }
+    private async Task<string> CaputurarImagem()
+    {
+
+        if(file is null)
+        {
+            return "";
+        }
+
+        try
+        {
+           // string imagemCript = Guid.NewGuid() + "_";
+            string newFileName = Path.ChangeExtension(
+                                 Path.GetRandomFileName(),
+                                 Path.GetFileName(file.Name));
+
+            string path = Path.Combine(
+                config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                "imagensCafeteria",
+                newFileName);
+
+            string relativePath = Path.Combine("imagensCafeteria",newFileName);
+
+
+            Directory.CreateDirectory(
+                        Path.Combine(
+                        config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                        "imagensCafeteria"));
+
+            await using FileStream fs = new(path, FileMode.Create);
+            await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+
+            return relativePath;
+        }
+
+        catch (Exception ex)
+        {
+            erros.Add($"File: {file.Name} Erro:{ex.Message}");
+            throw;
+        }
 }
+
+}
+
+
+@*  foreach (var file in evento.GetMultipleFiles(maxAllowedFiles))
+        {
+            try
+            {
+                //string imgPrefixo = Guid.NewGuid() + "_"; // Gerando um GUID e concatenando com um prefixo
+
+                string newFileName = Path.Combine(
+                                     Path.GetRandomFileName(),
+                                     Path.GetFileName(file.Name));
+
+                string path = Path.Combine(
+                    config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                    "imagensCafeteria",
+                    newFileName);
+
+                Directory.CreateDirectory(
+                            Path.Combine(
+                            config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                            "imagensCafeteria"));
+
+                await using FileStream fs = new(path, FileMode.Create);
+                await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+            }
+            catch (Exception ex)
+            {
+                erros.Add($"File: {file.Name} Erro:{ex.Message}");
+                throw;
+            }
+        }
+ *@
