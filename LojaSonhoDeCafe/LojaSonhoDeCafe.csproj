@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <None Include="Components\Layout\ProdutosCategoriaNavMenu.razor" />
+    <None Include="Components\Pages\CadastroProduto.razor" />
   </ItemGroup>
 
 </Project>
