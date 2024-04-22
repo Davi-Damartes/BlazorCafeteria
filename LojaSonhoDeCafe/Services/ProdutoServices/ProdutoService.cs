@@ -16,12 +16,28 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
             _logger = logger;
         }
 
+        public async Task AdicionarProduto(ProdutoDto produtoDto)
+        {
+            try
+            {
+                if(produtoDto != null)
+                { 
+                    await _produtoRepository.AdicionarNovoProdutoDto(produtoDto);
+                }
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Erro ao Adicionar novo Produto");
+                throw;
+            }
+
+        }
+
         public async Task<IEnumerable<CategoriaDto>> BuscarCategorias()
         {
             try
             {
                 var categorias = await _produtoRepository.ObterCategorias();
-
 
                 var categoriasDto = categorias.ConverterCategoriasParaDto();
 
@@ -71,7 +87,6 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
                 {
                     _logger.LogError("Erro ao buscar Produto");
                 }
-
 
                 var produtosDto = produtos!.ConvertProdutosParaDto();
                 return produtosDto;
