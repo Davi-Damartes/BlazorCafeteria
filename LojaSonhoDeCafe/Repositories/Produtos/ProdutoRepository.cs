@@ -1,5 +1,6 @@
 ﻿using LojaSonhoDeCafe.Data;
 using LojaSonhoDeCafe.Entities;
+using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Repositories.Produtos;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
         {
             _bancoDeDados = bancoDeDados;
         }
-      
+
         public async Task<Produto> ObterProdutoPorId(Guid Id)
         {
             var produto = await _bancoDeDados
@@ -60,5 +61,34 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
 
             return categorias;
         }
+
+
+        public async Task AdicionarNovoProdutoDto(ProdutoDto produtodto)
+        {
+            if (await ProdutoIdJaExisteAsync(produtodto.Id) == false)
+            {
+
+                var produto = new Produto
+                {
+                    Nome = produtodto.Nome,
+                    Descricao = produtodto.Descricao,
+                    FotoUrl = produtodto.FotoUrl,
+                    Preco = produtodto.Preco,
+                    QuantidadeEmEstoque = produtodto.QuantidadeEmEstoque,
+                    CategoriaId = produtodto.CategoriaId
+                };
+
+                await _bancoDeDados.Produtos.AddAsync(produto);
+                await _bancoDeDados.SaveChangesAsync();
+
+            }
+
+        }
+
+        public async Task<bool> ProdutoIdJaExisteAsync(Guid produtoId)
+        {
+            return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
+        }
+
     }
 }
