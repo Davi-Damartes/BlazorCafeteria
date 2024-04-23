@@ -44,6 +44,8 @@ else
     {
         try
         {
+            await GerenciaProdutoLocalStorage!.AtualizarDadosLocalStorage(ProdutosDto);
+
             //ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
             ProdutosDto = await GetColecaoProdutosPorCategoria(CategoriaId);
 
