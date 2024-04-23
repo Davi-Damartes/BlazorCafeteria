@@ -21,6 +21,8 @@ namespace LojaSonhoDeCafe.Entities
 
         public int QuantidadeEmEstoque { get; set; }
 
+        public bool ProdutoFavorito { get; set; } 
+
         public int CategoriaId { get; set; }
         public Categoria? Categoria { get; set; }
 

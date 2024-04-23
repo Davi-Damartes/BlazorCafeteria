@@ -13,7 +13,9 @@
     }
 
     .card img {
-        transition: transform 0.5s ease-in-out;  
+        transition: transform 0.5s ease-in-out;
+        margin-bottom: 15px;
+        margin-top: 50px;
     }
 
     .card:hover img {
@@ -22,4 +24,31 @@
 
 .card-body {
     padding: 1rem; 
+}
+
+
+input[type="checkbox"] {
+    display: none; /* Oculta a caixa de seleção padrão */
+}
+
+label {
+    cursor: pointer; /* Altera o cursor para indicar que o elemento é clicável */
+}
+
+.icone-coracao {
+    font-size: 60px; /* Define o tamanho do ícone */
+    margin-left: 180px;
+    margin-right: 150px;
+}
+
+/* Estilize o ícone para representar o checkbox desmarcado */
+input[type="checkbox"] + label .icone-coracao:before {
+    content: "\f08a"; /* Ícone vazio */
+    color: #B197FC; /* Cor do ícone desmarcado */
+}
+
+/* Estilize o ícone para representar o checkbox marcado */
+input[type="checkbox"]:checked + label .icone-coracao:before {
+    content: "\f004"; /* Ícone de coração preenchido */
+    color: red; /* Cor do ícone marcado */
 }
