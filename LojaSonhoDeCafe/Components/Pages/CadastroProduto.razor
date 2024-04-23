@@ -58,63 +58,57 @@
 
 @code {
 
-        [Inject]
-        public NavigationManager? navigationManager { get; set; }
+    [Inject]
+    public NavigationManager? navigationManager { get; set; }
 
-        [Inject]
-        public IProdutoService? ProdutoService { get; set; }
+    [Inject]
+    public IProdutoService? ProdutoService { get; set; }
 
-        public IEnumerable<CategoriaDto>? Categorias { get; set; } = new List<CategoriaDto>();
+    public IEnumerable<CategoriaDto>? Categorias { get; set; } = new List<CategoriaDto>();
 
-        private ProdutoDto? ProdutoDto = new();
+    private ProdutoDto? ProdutoDto = new();
 
-        private IBrowserFile? file;
-        private const long maxFileSize = 1024 * 1024 * 3;
-        private const int maxAllowedFiles = 1;
-        private bool isLoading;
-        private List<string> erros = new();
+    private IBrowserFile? file;
+    private const long maxFileSize = 1024 * 1024 * 3;
+    private const int maxAllowedFiles = 1;
+    private bool isLoading;
+    private List<string> erros = new();
 
 
-        protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
+    {
+        Categorias = await ProdutoService!.BuscarCategorias();
+
+    }
+
+    private async Task SubmitForm()
+    {
+        try
         {
-            Categorias = await ProdutoService!.BuscarCategorias();
+            string relativePath = await CaputurarImagem();
+            ProdutoDto.FotoUrl = relativePath;
 
-        }
-
-        private async Task SubmitForm()
-        {
-            try
+            if(ProdutoDto.FotoUrl != null)
             {
-                string relativePath = await CaputurarImagem();
-                ProdutoDto!.FotoUrl = relativePath;
-
-                if(ProdutoDto.FotoUrl != null)
-                {
-                    await ProdutoService!.AdicionarProduto(ProdutoDto);
-                    StateHasChanged();
-                    navigationManager!.NavigateTo("/ ");
-                }
-            }
-            catch (Exception ex)
-            {
-                erros.Add($"Erro: {ex.Message}");
+                await ProdutoService!.AdicionarProduto(ProdutoDto);
+                StateHasChanged();
+                navigationManager!.NavigateTo("/ ");
             }
         }
-
-
-        private string CreateWebPath(string relativePath)
+        catch (Exception ex)
         {
-            return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
+            erros.Add($"Erro: {ex.Message}");
         }
+    }
 
 
-        private void LoadFiles(InputFileChangeEventArgs evento)
-        {
-            file = evento.File;
+    private void LoadFiles(InputFileChangeEventArgs evento)
+    {
+        file = evento.File;
 
-        }
-        private async Task<string> CaputurarImagem()
-        {
+    }
+    private async Task<string> CaputurarImagem()
+    {
 
         if(file is null)
         {
@@ -152,7 +146,38 @@
             erros.Add($"File: {file.Name} Erro:{ex.Message}");
             throw;
         }
-    }
+}
 
 }
 
+
+@*  foreach (var file in evento.GetMultipleFiles(maxAllowedFiles))
+        {
+            try
+            {
+                //string imgPrefixo = Guid.NewGuid() + "_"; // Gerando um GUID e concatenando com um prefixo
+
+                string newFileName = Path.Combine(
+                                     Path.GetRandomFileName(),
+                                     Path.GetFileName(file.Name));
+
+                string path = Path.Combine(
+                    config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                    "imagensCafeteria",
+                    newFileName);
+
+                Directory.CreateDirectory(
+                            Path.Combine(
+                            config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                            "imagensCafeteria"));
+
+                await using FileStream fs = new(path, FileMode.Create);
+                await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+            }
+            catch (Exception ex)
+            {
+                erros.Add($"File: {file.Name} Erro:{ex.Message}");
+                throw;
+            }
+        }
+ *@
