@@ -146,9 +146,6 @@ namespace LojaSonhoDeCafe.Migrations.BancoDeDadosMigrations
                     b.Property<decimal>("Preco")
                         .HasColumnType("decimal(10, 2)");
 
-                    b.Property<bool>("ProdutoFavorito")
-                        .HasColumnType("bit");
-
                     b.Property<int>("QuantidadeEmEstoque")
                         .HasColumnType("int");
 
@@ -161,112 +158,102 @@ namespace LojaSonhoDeCafe.Migrations.BancoDeDadosMigrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("84a1c72e-38c7-429a-b93c-947c54b0a8ef"),
+                            Id = new Guid("34fdf30d-1a0d-4597-b667-52625d6b70a4"),
                             CategoriaId = 1,
                             Descricao = "Café forte e encorpado, ideal para quem gosta de um sabor intenso.",
                             FotoUrl = "/Imagens/Cafes/espresso.jpg",
                             Nome = "Café Espresso",
                             Preco = 3.50m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 100
                         },
                         new
                         {
-                            Id = new Guid("874ff6fb-7218-4387-b4a1-93507383ea70"),
+                            Id = new Guid("db2bda1e-492c-4ad9-a5c9-03a2d1eca78b"),
                             CategoriaId = 1,
                             Descricao = "Café suave e cremoso, feito com leite vaporizado.",
                             FotoUrl = "/Imagens/Cafes/latte.jpg",
                             Nome = "Café Latte",
                             Preco = 4.00m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 80
                         },
                         new
                         {
-                            Id = new Guid("ea3e8728-4766-44ce-8856-7aec39a21619"),
+                            Id = new Guid("3323d5d3-c06a-4ed7-8e2e-992ee7ef8790"),
                             CategoriaId = 1,
                             Descricao = "Café cremoso com uma generosa camada de espuma de leite e canela por cima.",
                             FotoUrl = "/Imagens/Cafes/capuccino.jpg",
                             Nome = "Café Capuccino",
                             Preco = 4.50m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 70
                         },
                         new
                         {
-                            Id = new Guid("4b9de137-c721-4673-b814-fd1c1e5745db"),
+                            Id = new Guid("792d7b55-f575-4cd6-a601-39f293472c03"),
                             CategoriaId = 2,
                             Descricao = "Croissant recheado com queijo derretido.",
                             FotoUrl = "/Imagens/Salgados/croissant_queijo.jpg",
                             Nome = "Croissant de Queijo",
                             Preco = 5.00m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 60
                         },
                         new
                         {
-                            Id = new Guid("abad6502-8e02-4a3d-9269-317d4eafad83"),
+                            Id = new Guid("7955c423-3c43-4467-aabc-82de749ea274"),
                             CategoriaId = 2,
                             Descricao = "Pão de queijo quentinho e delicioso.",
                             FotoUrl = "/Imagens/Salgados/pao_queijo.jpg",
                             Nome = "Pão de Queijo",
                             Preco = 3.00m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 70
                         },
                         new
                         {
-                            Id = new Guid("dc2f536f-c0e0-450f-812b-e4a3cb153ff9"),
+                            Id = new Guid("58e04c01-380d-475b-af2e-8edb34d4daec"),
                             CategoriaId = 2,
                             Descricao = "Coxinha deliciosa e crocante.",
                             FotoUrl = "/Imagens/Salgados/coxinha_de_frango.jpg",
                             Nome = "Coxinha de Frango",
                             Preco = 3.00m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 70
                         },
                         new
                         {
-                            Id = new Guid("0a6268f5-2f0b-4bbd-9f85-1f96697589a7"),
+                            Id = new Guid("e1795112-d1c6-4957-8f51-e00fcc81bb60"),
                             CategoriaId = 3,
                             Descricao = "Bolo de cenoura macio coberto com ganache de chocolate.",
                             FotoUrl = "/Imagens/Doces/bolo_cenoura.jpg",
                             Nome = "Bolo de Cenoura com Chocolate",
                             Preco = 6.50m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 30
                         },
                         new
                         {
-                            Id = new Guid("be516142-59ab-4b24-b69f-0066ddb6c250"),
+                            Id = new Guid("406f24e0-4768-452a-83f9-e88910d06591"),
                             CategoriaId = 3,
                             Descricao = "Torta cremosa de limão com uma base crocante.",
                             FotoUrl = "/Imagens/Doces/torta_limao.jpg",
                             Nome = "Torta de Limão",
                             Preco = 7.00m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 40
                         },
                         new
                         {
-                            Id = new Guid("2dad6254-733c-400e-8941-64f083f93e11"),
+                            Id = new Guid("78f24136-996f-4a3b-9623-cc68948e2915"),
                             CategoriaId = 4,
                             Descricao = "Sanduíche fresco com frango grelhado e cream cheese.",
                             FotoUrl = "/Imagens/Lanches/sanduiche_frango.jpg",
                             Nome = "Sanduíche de Frango com Cream Cheese",
                             Preco = 8.00m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 50
                         },
                         new
                         {
-                            Id = new Guid("7d17dec7-db7d-4117-b58d-677a49021127"),
+                            Id = new Guid("ddbf3619-8281-40f3-bb7c-d08f1ea25816"),
                             CategoriaId = 4,
                             Descricao = "Baguete recheada com presunto, queijo e vegetais frescos.",
                             FotoUrl = "/Imagens/Lanches/baguete.jpg",
                             Nome = "Baguete de Presunto e Queijo",
                             Preco = 7.50m,
-                            ProdutoFavorito = false,
                             QuantidadeEmEstoque = 40
                         });
                 });
@@ -294,12 +281,12 @@ namespace LojaSonhoDeCafe.Migrations.BancoDeDadosMigrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5c823f4b-0c6e-4908-b24e-56264a753f50"),
+                            Id = new Guid("619adf24-e943-4f2a-8f89-c942d8fc53dd"),
                             NomeUsuario = "Macoratti"
                         },
                         new
                         {
-                            Id = new Guid("88d41c7b-0e67-4bd2-b6e7-b1bb2a47abe0"),
+                            Id = new Guid("8278e20b-e3e6-4926-bc26-ca54112b4645"),
                             NomeUsuario = "Janice"
                         });
                 });

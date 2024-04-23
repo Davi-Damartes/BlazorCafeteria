@@ -40,15 +40,14 @@ else
     public string? NomeCategoria { get; set; }
     public string? MensagemErro { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync( )
     {
         try
         {
-           // await GerenciaProdutoLocalStorage!.AtualizarDadosLocalStorage(ProdutosDto);
+            await GerenciaProdutoLocalStorage!.AtualizarDadosLocalStorage(ProdutosDto);
 
-            ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
-            //ProdutosDto = await GetColecaoProdutosPorCategoria(CategoriaId);
-
+            //ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
+            ProdutosDto = await GetColecaoProdutosPorCategoria(CategoriaId);
 
 
             if(ProdutosDto != null && ProdutosDto.Count() > 0)
