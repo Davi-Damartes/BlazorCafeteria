@@ -37,7 +37,8 @@ else
                                 @item.ProdutoDescricao
                             </div>
 
-                            <span>Preço: <b>@item.Preco.ToString("C")</b>
+                            <span>
+                                Preço: <b>@item.Preco.ToString("C")</b>
 
 
                                 <input type="number" @bind="@item.Quantidade" />
@@ -58,7 +59,7 @@ else
                     </div>
                 }
             </div>
-           
+
 
             <div class="col-md-3">
                 <h5>Carrinho - Resumo</h5>
