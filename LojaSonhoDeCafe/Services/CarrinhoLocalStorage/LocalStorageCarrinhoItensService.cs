@@ -39,7 +39,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoLocalStorage
         }
 
 
-        private async Task<List<CarrinhoItemDto>> AddCollection( )
+        private async Task<List<CarrinhoItemDto>> AddCollection()
         {
             var listaCarrinhoCompra = await _carrinhoCompraService
                                             .ObterItens(UsuarioLogado.UsuarioId);
