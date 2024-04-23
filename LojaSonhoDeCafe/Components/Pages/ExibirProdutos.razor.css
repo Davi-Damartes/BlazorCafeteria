@@ -13,9 +13,7 @@
     }
 
     .card img {
-        transition: transform 0.5s ease-in-out;
-        margin-bottom: 15px;
-        margin-top: 50px;
+        transition: transform 0.5s ease-in-out;  
     }
 
     .card:hover img {
@@ -25,7 +23,6 @@
 .card-body {
     padding: 1rem; 
 }
-
 
 input[type="checkbox"] {
     display: none; /* Oculta a caixa de seleção padrão */

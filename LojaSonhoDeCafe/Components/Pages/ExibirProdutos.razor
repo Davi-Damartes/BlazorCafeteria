@@ -5,36 +5,36 @@
 
 
 
-                <div class="card">
-                    <input type="checkbox" id="@($"favorito-{produto.Id}")" @onchange="() => MudarBotao(produto.Id)" checked="@produto.ProdutoFavorito" />
-                    <label for="@($"favorito-{produto.Id}")">
-                        <i class="fa-regular fa-heart icone-coracao"></i>
-                    </label>
-                </div>
+        <div class="card">
+            <input type="checkbox" id="@($"favorito-{produto.Id}")" @onchange="() => MudarBotao(produto.Id)" checked="@produto.ProdutoFavorito" />
+            <label for="@($"favorito-{produto.Id}")">
+                <i class="fa-regular fa-heart icone-coracao"></i>
+            </label>
+        </div>
 
-            <a href="/ProdutosDetalhes/@produto.Id">
-                <div class="card-body">
-                    <a href="/ProdutosDetalhes/@produto.Id">                                       
-                        @if (File.Exists(produto.FotoUrl))
-                        {
-                            <img src="@produto.FotoUrl" class="card-img-top" width="400" alt="Imagem do Produto">
-                        }
-                        else
-                        {
-                            <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" width="400" alt="Imagem do Produto">
-                        }
-                    </a>
+        <a href="/ProdutosDetalhes/@produto.Id">
+            <div class="card-body">
+                <a href="/ProdutosDetalhes/@produto.Id">
+                    @if (File.Exists(produto.FotoUrl))
+                    {
+                        <img src="@produto.FotoUrl" class="card-img-top" width="400" alt="Imagem do Produto">
+                    }
+                    else
+                    {
+                        <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" width="400" alt="Imagem do Produto">
+                    }
+                </a>
 
-                    <h5 class="card-title">@produto.Nome</h5>
-                    <p class="card-text">@produto.Descricao.</p>
-                    <a href="/ProdutosDetalhes/@produto.Id">
-                        <h5 class="card-title mb-3">
-                            @produto.Preco.ToString("c")
-                        </h5>                                                                      
-                    </a>
-                </div>
-            </a>
-        
+                <h5 class="card-title">@produto.Nome</h5>
+                <p class="card-text">@produto.Descricao.</p>
+                <a href="/ProdutosDetalhes/@produto.Id">
+                    <h5 class="card-title mb-3">
+                        @produto.Preco.ToString("c")
+                    </h5>
+                </a>
+            </div>
+        </a>
+
     </div>
 }
 
@@ -42,7 +42,8 @@
 
     [Parameter]
     public IEnumerable<ProdutoDto>? Produtos { get; set; }
-    bool isClicado = false;
+
+
 
     private string CreateWebPath(string? relativePath)
     {
@@ -67,4 +68,5 @@
         // Certifique-se de implementar esse método de acordo com a sua arquitetura.
     }
 }
+
 
