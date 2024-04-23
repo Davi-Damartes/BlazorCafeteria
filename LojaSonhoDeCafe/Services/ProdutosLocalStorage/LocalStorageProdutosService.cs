@@ -18,6 +18,11 @@ namespace LojaSonhoDeCafe.Services.ProdutosLocalStorage
             _localStorageService = localStorageService;
         }
 
+
+        public async Task RemoveCollection( )
+        {
+            await _localStorageService.RemoveItemAsync(Key);
+        }
         public async Task<IEnumerable<ProdutoDto>> GetCollection( )
         {
             return await _localStorageService
@@ -26,21 +31,29 @@ namespace LojaSonhoDeCafe.Services.ProdutosLocalStorage
                                             await AddCollection();
         }
 
-        public async Task RemoveCollection( )
+
+        public async Task AtualizarDadosLocalStorage(IEnumerable<ProdutoDto> novosDados)
         {
-            await _localStorageService.RemoveItemAsync(Key);
+            try
+            {
+                // Armazenar os novos dados no LocalStorage
+                await _localStorageService.SetItemAsync<IEnumerable<ProdutoDto>>(Key, novosDados);
+            }
+            catch (Exception)
+            {
+                // Lidar com qualquer erro de armazenamento
+                throw;
+            }
         }
-
-
         private async Task<IEnumerable<ProdutoDto>> AddCollection( )
         {
             var listaProdutos = await _produtoService.ObterProdutos();
             if (listaProdutos != null)
             {
-                await _localStorageService.SetItemAsync(Key, listaProdutos);
+                await _localStorageService.SetItemAsync(Key, listaProdutos ?? Enumerable.Empty<ProdutoDto>());
             }
 
-            return listaProdutos ?? null!;
+            return listaProdutos ?? Enumerable.Empty<ProdutoDto>();
         }
     }
 }

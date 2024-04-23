@@ -6,6 +6,8 @@ namespace LojaSonhoDeCafe.Services.ProdutosLocalStorage
     {
         Task<IEnumerable<ProdutoDto>> GetCollection();
 
+        Task AtualizarDadosLocalStorage(IEnumerable<ProdutoDto> novosDados);
+
         Task RemoveCollection();
     }
 }
