@@ -1,4 +1,7 @@
-﻿namespace LojaSonhoDeCafe.Entities
+﻿
+using LojaSonhoDeCafe.Models.Dtos;
+
+namespace LojaSonhoDeCafe.Entities
 {
     public class CarrinhoItem
     {
