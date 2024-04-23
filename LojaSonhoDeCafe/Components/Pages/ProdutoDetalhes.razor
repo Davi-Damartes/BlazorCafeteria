@@ -14,7 +14,7 @@ else
     <h3 class="mb-5">Detalhes do Produto</h3>
     <div class="row">
         <div class="col-md-4">
-            <img src="@Produto?.FotoUrl" class="img-fluid mb-3" alt="Imagem do Produto">
+            <img src="@Produto?.FotoUrl" class="img-fluid mb-3" style="width: 250px; height: 200px;" alt="Imagem do Produto">
         </div>
             <div class="col-md-8">
                 <div class="card">
@@ -72,7 +72,7 @@ else
         {
             CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage.GetCollection();
 
-            // Produto = await ProdutoService!.ObterUmProduto(Id);
+            //Produto = await ProdutoService!.ObterUmProduto(Id);
             Produto = await GetProdutoPorId(Id);
         }
 
