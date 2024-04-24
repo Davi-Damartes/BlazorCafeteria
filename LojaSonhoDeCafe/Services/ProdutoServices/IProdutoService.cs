@@ -14,5 +14,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
         
         Task AdicionarProduto(ProdutoDto produto);
 
+        Task AtualizaProdutoService(ProdutoDto produtoDto);
+
     }
 }

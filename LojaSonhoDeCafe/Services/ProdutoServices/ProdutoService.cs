@@ -33,6 +33,23 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
 
         }
 
+        public async Task AtualizaProdutoService(ProdutoDto produtoDto)
+        {
+            try
+            {
+                if(produtoDto != null)
+                {
+                    await _produtoRepository.AtualizaProduto(produtoDto);
+
+                }
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Erro ao Atualizar produto");
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<CategoriaDto>> BuscarCategorias()
         {
             try
