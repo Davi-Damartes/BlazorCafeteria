@@ -88,8 +88,8 @@ else
         {
             CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage.GetCollection();
 
-            //Produto = await ProdutoService!.ObterUmProduto(Id);
-            Produto = await GetProdutoPorId(Id);
+            Produto = await ProdutoService!.ObterUmProduto(Id);
+            //Produto = await GetProdutoPorId(Id);
         }
 
             catch (Exception ex)
