@@ -14,5 +14,7 @@ namespace LojaSonhoDeCafe.Repositories.Produtos
 
         Task AdicionarNovoProdutoDto(ProdutoDto produto);
 
+        Task AtualizaProduto(ProdutoDto produtoDto);
+
     }
 }

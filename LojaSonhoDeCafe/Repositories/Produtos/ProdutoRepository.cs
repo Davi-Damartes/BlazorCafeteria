@@ -63,19 +63,19 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
         }
 
 
-        public async Task AdicionarNovoProdutoDto(ProdutoDto produtodto)
+        public async Task AdicionarNovoProdutoDto(ProdutoDto produtoDto)
         {
-            if (await ProdutoIdJaExisteAsync(produtodto.Id) == false)
+            if (await ProdutoIdJaExisteAsync(produtoDto.Id) == false)
             {
 
                 var produto = new Produto
                 {
-                    Nome = produtodto.Nome,
-                    Descricao = produtodto.Descricao,
-                    FotoUrl = produtodto.FotoUrl,
-                    Preco = produtodto.Preco,
-                    QuantidadeEmEstoque = produtodto.QuantidadeEmEstoque,
-                    CategoriaId = produtodto.CategoriaId
+                    Nome = produtoDto.Nome,
+                    Descricao = produtoDto.Descricao,
+                    FotoUrl = produtoDto.FotoUrl,
+                    Preco = produtoDto.Preco,
+                    QuantidadeEmEstoque = produtoDto.QuantidadeEmEstoque,
+                    CategoriaId = produtoDto.CategoriaId
                 };
 
                 await _bancoDeDados.Produtos.AddAsync(produto);
@@ -90,5 +90,24 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
             return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
         }
 
+        public async Task AtualizaProduto(ProdutoDto produtoDto)
+        {
+            var produto = await _bancoDeDados.Produtos.SingleOrDefaultAsync(x => x.Id == produtoDto.Id) ;
+
+            if(produto != null)
+            { 
+                produto.Nome = produtoDto.Nome;
+                produto.Descricao = produtoDto.Descricao;
+                produto.FotoUrl = produtoDto.FotoUrl;
+                produto.Preco = produtoDto.Preco;
+                produto.QuantidadeEmEstoque = produtoDto.QuantidadeEmEstoque;
+                produto.ProdutoFavorito = produtoDto.ProdutoFavorito;
+                produto.CategoriaId = produtoDto.CategoriaId;
+
+
+                await _bancoDeDados.SaveChangesAsync();
+            }
+
+        }
     }
 }
