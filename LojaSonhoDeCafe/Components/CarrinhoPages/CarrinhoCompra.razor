@@ -190,17 +190,17 @@ else
     }
 
 
-    private void SetPrecoTotal( )
+    private void SetPrecoTotal()
     {
         PrecoTotal = CarrinhoCompraItens!.Sum(p => p.PrecoTotal).ToString("C");
     }
 
-    private void SetQuantidadeTotal( )
+    private void SetQuantidadeTotal()
     {
         QuantidadeTotal = CarrinhoCompraItens!.Sum(P => P.Quantidade);
     }
 
-    private void CalculaResumoCarrinhoTotal( )
+    private void CalculaResumoCarrinhoTotal()
     {
         SetPrecoTotal();
         SetQuantidadeTotal(); 
