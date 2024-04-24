@@ -54,13 +54,13 @@ else
         {
             await LimpaLocalStorage();
 
-            //Produtos = await ProdutoService!.ObterProdutos();
-            Produtos = await GerenciaProdutoLocalStorage!.GetCollection();
+            Produtos = await ProdutoService!.ObterProdutos();
+            //Produtos = await GerenciaProdutoLocalStorage!.GetCollection();
 
 
-            //var carrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
-            var carrinhoCompraItens = await GerenciaCarrinhoLocalStorage!
-                                            .GetCollection();
+            var carrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            //var carrinhoCompraItens = await GerenciaCarrinhoLocalStorage!
+                                           // .GetCollection();
 
 
             var totalQuantidade = carrinhoCompraItens.Sum(i => i.Quantidade);
