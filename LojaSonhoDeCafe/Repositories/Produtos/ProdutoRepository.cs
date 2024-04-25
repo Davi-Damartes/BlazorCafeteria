@@ -62,6 +62,16 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
             return categorias;
         }
 
+        public async Task<IEnumerable<Produto>> ObterProdutosFavoritos( )
+        {
+            var produtosFavoritos = await _bancoDeDados
+                                .Produtos.AsQueryable()
+                                .Where(x => x.IsFavorito == true)
+                                .ToListAsync();
+
+            return produtosFavoritos;
+               
+        }
 
         public async Task AdicionarNovoProdutoDto(ProdutoDto produtoDto)
         {
@@ -75,7 +85,9 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
                     FotoUrl = produtoDto.FotoUrl,
                     Preco = produtoDto.Preco,
                     QuantidadeEmEstoque = produtoDto.QuantidadeEmEstoque,
+                    IsFavorito = produtoDto.IsFavorito,
                     CategoriaId = produtoDto.CategoriaId
+                   
                 };
 
                 await _bancoDeDados.Produtos.AddAsync(produto);
@@ -83,11 +95,6 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
 
             }
 
-        }
-
-        public async Task<bool> ProdutoIdJaExisteAsync(Guid produtoId)
-        {
-            return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
         }
 
         public async Task AtualizaProduto(ProdutoDto produtoDto)
@@ -101,7 +108,7 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
                 produto.FotoUrl = produtoDto.FotoUrl;
                 produto.Preco = produtoDto.Preco;
                 produto.QuantidadeEmEstoque = produtoDto.QuantidadeEmEstoque;
-                produto.ProdutoFavorito = produtoDto.ProdutoFavorito;
+                produto.IsFavorito = produtoDto.IsFavorito;
                 produto.CategoriaId = produtoDto.CategoriaId;
 
 
@@ -109,5 +116,12 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
             }
 
         }
+        public async Task<bool> ProdutoIdJaExisteAsync(Guid produtoId)
+        {
+            return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
+        }
+
+
+       
     }
 }

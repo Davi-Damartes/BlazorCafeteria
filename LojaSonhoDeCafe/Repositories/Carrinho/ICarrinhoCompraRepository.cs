@@ -16,5 +16,7 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
 
         Task<IEnumerable<CarrinhoItem>> ObtemItensDoCarinho(string usuarioId);
 
+        
+
     }
 }
