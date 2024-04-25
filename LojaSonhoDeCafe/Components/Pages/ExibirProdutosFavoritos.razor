@@ -1,0 +1,65 @@
+﻿@page "/ExibiProdutosFavoritos"
+@inject IConfiguration config
+@inject IProdutoService ProdutoService
+
+@if (Produtos is null && MensagemErro is null)
+{
+    <ExibirSpinner />
+}
+else if (MensagemErro is not null)
+{
+    <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+}
+else
+{
+    <h3>Produtos Favoritos</h3>
+    @foreach (var produto in Produtos!)
+    {
+        <div class="card" style="width: 18rem;">
+            <a href="/produtosdetalhes/@produto.Id">
+                @if (File.Exists(produto.FotoUrl))
+                {
+                    <img src="@produto.FotoUrl" class="card-img-top" width="400" alt="imagem do produto">
+                }
+                else
+                {
+                    <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" width="400" alt="imagem do produto">
+                }
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">@produto.Nome</h5>
+                <p class="card-text">@produto.Descricao.</p>
+                <a href="/produtosdetalhes/@produto.Id">
+                    <h5 class="card-title mb-3">
+                        @produto.Preco.ToString("c")
+                    </h5>
+                </a>
+            </div>
+        </div>
+    }
+}
+@code {
+
+    public IEnumerable<ProdutoDto>? Produtos { get; set; }
+
+    private string? MensagemErro { get; set; }
+
+    private string CreateWebPath(string? relativePath)
+    {
+        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath!);
+    }
+
+    protected override async Task OnInitializedAsync( )
+    {
+        try
+        {
+            Produtos = await ProdutoService.ObterProdutosFavoritos();
+        }
+        catch (Exception ex)
+        {
+
+            MensagemErro = ex.Message;
+
+        }
+    }
+}
