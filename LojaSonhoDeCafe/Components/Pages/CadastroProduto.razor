@@ -13,7 +13,7 @@
         <InputText id="Nome" class="form-control" @bind-Value="ProdutoDto.Nome"></InputText>
     </div>
     <div class="mb-4">
-        <label for="Descricao">Descricao: </label>
+        <label for="Descricao">Descrição: </label>
         <InputText id="Descricao" class="form-control" @bind-Value="ProdutoDto.Descricao"></InputText>
     </div>
     <div class="mb-4">
@@ -26,14 +26,14 @@
         <InputNumber id="Preco" class="form-control" @bind-Value="ProdutoDto.Preco"></InputNumber>
     </div>
     <div class="mb-4">
-        <label for="QuantidadeEmEstoque">QuantidadeEmEstoque: </label>
+        <label for="QuantidadeEmEstoque">Quantidade Em Estoque: </label>
         <InputNumber id="QuantidadeEmEstoque" class="form-control" @bind-Value="ProdutoDto.QuantidadeEmEstoque"></InputNumber>
     </div>
 
     <div class="mb-4">
         <label for="CategoriaId">Categoria: </label>
-        <select id="CategoriaId" class="form-control" @bind="@ProdutoDto.CategoriaId">
-            @foreach (var categoria in Categorias)
+        <select id="CategoriaId" class="form-control" @bind="ProdutoDto.CategoriaId">
+            @foreach (var categoria in Categorias!)
             {
                 <option value="@categoria.Id">@categoria.Nome</option>
             }
@@ -70,7 +70,6 @@
         private IBrowserFile? file;
         private const long maxFileSize = 1024 * 1024 * 3;
         private const int maxAllowedFiles = 1;
-        private bool isLoading;
         private List<string> erros = new();
 
 
