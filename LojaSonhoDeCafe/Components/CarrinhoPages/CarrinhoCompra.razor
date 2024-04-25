@@ -97,11 +97,12 @@ else
     protected string? PrecoTotal { get; set; }
 
     protected int QuantidadeTotal { get; set; }
+    
 
 
     private string CreateWebPath(string? relativePath)
     {
-        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
+        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath!);
     }
 
 
@@ -144,7 +145,7 @@ else
                 var retornaItemAtualizadoDto = await CarrinhoCompraService!
                         .AtualizarQuantidade(atualizaCarrinhoDto.CarrinhoId, atualizaCarrinhoDto);
 
-                AtualizarPrecoTotalItem(retornaItemAtualizadoDto);
+                await AtualizarPrecoTotalItem(retornaItemAtualizadoDto);
                 //CalculaResumoCarrinhoTotal();
                 CarrinhoChanged();
             }           
@@ -184,7 +185,7 @@ else
     private async Task RemoveCarrinhoItem(int id)
     {
         var carrinhoDto = ObtemItemDoCarrinho(id);
-        CarrinhoCompraItens.Remove(carrinhoDto);
+        CarrinhoCompraItens!.Remove(carrinhoDto);
 
         await GerenciaCarrinhoLocalStorage!.SaveCollection(CarrinhoCompraItens);
     }
