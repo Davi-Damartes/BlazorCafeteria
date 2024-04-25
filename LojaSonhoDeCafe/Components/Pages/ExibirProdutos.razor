@@ -1,14 +1,13 @@
 ﻿@inject IConfiguration config
+@inject IJSRuntime Js
 @foreach (var produto in Produtos!)
 {
     <div class="card" style="width: 18rem;">
 
-
-
-        <div class="card">
-            <input type="checkbox" id="@($"favorito-{produto.Id}")" @onchange="() => MudarBotao(produto.Id)" checked="@produto.ProdutoFavorito" />
-            <label for="@($"favorito-{produto.Id}")">
-                <i class="fa-regular fa-heart icone-coracao"></i>
+        <div class="form-check form-switch">
+            <input @onclick="(() => MudarCorDoBotao_Click(produto.Id))"  class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <label class="form-check-label" for="flexSwitchCheckDefault">
+                <i class="far fa-heart icone-coracao"></i>
             </label>
         </div>
 
@@ -19,7 +18,7 @@
                     {
                         <img src="@produto.FotoUrl" class="card-img-top" width="400" alt="Imagem do Produto">
                     }
-                    else
+                    else if(!File.Exists(produto.FotoUrl))
                     {
                         <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" width="400" alt="Imagem do Produto">
                     }
@@ -43,30 +42,33 @@
     [Parameter]
     public IEnumerable<ProdutoDto>? Produtos { get; set; }
 
-
+    [Inject]
+    public IProdutoService? ProdutoService { get; set; }
 
     private string CreateWebPath(string? relativePath)
     {
         return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
     }
 
-    public void MudarBotao(Guid produtoId)
+
+
+
+    protected async Task MudarCorDoBotao_Click(Guid produtoId)
     {
-        var produto = Produtos?.FirstOrDefault(p => p.Id == produtoId);
+        var produto = Produtos?.SingleOrDefault(p => p.Id == produtoId);
         if (produto != null)
-        {
-            produto.ProdutoFavorito = !produto.ProdutoFavorito;
-            AtualizarListaDeProdutos(); // Método para atualizar a lista de produtos na interface de usuário
+        {  
+            produto.IsFavorito = !produto.IsFavorito;
+
+            await AtualizaProduto(produto!);
         }
     }
 
-    private void AtualizarListaDeProdutos( )
+    public async Task AtualizaProduto(ProdutoDto Produto)
     {
-        // O código para atualizar a lista de produtos pode variar dependendo de como você está gerenciando o estado dos produtos.
-        // Se você estiver usando um componente pai para passar a lista de produtos, você pode chamar StateHasChanged() no componente pai.
-        // Se você estiver usando um serviço de estado, você pode notificar o serviço sobre a mudança.
-        // Certifique-se de implementar esse método de acordo com a sua arquitetura.
+        await ProdutoService!.AtualizaProdutoService(Produto);
     }
+
 }
 
 
