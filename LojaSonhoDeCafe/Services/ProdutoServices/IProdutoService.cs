@@ -6,6 +6,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
     {
         Task<IEnumerable<ProdutoDto>> ObterProdutos();
 
+        Task<IEnumerable<ProdutoDto>> ObterProdutosFavoritos();
         Task<ProdutoDto> ObterUmProduto(Guid Id);
 
         Task<IEnumerable<CategoriaDto>> BuscarCategorias();
@@ -15,6 +16,8 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
         Task AdicionarProduto(ProdutoDto produto);
 
         Task AtualizaProdutoService(ProdutoDto produtoDto);
+
+        
 
     }
 }

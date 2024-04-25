@@ -117,6 +117,28 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
 
         }
 
+        public async Task<IEnumerable<ProdutoDto>> ObterProdutosFavoritos()
+        {
+            try
+            {
+                var produtos = await _produtoRepository.ObterProdutosFavoritos();
+
+                if (produtos == null)
+                {
+                    _logger.LogError("Erro ao buscar Produto");
+                }
+                var produtosDto = produtos!.ConvertProdutosParaDto();
+                return produtosDto;
+            
+            }
+
+            catch (Exception)
+            {
+                _logger.LogError("Erro ao obter Produto");
+                throw;
+            }
+        }
+
         public async Task<ProdutoDto> ObterUmProduto(Guid Id)
         {
             try
