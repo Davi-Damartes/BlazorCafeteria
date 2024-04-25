@@ -25,7 +25,7 @@ namespace LojaSonhoDeCafe.Models.Dtos
         [Range(1, 150, ErrorMessage = "O campo {0} deve estar entre {1} e {2}.")]
         public int QuantidadeEmEstoque { get; set; }
 
-        public bool ProdutoFavorito { get; set; }
+        public bool IsFavorito { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!!!")]
         public int CategoriaId { get; set; }

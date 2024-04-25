@@ -27,12 +27,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Pages\ExibirProdutosFavoritos.razor" />
     <_ContentIncludedByDefault Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Components\Layout\ProdutosCategoriaNavMenu.razor" />
     <None Include="Components\Pages\CadastroProduto.razor" />
+    <None Include="Components\Pages\ExibirProdutosFavoritos.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\ExibirProdutosFavoritos.razor" />
   </ItemGroup>
 
 </Project>
