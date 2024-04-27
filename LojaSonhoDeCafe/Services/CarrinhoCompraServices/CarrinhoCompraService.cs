@@ -113,6 +113,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
         }
 
 
+
         public void RaiseEventCarrinhoCompraChanged(int totalQuantidade)
         {
             if (OnCarrinhoCompraChanged != null)
@@ -122,6 +123,5 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
 
 
         }
-
     }
 }
