@@ -156,5 +156,26 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
             }
 
         }
+
+        public async Task RemoverProduto(Guid Id)
+        {
+            try
+            {
+                var produtoExiste = await _produtoRepository.ObterProdutoPorId(Id);
+
+                if (produtoExiste != null)
+                {
+                    await _produtoRepository.ExcluirProduto(produtoExiste.Id);
+
+                }
+            }
+
+            catch (Exception)
+            {
+                _logger.LogError($"Erro ao excluit Produto");
+                throw;
+            }
+        
+        }
     }
 }
