@@ -80,7 +80,6 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
 
                 var produto = new Produto
                 {
-
                     Nome = produtoDto.Nome,
                     Descricao = produtoDto.Descricao,
                     FotoUrl = produtoDto.FotoUrl,
@@ -117,21 +116,12 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
             }
 
         }
-        public async Task ExcluirProduto(Guid Id)
-        {
-            var produto = await _bancoDeDados.Produtos.SingleOrDefaultAsync(x => x.Id == Id);
-            var produtoExiste = ProdutoIdJaExisteAsync(produto!.Id);
-
-            if(await produtoExiste == true)
-            {
-                _bancoDeDados.Produtos.Remove(produto);
-                await _bancoDeDados.SaveChangesAsync();
-            }         
-        }
         public async Task<bool> ProdutoIdJaExisteAsync(Guid produtoId)
         {
             return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
         }
 
+
+       
     }
 }
