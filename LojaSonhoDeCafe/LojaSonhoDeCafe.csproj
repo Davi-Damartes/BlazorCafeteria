@@ -12,8 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Components\Shared\DeletarProduto.razor~RF572232a8.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LojaSonhoDeCafe.Client\LojaSonhoDeCafe.Client.csproj" />
     <ProjectReference Include="..\LojaSonhoDeCafe.Models\LojaSonhoDeCafe.Models.csproj" />
+    <PackageReference Include="Blazor.Bootstrap" Version="2.2.1" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.3" />
