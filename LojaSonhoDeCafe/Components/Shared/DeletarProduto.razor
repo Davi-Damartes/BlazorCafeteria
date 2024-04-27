@@ -1,0 +1,42 @@
+@using BlazorBootstrap;
+<ConfirmDialog @ref="dialog" />
+
+
+<div>
+<i class="fa-solid fa-trash icone-lixeira-Exclusao" @onclick="ExcluirProduto_Click">
+</i>
+</div>
+
+
+
+
+@code {
+
+    [Parameter]
+    public ProdutoDto? produto { get; set; }
+
+    private ConfirmDialog? dialog;
+
+    [Inject]
+    public IProdutoService? ProdutoService { get; set; }
+
+    [Inject]
+    private NavigationManager? NavigationManager { get; set; }
+
+    private async Task ExcluirProduto_Click()
+    {
+        var confirmation = await dialog.ShowAsync(
+            title: $"Você tem certeza que deseja exlcuir esse {produto.Nome}?",
+            message1: "Esse ação não pode ser desfeita.",
+            message2: "Deseja continuar?");
+
+        if (confirmation)
+        {
+            await ProdutoService!.RemoverProduto(produto.Id);
+            NavigationManager!.NavigateTo("/ ");
+        }
+
+
+    }
+
+}

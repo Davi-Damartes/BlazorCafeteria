@@ -1,0 +1,14 @@
+﻿.icone-lixeira-Exclusao {
+
+    color: black;
+    font-size: 35px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.icone-lixeira-Exclusao:hover {
+    color: red;
+
+    cursor: pointer;
+}
