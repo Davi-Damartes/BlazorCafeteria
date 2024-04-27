@@ -33,7 +33,7 @@
                 </a>
             </div>
         </a>
-
+            <DeletarProduto produto="produto"> </DeletarProduto>
     </div>
 }
 
@@ -49,8 +49,6 @@
     {
         return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
     }
-
-
 
 
     protected async Task MudarCorDoBotao_Click(Guid produtoId)

@@ -1,5 +1,6 @@
 ﻿a {
     text-decoration: none;
+    color: #FF0000;
 }
 
 a:hover .card {
@@ -20,16 +21,20 @@ a:hover img {
     margin-right: 15px;
     margin-block: 15px;
     transition: box-shadow 0.3s ease-in-out;
-    overflow: hidden;
+    overflow: hidden;  
+
+    color: black;
 }
 
-.card:hover {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    .card:hover {
+        box-shadow: 0 4px 8px 0 #ffffff, 0 6px 20px 0 #15e6d9;
         transition: box-shadow 0.3s ease-in-out;
-}
+    }
 
 .card img {
         transition: transform 0.5s ease-in-out;  
+
+        margin-bottom: 40px;
 }
 
 .card:hover img {
@@ -37,10 +42,15 @@ a:hover img {
 }
 
 .card-body {
-    padding: 1rem; 
+    padding: 1rem;
+    margin-bottom: 60px;
+
+    color: #333333;
 }
 
 
+
+/*Icone Favorito*/
 .icone-coracao {
     color: #808080;
     border-radius: 30px;
@@ -52,5 +62,5 @@ a:hover img {
 }
 
 .icone-coracao.clicado::after {
-        color: aqua; 
+        color: #0fe50d; 
 }
