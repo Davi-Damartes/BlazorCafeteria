@@ -116,12 +116,28 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
             }
 
         }
+        public async Task ExcluirProduto(Guid Id)
+        {
+            var produtoExiste = await ProdutoIdJaExisteAsync(Id);
+
+            if (produtoExiste == true)
+            {
+                var produtoExclusao = await _bancoDeDados
+                                            .Produtos
+                                            .SingleOrDefaultAsync(x => x.Id == Id);
+
+                _bancoDeDados.Produtos.Remove(produtoExclusao!);
+                await _bancoDeDados.SaveChangesAsync();
+
+            }
+        }
+
+
+
         public async Task<bool> ProdutoIdJaExisteAsync(Guid produtoId)
         {
             return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
         }
 
-
-       
     }
 }
