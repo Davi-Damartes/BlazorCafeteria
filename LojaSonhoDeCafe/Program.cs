@@ -73,6 +73,10 @@ builder.Services.AddScoped<ILocalStorageCarrinhoItensService,
                            LocalStorageCarrinhoItensService>();
 
 
+builder.Services.AddBlazorBootstrap();
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
