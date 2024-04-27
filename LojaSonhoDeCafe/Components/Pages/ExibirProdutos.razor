@@ -1,31 +1,30 @@
 ﻿@inject IConfiguration config
 @inject IJSRuntime Js
-
 @foreach (var produto in Produtos!)
 {
     <div class="card" style="width: 18rem;">
 
         <div class="form-check form-switch">
-            <input @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+            <input @onclick="(() => MudarCorDoBotao_Click(produto.Id))"  class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
             <label class="form-check-label" for="flexSwitchCheckDefault">
+                <i class="far fa-heart icone-coracao"></i>
             </label>
-            <i class="far fa-heart icone-coracao"></i>
         </div>
 
         <a href="/ProdutosDetalhes/@produto.Id">
             <div class="card-body">
                 <a href="/ProdutosDetalhes/@produto.Id">
-                    @if (string.IsNullOrWhiteSpace(produto.FotoUrl) == false)
+                    @if (File.Exists(produto.FotoUrl))
                     {
-                        <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top imagem-borda" width="420" height="200" alt="Imagem do Produto">
+                        <img src="@produto.FotoUrl" class="card-img-top" width="400" alt="Imagem do Produto">
                     }
-                    else
+                    else if(!File.Exists(produto.FotoUrl))
                     {
-                        <img src="@produto.FotoUrl" class="card-img-top imagem-borda" width="420" height="200" alt="Imagem do Produto">
+                        <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" width="400" alt="Imagem do Produto">
                     }
                 </a>
 
-                <h5 class="card-title card-nome-Produto">@produto.Nome</h5>
+                <h5 class="card-title">@produto.Nome</h5>
                 <p class="card-text">@produto.Descricao.</p>
                 <a href="/ProdutosDetalhes/@produto.Id">
                     <h5 class="card-title mb-3">
@@ -34,9 +33,7 @@
                 </a>
             </div>
         </a>
-        <div>
-            <ExibirMensagemExclusao produtoDto="produto!"></ExibirMensagemExclusao>
-        </div>
+
     </div>
 }
 
@@ -53,15 +50,14 @@
         return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
     }
 
-    [Inject]
-    public NavigationManager? navigationManager { get; set; }
+
 
 
     protected async Task MudarCorDoBotao_Click(Guid produtoId)
     {
         var produto = Produtos?.SingleOrDefault(p => p.Id == produtoId);
         if (produto != null)
-        {
+        {  
             produto.IsFavorito = !produto.IsFavorito;
 
             await AtualizaProduto(produto!);
@@ -71,19 +67,6 @@
     public async Task AtualizaProduto(ProdutoDto Produto)
     {
         await ProdutoService!.AtualizaProdutoService(Produto);
-    }
-
-    async Task DeletarProduto(ProdutoDto produtoDto)
-    {
-        bool confirmed = await Js.InvokeAsync<bool>("confirm", "Você tem certeza ?");
-        if (confirmed)
-        {
-            navigationManager!.NavigateTo("/ ");
-        }
-        else
-        {
-            navigationManager!.NavigateTo($"/ProdutosPorCategoria/{produtoDto.CategoriaId}");
-        }
     }
 
 }
