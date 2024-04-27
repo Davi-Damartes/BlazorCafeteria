@@ -121,9 +121,9 @@
 
         try
         {
-           // string imagemCript = Guid.NewGuid() + "_";
+            string imagemCript = Guid.NewGuid() + "_";
             string newFileName = Path.ChangeExtension(
-                                 Path.GetRandomFileName(),
+                                 imagemCript,
                                  Path.GetFileName(file.Name));
 
             string path = Path.Combine(

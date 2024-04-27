@@ -1,0 +1,12 @@
+﻿.icon-delete-Produto {
+    color: black;
+    font-size: 25px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+    .icon-delete-Produto:hover {
+        color: red;
+        cursor: pointer;
+    }

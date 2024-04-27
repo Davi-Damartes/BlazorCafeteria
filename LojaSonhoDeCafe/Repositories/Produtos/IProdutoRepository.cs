@@ -12,12 +12,13 @@ namespace LojaSonhoDeCafe.Repositories.Produtos
 
         Task<IEnumerable<Produto>> ObterProdutosFavoritos();
 
-        Task<IEnumerable<Categoria>> ObterCategorias( );
+        Task<IEnumerable<Categoria>> ObterCategorias();
 
         Task AdicionarNovoProdutoDto(ProdutoDto produto);
 
         Task AtualizaProduto(ProdutoDto produtoDto);
 
+        Task ExcluirProduto(Guid Id);
         
 
     }
