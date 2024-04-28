@@ -4,6 +4,18 @@
 @inject IConfiguration config
 
 <h3>Cadastro de Produto</h3>
+
+@if (erros.Count > 0)
+{
+    <h2>Erros</h2>
+    <ul class="text-danger">
+        @foreach (var error in erros)
+        {
+            <li>@error</li>
+        }
+    </ul>
+}
+
 <EditForm Model="ProdutoDto" OnValidSubmit="SubmitForm">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -18,7 +30,7 @@
     </div>
     <div class="mb-4">
         <label for="FotoProduto">Foto do Produto: </label>
-        <InputFile OnChange="LoadFiles" class="form-control" id="FotoUrl" @bind-Value="ProdutoDto.FotoUrl"></InputFile>
+        <InputFile OnChange="LoadFiles"  class="form-control" multiple accept=".png, .jpg, .jpeg" id="FotoUrl" @bind-Value="ProdutoDto.FotoUrl"></InputFile>
     </div>
 
     <div class="mb-4">
@@ -32,85 +44,78 @@
 
     <div class="mb-4">
         <label for="CategoriaId">Categoria: </label>
-        <select id="CategoriaId" class="form-control" @bind="ProdutoDto.CategoriaId">
-            @foreach (var categoria in Categorias!)
-            {
-                <option value="@categoria.Id">@categoria.Nome</option>
-            }
-        </select>
+            <select id="CategoriaId" class="form-control" @bind="ProdutoDto.CategoriaId">
+            <option value=" " selected>Escolha uma Categoria</option>
+                @foreach (var categoria in Categorias!)
+                {
+                    <option value="@categoria.Id">@categoria.Nome</option>
+                }
+            </select> 
     </div>
-  
 
-    <button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+    <button type="submit" class="btn btn-primary btn-lg">Criar</button>
 </EditForm>
 
-@if (erros.Count > 0)
-{
-    <h2>Erros</h2>
-    <ul class="text-danger"> 
-        @foreach(var error in erros)
-        {
-            <li>@error</li>
-        }
-    </ul>
-}
+
 
 @code {
 
-        [Inject]
-        public NavigationManager? navigationManager { get; set; }
+    [Inject]
+    public NavigationManager? navigationManager { get; set; }
 
-        [Inject]
-        public IProdutoService? ProdutoService { get; set; }
+    [Inject]
+    public IProdutoService? ProdutoService { get; set; }
 
-        public IEnumerable<CategoriaDto>? Categorias { get; set; } = new List<CategoriaDto>();
-
-        private ProdutoDto? ProdutoDto = new();
-
-        private IBrowserFile? file;
-        private const long maxFileSize = 1024 * 1024 * 3;
-        private const int maxAllowedFiles = 1;
-        private List<string> erros = new();
+    public IEnumerable<CategoriaDto>? Categorias { get; set; } = new List<CategoriaDto>();
 
 
-        protected override async Task OnInitializedAsync()
+    public ProdutoDto? ProdutoDto = new();
+
+    private const long maxFileSize = 1024 * 1024 * 3;
+    private const int maxAllowedFiles = 1;
+    private IBrowserFile? file;     
+    private List<string> erros = new();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Categorias = await ProdutoService!.BuscarCategorias();
+
+    }
+
+    private async Task SubmitForm()
+    {
+        try
         {
-            Categorias = await ProdutoService!.BuscarCategorias();
-
-        }
-
-        private async Task SubmitForm()
-        {
-            try
+            string relativePath = await CaputurarImagem();
+            ProdutoDto!.FotoUrl = relativePath;
+            if(ProdutoDto.CategoriaId == 0)
             {
-                string relativePath = await CaputurarImagem();
-                ProdutoDto!.FotoUrl = relativePath;
-
-                if(ProdutoDto.FotoUrl != null)
-                {
-                    await ProdutoService!.AdicionarProduto(ProdutoDto);
-                    StateHasChanged();
-                    navigationManager!.NavigateTo("/ ");
-                }
+                erros.Add("A categoria não pode ser nulla!");
             }
-            catch (Exception ex)
+
+            if(ProdutoDto.FotoUrl != null)
             {
-                erros.Add($"Erro: {ex.Message}");
+                await ProdutoService!.AdicionarProduto(ProdutoDto);
+                StateHasChanged();
+                navigationManager!.NavigateTo("/ ");
             }
+
+            erros.Clear();
         }
-
-
-        private string CreateWebPath(string relativePath)
+        catch (Exception)
         {
-            return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
+            erros.Add($"Erro ao Criar o Produto");
         }
-
+    }
 
         private void LoadFiles(InputFileChangeEventArgs evento)
         {
             file = evento.File;
 
         }
+
         private async Task<string> CaputurarImagem()
         {
 
@@ -128,16 +133,15 @@
 
             string path = Path.Combine(
                 config.GetValue<string>("ArmazenamentoProdutoImg")!,
-                "imagensCafeteria",
+                "ImagensCafeteria",
                 newFileName);
 
-            string relativePath = Path.Combine("imagensCafeteria",newFileName);
+            string relativePath = Path.Combine("ImagensCafeteria", newFileName);
 
 
-            Directory.CreateDirectory(
-                        Path.Combine(
+            Directory.CreateDirectory(Path.Combine(
                         config.GetValue<string>("ArmazenamentoProdutoImg")!,
-                        "imagensCafeteria"));
+                        "ImagensCafeteria"));
 
             await using FileStream fs = new(path, FileMode.Create);
             await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
