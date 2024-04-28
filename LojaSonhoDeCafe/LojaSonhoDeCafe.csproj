@@ -46,4 +46,8 @@
     <UpToDateCheckInput Remove="Components\Pages\ExibirProdutosFavoritos.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ImagemWeb\ImagensCafeteria\" />
+  </ItemGroup>
+
 </Project>
