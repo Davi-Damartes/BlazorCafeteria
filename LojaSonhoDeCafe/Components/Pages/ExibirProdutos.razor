@@ -14,13 +14,13 @@
         <a href="/ProdutosDetalhes/@produto.Id">
             <div class="card-body">
                 <a href="/ProdutosDetalhes/@produto.Id">
-                    @if (File.Exists(produto.FotoUrl))
+                    @if (!File.Exists(produto.FotoUrl))
                     {
-                        <img src="@produto.FotoUrl" class="card-img-top" width="400" alt="Imagem do Produto">
+                        <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" alt="Imagem do Produto">
                     }
-                    else if(!File.Exists(produto.FotoUrl))
+                    else
                     {
-                        <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" width="400" alt="Imagem do Produto">
+                        <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
                     }
                 </a>
 
@@ -45,11 +45,10 @@
     [Inject]
     public IProdutoService? ProdutoService { get; set; }
 
-    private string CreateWebPath(string? relativePath)
+    private string CreateWebPath(string relativePath)
     {
-        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
+        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath!);
     }
-
 
     protected async Task MudarCorDoBotao_Click(Guid produtoId)
     {
