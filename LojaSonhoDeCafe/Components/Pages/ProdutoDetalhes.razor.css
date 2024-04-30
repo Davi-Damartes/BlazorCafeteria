@@ -1,0 +1,10 @@
+﻿.card-img-top {
+    width:295px;
+    height:290px; 
+}
+
+.teste {
+    display: inline-block;
+    vertical-align: top; 
+    margin-right: 30px;
+}
