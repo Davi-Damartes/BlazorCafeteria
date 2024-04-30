@@ -16,7 +16,7 @@
                 <a href="/ProdutosDetalhes/@produto.Id">
                     @if (!File.Exists(produto.FotoUrl))
                     {
-                        <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" alt="Imagem do Produto">
+                        <img src="@CreateWebPath(produto.FotoUrl!)" class="card-img-top" alt="Imagem do Produto">
                     }
                     else
                     {
