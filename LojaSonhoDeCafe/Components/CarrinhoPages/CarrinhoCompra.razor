@@ -20,8 +20,7 @@ else
                 @foreach (var item in CarrinhoCompraItens!)
                 {
                     <div class="row mb-3">
-                        <div class="col-md-3">
-                            @* <img src="@item.ProdutoFotoUrl" width="250" class="img-thumbnail"> *@
+                        <div class="col-md-3">                           
                             @if (File.Exists(@item.ProdutoFotoUrl))
                             {
                                 <img src="@item.ProdutoFotoUrl" class="card-img-top" width="400" alt="Imagem do Produto">
@@ -65,13 +64,15 @@ else
                 <h5>Carrinho - Resumo</h5>
                 <div class="mt-2">
                     <div><b>Total - (@QuantidadeTotal items)&nbsp;</b><b>@PrecoTotal</b></div>
-                    <a href="#" class="btn btn-success">
-                        <i class="fa-solid fa-credit-card"></i>&nbsp;Continuar
+                    <a href="/Pagamento/@PrecoTotal/@QuantidadeTotal" class="btn btn-success">
+                        <i class="fa-solid fa-credit-card"></i>&nbsp;Pagamento
+                        
                     </a>
+                   
                 </div>
             </div>
         </div>
-
+       
     }
     else
     {
@@ -86,6 +87,8 @@ else
 @code {
     [Inject]
     public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+    [Inject]
+    public NavigationManager? NavigationManager { get; set; }
 
     [Inject]
     public ILocalStorageCarrinhoItensService? GerenciaCarrinhoLocalStorage { get; set; }
@@ -94,10 +97,10 @@ else
 
     public string? MensagemErro { get; set; }
 
-    protected string? PrecoTotal { get; set; }
+    public string PrecoTotal { get; set; }
 
-    protected int QuantidadeTotal { get; set; }
-    
+    public int QuantidadeTotal { get; set; }
+
 
 
     private string CreateWebPath(string? relativePath)
@@ -129,6 +132,7 @@ else
     {
         return CarrinhoCompraItens!.FirstOrDefault(i => i.Id == id) ?? null!;
     }
+
 
     protected async Task AtualizarQuantidadeCarrinho_Click(int id, int quantidade)
     {
