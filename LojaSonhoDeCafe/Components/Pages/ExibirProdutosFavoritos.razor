@@ -5,6 +5,7 @@
 @if (Produtos is null && MensagemErro is null)
 {
     <ExibirSpinner />
+    <h3>Nenhum Produto escolhido como Favorito</h3>
 }
 else if (MensagemErro is not null)
 {
@@ -15,27 +16,27 @@ else
     <h3>Produtos Favoritos</h3>
     @foreach (var produto in Produtos!)
     {
-        <div class="card" style="width: 18rem;">
-            <a href="/produtosdetalhes/@produto.Id">
-                @if (File.Exists(produto.FotoUrl))
-                {
-                    <img src="@produto.FotoUrl" class="card-img-top" width="400" alt="imagem do produto">
-                }
-                else
-                {
-                    <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" width="400" alt="imagem do produto">
-                }
-            </a>
-            <div class="card-body">
-                <h5 class="card-title">@produto.Nome</h5>
-                <p class="card-text">@produto.Descricao.</p>
-                <a href="/produtosdetalhes/@produto.Id">
-                    <h5 class="card-title mb-3">
-                        @produto.Preco.ToString("c")
-                    </h5>
-                </a>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <a href="/produtosdetalhes/@produto.Id">
+                        @if (File.Exists(produto.FotoUrl))
+                        {
+                            <img src="@produto.FotoUrl" class="card-img-top" alt="imagem do produto">
+                        }
+                        else
+                        {
+                            <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" alt="imagem do produto">
+                        }
+                    </a>
+                    <h5 class="card-title">@produto.Nome</h5>
+                <p class="card-text descricao">@produto.Descricao</p>
+                    <a href="/produtosdetalhes/@produto.Id">
+                        <h5 class="card-title mb-3 preco-formatacao">
+                            @produto.Preco.ToString("c")
+                        </h5>
+                    </a>
+                </div>
             </div>
-        </div>
     }
 }
 @code {
