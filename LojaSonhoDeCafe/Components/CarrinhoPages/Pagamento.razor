@@ -1,0 +1,49 @@
+@page "/Pagamento/{PrecoTotal}/{QuantidadeTotal:int?}"
+
+
+<div class="container">
+    <div class="row">
+        <div class="column">
+            <h1 class="title">Preco:</h1>
+            <div class="input-box">
+                <p>Preço Total: @PrecoTotal</p>
+                <h5>Quantidade</h5>
+                <p>Quantidade de Itens: @QuantidadeTotal</p>
+            </div>
+        </div>
+        <div class="column">
+            <h1 class="title">Preco:</h1>
+            <div class="input-box">
+                <p>Preço Total: @PrecoTotal</p>
+                <h5>Quantidade</h5>
+                <p>Quantidade de Itens: @QuantidadeTotal</p>
+            </div>
+        </div>
+        <div class="column">
+            <h1 class="title">Preco:</h1>
+            <div class="input-box">
+                <p>Preço Total: @PrecoTotal</p>
+                <h5>Quantidade</h5>
+                <p>Quantidade de Itens: @QuantidadeTotal</p>
+            </div>
+        </div>
+    </div>
+        <button class="btn btn-primary">
+            Pagar
+        </button>
+</div>
+
+
+
+
+@code{
+
+    [Parameter]
+    public string? PrecoTotal { get; set; }
+
+    [Parameter]
+    public int QuantidadeTotal { get; set; }
+
+
+
+}

@@ -1,0 +1,33 @@
+﻿* {
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh;
+    background-color: darkgray;
+}
+
+.row{
+    display: flex;
+    width: 700px;
+    padding: 40px;
+    background-color: cornflowerblue;
+    border-radius: 25px;
+}
+
+.column title {
+    font-size: 35px;
+    color: #333;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+
+.input-box{
+
+}
