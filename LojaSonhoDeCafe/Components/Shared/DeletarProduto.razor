@@ -26,14 +26,14 @@
     private async Task ExcluirProduto_Click()
     {
         var confirmation = await dialog!.ShowAsync(
-            title: $"Você tem certeza que deseja exlcuir esse {produto.Nome}?",
+            title: $"Você tem certeza que deseja exlcuir: {produto!.Nome}?",
             message1: "Esse ação não pode ser desfeita.",
             message2: "Deseja continuar?");
 
         if (confirmation)
         {
             await ProdutoService!.RemoverProduto(produto.Id);
-            NavigationManager!.NavigateTo("/produtos ");
+            NavigationManager!.NavigateTo($"/ProdutosPorCategoria/{produto.CategoriaId}");
         }
 
 
