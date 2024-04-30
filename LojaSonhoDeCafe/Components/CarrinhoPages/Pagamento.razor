@@ -3,34 +3,63 @@
 
 <div class="container">
     <div class="row">
+        <h1 class="titulo">Simulador de Pagamento</h1>
+
         <div class="column">
-            <h1 class="title">Preco:</h1>
-            <div class="input-box">
-                <p>Preço Total: @PrecoTotal</p>
-                <h5>Quantidade</h5>
-                <p>Quantidade de Itens: @QuantidadeTotal</p>
+            <h1 class="title">Total: @PrecoTotal</h1>
+            <div class="flex">
+                <div class="input-box">
+                    <p>Quantidade de itens: @QuantidadeTotal</p>
+                </div>
             </div>
         </div>
+
         <div class="column">
-            <h1 class="title">Preco:</h1>
-            <div class="input-box">
-                <p>Preço Total: @PrecoTotal</p>
-                <h5>Quantidade</h5>
-                <p>Quantidade de Itens: @QuantidadeTotal</p>
+            <span class="titulo-cartoes"><b>Opções de Pagamento:</b></span>
+            <div class="icones-Pagamento">
+                <label class="opcao-pagamento">
+                    <i class="fa-brands fa-cc-visa icone"></i>
+                    <input type="radio" name="opcao-pagamento" value="visa">
+                </label>
+                <label class="opcao-pagamento">
+                    <i class="fa-brands fa-cc-mastercard icone"></i>
+                    <input type="radio" name="opcao-pagamento" value="visa">
+                </label>
+                <label class="opcao-pagamento">
+                    <i class="fa-brands fa-cc-paypal icone"></i>
+                    <input type="radio" name="opcao-pagamento" value="visa">
+                </label>
+                <label class="opcao-pagamento">
+                    <i class="fa-solid fa-barcode icone"></i>
+                    <input type="radio" name="opcao-pagamento" value="visa">
+                </label>
             </div>
         </div>
+
         <div class="column">
-            <h1 class="title">Preco:</h1>
+            <span class="titulo-cartoes"><b>Nome:</b></span>
             <div class="input-box">
-                <p>Preço Total: @PrecoTotal</p>
-                <h5>Quantidade</h5>
-                <p>Quantidade de Itens: @QuantidadeTotal</p>
+                <input type="text" class="input-form" placeholder="Nome">
+            </div>
+            <span class="titulo-cartoes"><b>Email:</b></span>
+            <div class="input-box">
+                <input type="text" class="input-form" placeholder="Email">
             </div>
         </div>
-    </div>
-        <button class="btn btn-primary">
+
+
+        <div class="column">
+            <span class="titulo-cartoes"><b>Preço:</b></span>
+            <div class="input-box">
+                <h5>Quantidade: @QuantidadeTotal</h5>
+            </div>
+        </div>
+
+        <button class="btn"
+                @onclick="(() => AdicionaPagamento_Click(PagamentoDiario!))">
             Pagar
         </button>
+    </div>
 </div>
 
 
@@ -44,6 +73,18 @@
     [Parameter]
     public int QuantidadeTotal { get; set; }
 
+    public PagamentoDiario? PagamentoDiario { get; set; }
 
+
+
+    public void AdicionaPagamento_Click(PagamentoDiario pagamento)
+    {
+        pagamento.TotalQuantDiaria = 10;
+        pagamento.TotalPrecoDiaria = 15M;
+        pagamento.Usuario = "Davi";
+        pagamento.Email = "Davi@Gmail.com";
+        pagamento.EPagamento = ETipoPagamento.visa;
+        pagamento.HoraDoPagamento = DateTime.Now;
+    }
 
 }
