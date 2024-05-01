@@ -1,4 +1,6 @@
-﻿using LojaSonhoDeCafe.Entities;
+﻿using LojaSonhoDeCafe.Components.CarrinhoPages;
+using LojaSonhoDeCafe.Entities;
+using LojaSonhoDeCafe.Enum;
 using LojaSonhoDeCafe.Models.Dtos;
 
 namespace SonhoDeCafe.Server.MapeandoDto
@@ -104,6 +106,20 @@ namespace SonhoDeCafe.Server.MapeandoDto
             };
         }
 
-        
+        public static PagamentoDiario ConvertePagamentoDtoParaPagamento(this PagamentoDiarioDto diarioDto)
+        {
+            return new PagamentoDiario
+            {
+                Usuario = diarioDto.Usuario,
+                Email = diarioDto.Email,
+                TotalQuantDiaria = diarioDto.TotalQuantDiaria,
+                TotalPrecoDiaria = diarioDto.TotalPrecoDiaria,
+                EPagamento = (ETipoPagamento)diarioDto.EPagamento,
+                HoraDoPagamento = diarioDto.HoraDoPagamento,
+
+            };
+        }
+
+ 
     }
 }
