@@ -3,9 +3,11 @@ using LojaSonhoDeCafe.Components;
 using LojaSonhoDeCafe.Components.Account;
 using LojaSonhoDeCafe.Data;
 using LojaSonhoDeCafe.Repositories.Carrinho;
+using LojaSonhoDeCafe.Repositories.Pagamento;
 using LojaSonhoDeCafe.Repositories.Produtos;
 using LojaSonhoDeCafe.Services.CarrinhoCompraServices;
 using LojaSonhoDeCafe.Services.CarrinhoLocalStorage;
+using LojaSonhoDeCafe.Services.PagamentoServices;
 using LojaSonhoDeCafe.Services.ProdutoServices;
 using LojaSonhoDeCafe.Services.ProdutosLocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -61,6 +63,9 @@ builder.Services.AddScoped<ICarrinhoCompraService, CarrinhoCompraService>();
 
 builder.Services.AddScoped<CarrinhoCompraRepository>();
 builder.Services.AddScoped<ProdutoRepository>();
+
+builder.Services.AddScoped<IPagamentoRepository, PagamentoRepository>();
+builder.Services.AddScoped<IPagamentoService, PagamentoService>();
 
 
 builder.Services.AddBlazoredLocalStorage();
