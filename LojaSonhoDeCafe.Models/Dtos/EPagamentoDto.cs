@@ -5,6 +5,6 @@
         visa = 1,
         mastercard = 2,
         paypal = 3,
-        codigoBarra = 4,
+        codigoDeBarra = 4,
     }
 }
