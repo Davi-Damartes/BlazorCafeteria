@@ -1,21 +1,25 @@
-@using BlazorBootstrap;
-<ConfirmDialog @ref="dialog" />
-
 
 <div>
-<i class="fa-solid fa-trash icone-lixeira-Exclusao" @onclick="ExcluirProduto_Click">
-</i>
+    <i class="fa-solid fa-trash icone-lixeira-Exclusao" 
+        @onclick="() => OpenDialog(produto!)">
+    </i>
 </div>
-
-
-
+@if(AbrirDialogModal)
+    {
+        <DialogPagamento Titulo="você deseja excluir esse item?" 
+                         Mensagem="essa ação não pode ser defeita!!!"
+                         OnClose="ExcluirProduto_Click"
+                         DialogType="DialogPagamento.ModalDialogType.DeleteCancel">
+    </DialogPagamento>
+   }
 
 @code {
 
     [Parameter]
     public ProdutoDto? produto { get; set; }
 
-    private ConfirmDialog? dialog;
+    public ProdutoDto? _produtoToDelete { get; set; }
+
 
     [Inject]
     public IProdutoService? ProdutoService { get; set; }
@@ -23,20 +27,42 @@
     [Inject]
     private NavigationManager? NavigationManager { get; set; }
 
-    private async Task ExcluirProduto_Click()
+    public bool AbrirDialogModal { get; set; }
+
+
+    private async void ExcluirProduto_Click(bool accepted)
     {
-        var confirmation = await dialog!.ShowAsync(
-            title: $"Você tem certeza que deseja exlcuir: {produto!.Nome}?",
-            message1: "Esse ação não pode ser desfeita.",
-            message2: "Deseja continuar?");
-
-        if (confirmation)
+        if (accepted && _produtoToDelete != null)
         {
-            await ProdutoService!.RemoverProduto(produto.Id);
-            NavigationManager!.NavigateTo($"/ProdutosPorCategoria/{produto.CategoriaId}");
+            await ProdutoService!.RemoverProduto(_produtoToDelete!.Id);
+            NavigationManager!.NavigateTo($"/ProdutosPorCategoria/{_produtoToDelete.CategoriaId}");
         }
-
-
+        AbrirDialogModal = false;
+        StateHasChanged();
     }
+
+    private void OpenDialog(ProdutoDto produto)
+    {
+        AbrirDialogModal = true;
+        _produtoToDelete = produto;
+        StateHasChanged();
+    }
+
+
+    // private async Task ExcluirProduto_Click()
+    // {
+    //     var confirmation = await dialog!.ShowAsync(
+    //         title: $"Você tem certeza que deseja exlcuir: {produto!.Nome}?",
+    //         message1: "Esse ação não pode ser desfeita.",
+    //         message2: "Deseja continuar?");
+
+    //     if (confirmation)
+    //     {
+    //         await ProdutoService!.RemoverProduto(produto.Id);
+    //         NavigationManager!.NavigateTo($"/ProdutosPorCategoria/{produto.CategoriaId}");
+    //     }
+
+
+    // }
 
 }
