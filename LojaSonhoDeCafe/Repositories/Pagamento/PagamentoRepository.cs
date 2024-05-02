@@ -17,6 +17,7 @@ namespace LojaSonhoDeCafe.Repositories.Pagamento
             if(pagamentoDiario != null)
             {
                 await _bancoDeDados.PagamentosDiarios.AddAsync(pagamentoDiario);
+                await _bancoDeDados.SaveChangesAsync();
             }
 
         }
