@@ -64,9 +64,8 @@ else
                 <h5>Carrinho - Resumo</h5>
                 <div class="mt-2">
                     <div><b>Total - (@QuantidadeTotal items)&nbsp;</b><b>@PrecoTotal</b></div>
-                    <a href="/Pagamento/@PrecoTotal/@QuantidadeTotal" class="btn btn-success">
-                        <i class="fa-solid fa-credit-card"></i>&nbsp;Pagamento
-                        
+                    <a href="/Pagamento" class="btn btn-success">
+                        <i class="fa-solid fa-credit-card"></i>&nbsp;Pagamento                  
                     </a>
                    
                 </div>
@@ -97,10 +96,9 @@ else
 
     public string? MensagemErro { get; set; }
 
-    public string PrecoTotal { get; set; }
+    public decimal PrecoTotal { get; set; }
 
     public int QuantidadeTotal { get; set; }
-
 
 
     private string CreateWebPath(string? relativePath)
@@ -114,7 +112,8 @@ else
         try
         {
 
-            CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage!.GetCollection();
+            //CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage!.GetCollection();
+            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
 
             //CalculaResumoCarrinhoTotal();
             CarrinhoChanged();
@@ -132,6 +131,9 @@ else
     {
         return CarrinhoCompraItens!.FirstOrDefault(i => i.Id == id) ?? null!;
     }
+
+
+
 
 
     protected async Task AtualizarQuantidadeCarrinho_Click(int id, int quantidade)
@@ -197,7 +199,7 @@ else
 
     private void SetPrecoTotal()
     {
-        PrecoTotal = CarrinhoCompraItens!.Sum(p => p.PrecoTotal).ToString("C");
+        PrecoTotal = CarrinhoCompraItens!.Sum(p => p.PrecoTotal);
     }
 
     private void SetQuantidadeTotal()
