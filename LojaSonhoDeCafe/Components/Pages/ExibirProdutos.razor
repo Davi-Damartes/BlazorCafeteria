@@ -35,6 +35,8 @@
         </a>
             <DeletarProduto produto="produto"> </DeletarProduto>
     </div>
+
+
 }
 
 @code {
@@ -42,8 +44,13 @@
     [Parameter]
     public IEnumerable<ProdutoDto>? Produtos { get; set; }
 
+
+
     [Inject]
     public IProdutoService? ProdutoService { get; set; }
+
+    [Inject]
+    public NavigationManager? NavigationManager { get; set; }
 
     private string CreateWebPath(string relativePath)
     {
@@ -65,6 +72,25 @@
     {
         await ProdutoService!.AtualizaProdutoService(Produto);
     }
+
+    public bool AbrirDialogModal { get; set; }
+
+
+    private void DeletaItemEFechaDialog(bool acao)
+    {
+        AbrirDialogModal = false;
+        NavigationManager!.NavigateTo("/CadastroProduto");
+        StateHasChanged();
+    }
+
+    private void OpenDialog()
+    {
+        AbrirDialogModal = true;
+        StateHasChanged();
+    }
+
+
+
 
 }
 
