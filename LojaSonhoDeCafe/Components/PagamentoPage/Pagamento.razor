@@ -1,0 +1,173 @@
+@page "/Pagamento"
+
+
+@if (CarrinhoCompraItens is null && MensagemErro is null)
+{
+    <ExibirSpinner />
+}
+else if (MensagemErro is not null)
+{
+    <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+}
+else
+{
+
+
+  <EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="container">
+            <div class="row">
+                <h1 class="titulo">Simulador de Pagamento</h1>
+                <div class="column">
+                    <h1>Total:@PrecoTotal.ToString("C")</h1>
+                    <div class="flex">
+                        <div class="input-box">
+                            <p>Quantidade de itens: @QuantidadeTotal</p>
+
+                        </div>
+                    </div>
+                    <span class="titulo-cartoes"><b>Nome:</b></span>
+                    <div class="input-box">
+                        <label for="Nome"></label>
+                        <InputText id="Nome" type="text" class="input-form" @bind-Value="PagamentoDiario!.Usuario" placeholder="Nome" />
+                    </div>
+                    <span class="titulo-cartoes"><b>Email:</b></span>
+                    <div class="input-box">
+                        <label for="Email"></label>
+                        <InputText id="Email" type="text" class="input-form" @bind-Value="PagamentoDiario.Email" placeholder="Email" />
+                    </div>
+                    <span class="titulo-cartoes"><b>Cep:</b></span>
+                    <div class="input-box">
+                        <label for="Cep"></label>
+                        <input id="Cep" type="text" class="input-form" placeholder="Cep" />
+                    </div>
+                </div>
+
+                <div class="column">
+                    <span class="titulo-cartoes"><b>Opções de Pagamento:</b></span>
+                    <div class="input-box-TipoPagamento">
+                        <h5><b>Tipo de Pagamento:</b></h5>
+                        <div class="icones-Pagamento">
+                            <label class="opcao-pagamento">
+                                <i class="fa-brands fa-cc-visa icone"></i>
+                                <input type="radio" name="opcao-pagamento" value="visa"
+                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.visa)">
+                            </label>
+                            <label class="opcao-pagamento">
+                                <i class="fa-brands fa-cc-mastercard icone"></i>
+                                <input type="radio" name="opcao-pagamento" value="mastercard"
+                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.mastercard)">
+                            </label>
+                            <label class="opcao-pagamento">
+                                <i class="fa-brands fa-cc-paypal icone"></i>
+                                <input type="radio" name="opcao-pagamento" value="paypal"
+                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.paypal)" />
+                            </label>
+                            <label class="opcao-pagamento">
+                                <i class="fa-solid fa-barcode icone"></i>
+                                <input type="radio" name="opcao-pagamento" value="codigoDeBarra"
+                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.codigoDeBarra)" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-box">
+                        <span><b>Nome do titular do cartão:</b></span>
+                        <input type="text" class="input-form" placeholder="Fulano De tal">
+                    </div>
+                    <div class="input-box">
+                        <span><b>Número do cartão:</b></span>
+                        <input type="text" class="input-form" placeholder="XXXXXXXXXXXXXXXX">
+                    </div>
+                    <div class="input-box">
+                        <span><b>Código de segurança (CVV/CVC):</b></span>
+                        <input type="text" class="input-form" placeholder="XXX">
+                    </div>
+                    <div class="input-box">
+                        <span><b>Data Validade Cartão:</b></span>
+                        <input type="text" class="input-form" placeholder="XX/XXXX">
+                    </div>
+                </div>
+                <button class="btn" type="submit">
+                                Pagar
+                </button>
+            </div>
+        </div>
+    </EditForm>
+
+}
+
+@code {
+    [Inject]
+    public IPagamentoService? PagamentoService { get; set; }
+
+    [Inject]
+    public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+
+    public CarrinhoItemDto? CarrinhoItem { get; set; }
+
+    private PagamentoDiarioDto? PagamentoDiario { get; set; } = new();
+
+    public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
+
+    public decimal PrecoTotal { get; set; }
+
+    public int QuantidadeTotal { get; set; }
+
+    public string? MensagemErro { get; set; }
+
+
+    private async void AdicionaPagamento_Click( )
+    {
+        PagamentoDiario!.TotalQuantDiaria = CarrinhoItem!.Quantidade;
+        PagamentoDiario.TotalPrecoDiaria = CarrinhoItem.PrecoTotal;
+
+        if(PagamentoDiario != null)
+        {
+            await PagamentoService.AdicionarPagamento(PagamentoDiario);
+        }
+
+    }
+
+    protected override async Task OnInitializedAsync( )
+    {
+        try
+        {
+            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            AtualizarPrecoEQuantidade();
+
+            foreach (var item in CarrinhoCompraItens)
+            {
+                ObtemItemDoCarrinho(item.Id);
+            }
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+
+    }
+
+    private CarrinhoItemDto ObtemItemDoCarrinho(int id)
+    {
+        CarrinhoItem = CarrinhoCompraItens!.FirstOrDefault(x => x.Id == id)!;
+        return CarrinhoCompraItens!.FirstOrDefault(x => x.Id == id)!;
+    }
+
+
+    private void AtualizarPrecoEQuantidade( )
+    {
+        SetPrecoTotal();
+        SetQuantidadeTotal();
+    }
+
+    private void SetPrecoTotal()
+    {
+        PrecoTotal = CarrinhoCompraItens!.Sum(p => p.PrecoTotal);
+    }
+
+    private void SetQuantidadeTotal( )
+    {
+        QuantidadeTotal = CarrinhoCompraItens!.Sum(p => p.Quantidade);
+    }
+}
