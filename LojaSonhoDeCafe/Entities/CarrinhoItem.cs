@@ -17,7 +17,5 @@ namespace LojaSonhoDeCafe.Entities
         public Carrinho? Carrinho { get; set; }
         public Produto? Produto { get; set; }
 
-
-
     }
 }
