@@ -62,7 +62,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
             foreach (var carrinhoItem in carrinhoItens)
             {
                 var produto = produtos.FirstOrDefault(p => p.Id == carrinhoItem.ProdutoId);
-                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto!);
                 carrinhoItemDtos.Add(carrinhoItemDto);
             }
 
