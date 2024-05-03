@@ -1,5 +1,6 @@
 ﻿using LojaSonhoDeCafe.Data;
 using LojaSonhoDeCafe.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace LojaSonhoDeCafe.Repositories.Pagamento
 {
@@ -20,6 +21,15 @@ namespace LojaSonhoDeCafe.Repositories.Pagamento
                 await _bancoDeDados.SaveChangesAsync();
             }
 
+        }
+
+        public async Task<IEnumerable<PagamentoDiario>> BucarTodosPagamentosPeloMes(int mes)
+        {
+            return await _bancoDeDados.PagamentosDiarios
+                               .AsQueryable()
+                               .Where(x => x.HoraDoPagamento.Month == mes)
+                               .OrderBy(x => x.HoraDoPagamento)
+                               .ToListAsync();
         }
     }
 }
