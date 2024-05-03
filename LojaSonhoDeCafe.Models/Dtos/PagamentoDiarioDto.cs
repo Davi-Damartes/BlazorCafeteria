@@ -25,7 +25,7 @@ namespace LojaSonhoDeCafe.Models.Dtos
         public EPagamentoDto EPagamento { get; set; }
 
         [Required]
-        public DateTime HoraDoPagamento { get; } = DateTime.Now;
+        public DateTime HoraDoPagamento { get; set; }
     }
 
 
