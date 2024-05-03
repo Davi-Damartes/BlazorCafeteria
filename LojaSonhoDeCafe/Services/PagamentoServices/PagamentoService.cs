@@ -1,6 +1,6 @@
-﻿using LojaSonhoDeCafe.Models.Dtos;
+﻿using LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao;
+using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Repositories.Pagamento;
-using SonhoDeCafe.Server.MapeandoDto;
 
 namespace LojaSonhoDeCafe.Services.PagamentoServices
 {
@@ -36,6 +36,23 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
 
             await _pagamentoRepository.AdicionarPagamento(pagamento);
         }
+
+        public async Task<IEnumerable<PagamentoDiarioDto>> ObterTodosPagamentosPorMes(int mes)
+        {
+            var pagamentos = await _pagamentoRepository.BucarTodosPagamentosPeloMes(mes);
+
+            var pagamentosDto = pagamentos.ConvertListPagamentosParaListPagamentosDto();
+
+
+            return pagamentosDto;
+        }
+
+
+
+
+
+
+
 
 
         private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
