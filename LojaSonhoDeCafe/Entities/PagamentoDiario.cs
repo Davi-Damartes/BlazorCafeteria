@@ -26,7 +26,7 @@ namespace LojaSonhoDeCafe.Entities
         public ETipoPagamento EPagamento { get; set; }
 
         [Required]
-        public DateTime HoraDoPagamento { get; set; }
+        public DateTime HoraDoPagamento { get; set; } = DateTime.Now;
 
 
     }
