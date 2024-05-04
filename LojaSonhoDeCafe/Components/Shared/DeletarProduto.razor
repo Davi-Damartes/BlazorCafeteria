@@ -18,14 +18,14 @@
     [Parameter]
     public ProdutoDto? produto { get; set; }
 
-    public ProdutoDto? _produtoToDelete { get; set; }
-
-
     [Inject]
     public IProdutoService? ProdutoService { get; set; }
 
     [Inject]
     private NavigationManager? NavigationManager { get; set; }
+
+
+    public ProdutoDto? _produtoToDelete { get; set; }
 
     public bool AbrirDialogModal { get; set; }
 
@@ -37,20 +37,19 @@
             await ProdutoService!.RemoverProduto(_produtoToDelete!.Id);
             await ShowSuccessToastr();
 
+
             await Task.Delay(2500);
             NavigationManager!.NavigateTo($"/ ");
+
         }
         AbrirDialogModal = false;
         StateHasChanged();
     }
 
 
-
-
-
     public async Task ShowSuccessToastr()
     {
-        await jsruntime.ToastrSuccess("Produto Deletado com Sucesso! :D ");
+        await jsruntime.ToastrSuccess("Produto Deletado com Sucesso!");
     }
 
     private void OpenDialog(ProdutoDto produto)
