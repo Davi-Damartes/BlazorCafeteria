@@ -9,7 +9,7 @@ else if (MensagemErro != null)
 }
 else
 {
-    @foreach (var categoria in CategoriasDto)
+    @foreach (var categoria in CategoriasDto!)
     {
         var link = "/ProdutosPorCategoria/" + categoria.Id;
 
