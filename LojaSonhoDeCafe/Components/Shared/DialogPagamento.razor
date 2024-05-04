@@ -1,15 +1,15 @@
-﻿﻿<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
+﻿
+<div class="modal fade show" id="myModal" style="display:block; background-color: rgba(10,10,10,.8);" aria-modal="true" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title"><b>@Titulo</b></h2>
                 <button type="button" class="close"
-                        @onclick="@ModalCLose">
-                    <i class="bi bi-x"></i>
+                        @onclick="@ModalCLose"> X
                 </button>
             </div>
             <div class="modal-body">
-                <h4><p>@Mensagem</p></h4>
+                <h5>@Mensagem</h5>
             </div>
             <div class="modal-footer">
                 @switch (DialogType)
@@ -30,6 +30,7 @@
         </div>
     </div>
 </div>
+
 
 
 @code {

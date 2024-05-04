@@ -1,4 +1,4 @@
-
+@inject IJSRuntime jsruntime
 <div>
     <i class="fa-solid fa-trash icone-lixeira-Exclusao" 
         @onclick="() => OpenDialog(produto!)">
@@ -6,8 +6,8 @@
 </div>
 @if(AbrirDialogModal)
     {
-        <DialogPagamento Titulo="você deseja excluir esse item?" 
-                         Mensagem="essa ação não pode ser defeita!!!"
+        <DialogPagamento Titulo="Você deseja excluir esse item?" 
+                         Mensagem="Essa ação não pode ser defeita!!!"
                          OnClose="ExcluirProduto_Click"
                          DialogType="DialogPagamento.ModalDialogType.DeleteCancel">
     </DialogPagamento>
@@ -35,10 +35,22 @@
         if (accepted && _produtoToDelete != null)
         {
             await ProdutoService!.RemoverProduto(_produtoToDelete!.Id);
-            NavigationManager!.NavigateTo($"/ProdutosPorCategoria/{_produtoToDelete.CategoriaId}");
+            await ShowSuccessToastr();
+
+            await Task.Delay(2500);
+            NavigationManager!.NavigateTo($"/ ");
         }
         AbrirDialogModal = false;
         StateHasChanged();
+    }
+
+
+
+
+
+    public async Task ShowSuccessToastr()
+    {
+        await jsruntime.ToastrSuccess("Produto Deletado com Sucesso! :D ");
     }
 
     private void OpenDialog(ProdutoDto produto)
@@ -47,22 +59,5 @@
         _produtoToDelete = produto;
         StateHasChanged();
     }
-
-
-    // private async Task ExcluirProduto_Click()
-    // {
-    //     var confirmation = await dialog!.ShowAsync(
-    //         title: $"Você tem certeza que deseja exlcuir: {produto!.Nome}?",
-    //         message1: "Esse ação não pode ser desfeita.",
-    //         message2: "Deseja continuar?");
-
-    //     if (confirmation)
-    //     {
-    //         await ProdutoService!.RemoverProduto(produto.Id);
-    //         NavigationManager!.NavigateTo($"/ProdutosPorCategoria/{produto.CategoriaId}");
-    //     }
-
-
-    // }
 
 }
