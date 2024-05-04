@@ -131,11 +131,6 @@ else
     {
         return CarrinhoCompraItens!.FirstOrDefault(i => i.Id == id) ?? null!;
     }
-
-
-
-
-
     protected async Task AtualizarQuantidadeCarrinho_Click(int id, int quantidade)
     {
         try
