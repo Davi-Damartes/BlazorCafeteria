@@ -62,7 +62,3 @@ color: black;
 .icone-coracao:hover {
     color: #ff0000;
 }
-
-.icone-coracao.clicado::after {
-        color: #0fe50d; 
-}
