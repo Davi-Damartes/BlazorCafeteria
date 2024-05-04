@@ -104,22 +104,7 @@ namespace SonhoDeCafe.Server.MapeandoDto
                 Preco = produto!.Preco,
                 PrecoTotal = (produto?.Preco ?? 0) * carrinhoItem.Quantidade
             };
-        }
-
-        public static PagamentoDiario ConvertePagamentoDtoParaPagamento(this PagamentoDiarioDto diarioDto)
-        {
-            return new PagamentoDiario
-            {
-                Usuario = diarioDto.Usuario,
-                Email = diarioDto.Email,
-                TotalQuantDiaria = diarioDto.TotalQuantDiaria,
-                TotalPrecoDiaria = diarioDto.TotalPrecoDiaria,
-                EPagamento = (ETipoPagamento)diarioDto.EPagamento,
-                HoraDoPagamento = diarioDto.HoraDoPagamento,
-
-            };
-        }
-
+        }    
  
     }
 }
