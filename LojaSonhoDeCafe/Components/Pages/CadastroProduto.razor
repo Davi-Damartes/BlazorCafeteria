@@ -22,7 +22,7 @@
 
     <div class="mb-4">
         <label for="Nome">Nome do Produto: </label>
-        <InputText id="Nome" class="form-control" @bind-Value="ProdutoDto.Nome"></InputText>
+        <InputText id="Nome" class="form-control" @bind-Value="ProdutoDto!.Nome"></InputText>
     </div>
     <div class="mb-4">
         <label for="Descricao">Descrição: </label>
@@ -88,11 +88,9 @@
     {
         try
         {
-            string relativePath = await CaputurarImagem();
-            ProdutoDto!.FotoUrl = relativePath;
-            if(ProdutoDto.CategoriaId == 0)
+            if(ProdutoDto!.CategoriaId == 0)
             {
-                erros.Add("A categoria não pode ser nulla!");
+                erros.Add("O campo categoria não pode ser nullo!");
             }
 
             if(ProdutoDto.FotoUrl != null)
@@ -110,10 +108,12 @@
         }
     }
 
-        private void LoadFiles(InputFileChangeEventArgs evento)
+        private async void LoadFiles(InputFileChangeEventArgs evento)
         {
             file = evento.File;
 
+            string relativePath = await CaputurarImagem();
+            ProdutoDto!.FotoUrl = relativePath;
         }
 
         private async Task<string> CaputurarImagem()
