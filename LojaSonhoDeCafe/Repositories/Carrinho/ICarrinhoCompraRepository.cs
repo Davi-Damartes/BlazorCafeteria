@@ -12,6 +12,8 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
 
         Task<CarrinhoItem> DeletaItem(int id);
 
+        Task LimpaItensDoCarrinho();
+
         Task<CarrinhoItem> ObtemItemDoCarrinho(int id);
 
         Task<IEnumerable<CarrinhoItem>> ObtemItensDoCarinho(string usuarioId);

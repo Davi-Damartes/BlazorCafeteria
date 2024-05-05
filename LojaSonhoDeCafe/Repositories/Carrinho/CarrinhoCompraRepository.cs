@@ -19,14 +19,57 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
             return await _context.CarrinhoItens.AnyAsync(c => c.CarrinhoId == carrinhoId &&
                                                               c.ProdutoId == produtoId);
         }
+        private async Task<CarrinhoItem> CarrinhoExistenteAttQuantidade(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
+        {
+            var carrinhoItemExistente = await _context.CarrinhoItens
+                   .FirstOrDefaultAsync(c =>
+                       c.CarrinhoId == carrinhoItemAdicionaDto.CarrinhoId &&
+                       c.ProdutoId == carrinhoItemAdicionaDto.ProdutoId);
+
+            carrinhoItemExistente!.Quantidade += carrinhoItemAdicionaDto.Quantidade;
+            await _context.SaveChangesAsync();
+
+            return carrinhoItemExistente;
+        }
+
+        //public async Task<CarrinhoItem> AdicionaItem(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
+        //{
+        //    if (await CarrinhoItemJaExiste(carrinhoItemAdicionaDto.CarrinhoId,
+        //        carrinhoItemAdicionaDto.ProdutoId) == false)
+        //    {
+        //        //verifica se o produto existe 
+        //        //cria um novo item no carrinho
+        //        var itemDoCarrinho = await (from produto in _context.Produtos
+        //                          where produto.Id == carrinhoItemAdicionaDto.ProdutoId
+        //                          select new CarrinhoItem
+        //                          {
+        //                              CarrinhoId = carrinhoItemAdicionaDto.CarrinhoId,
+        //                              ProdutoId = produto.Id,
+        //                              Quantidade = carrinhoItemAdicionaDto.Quantidade
+        //                          }).SingleOrDefaultAsync();
+
+        //        //se o item existe então incluir o item no carrinho.
+        //        if (itemDoCarrinho is not null)
+        //        {
+        //            var resultado = await _context.CarrinhoItens.AddAsync(itemDoCarrinho);
+        //            await _context.SaveChangesAsync();
+        //            return resultado.Entity;
+        //        }
+        //    }
+        //    return null!;
+        //}
 
         public async Task<CarrinhoItem> AdicionaItem(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
         {
-            if (await CarrinhoItemJaExiste(carrinhoItemAdicionaDto.CarrinhoId,
-                carrinhoItemAdicionaDto.ProdutoId) == false)
+            if (await CarrinhoItemJaExiste(carrinhoItemAdicionaDto.CarrinhoId, carrinhoItemAdicionaDto.ProdutoId))
             {
-                //verifica se o produto existe 
-                //cria um novo item no carrinho
+                var carrinhoItemExistente = await CarrinhoExistenteAttQuantidade(carrinhoItemAdicionaDto);
+
+                return carrinhoItemExistente;
+            }
+            else
+            {
+                // Se o item não existe no carrinho, crie um novo item
                 var item = await (from produto in _context.Produtos
                                   where produto.Id == carrinhoItemAdicionaDto.ProdutoId
                                   select new CarrinhoItem
@@ -36,7 +79,6 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
                                       Quantidade = carrinhoItemAdicionaDto.Quantidade
                                   }).SingleOrDefaultAsync();
 
-                //se o item existe então incluir o item no carrinho
                 if (item is not null)
                 {
                     var resultado = await _context.CarrinhoItens.AddAsync(item);
@@ -44,8 +86,10 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
                     return resultado.Entity;
                 }
             }
+
             return null!;
         }
+
 
         public async Task<CarrinhoItem> AtualizaQuantidade(int id, 
                                         CarrinhoItemAtualizaQuantidadeDto carrinhoItemAtualizaQuantidadeDto)
@@ -64,23 +108,12 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
         }
 
 
-
-
-
-        public async Task<CarrinhoItem> DeletaItem(int id)
+        public async Task<Usuario> ObterUsuario(Guid id)
         {
-            var item = await _context.CarrinhoItens.FindAsync(id);
-
-            if(item is not null)
-            {
-
-                _context.CarrinhoItens.Remove(item);
-                await _context.SaveChangesAsync();
-            }
-
-            return item!;
+            return await _context.Usuarios.FirstOrDefaultAsync(i => i.Id == id) ?? null!;
 
         }
+
 
         public async Task<CarrinhoItem> ObtemItemDoCarrinho(int id)
         {
@@ -113,10 +146,28 @@ namespace LojaSonhoDeCafe.Repositories.Carrinho
                           }).ToListAsync();
         }
 
-        public async Task<Usuario> ObterUsuario(Guid id)
+
+        public async Task<CarrinhoItem> DeletaItem(int id)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(i => i.Id == id) ?? null!;
-           
+            var item = await _context.CarrinhoItens.FindAsync(id);
+
+            if (item is not null)
+            {
+
+                _context.CarrinhoItens.Remove(item);
+                await _context.SaveChangesAsync();
+            }
+
+            return item!;
+
+        }
+
+        public async Task LimpaItensDoCarrinho()
+        {
+            var itensDoCarrinho = await _context.CarrinhoItens.ToListAsync();
+
+            _context.CarrinhoItens.RemoveRange(itensDoCarrinho);
+            await _context.SaveChangesAsync();
         }
     }
 }
