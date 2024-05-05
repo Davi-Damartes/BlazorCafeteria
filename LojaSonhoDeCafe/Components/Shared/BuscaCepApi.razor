@@ -1,0 +1,44 @@
+﻿@page "/Cep"
+@inject HttpClient http
+
+<h3>BuscaCepApi</h3>
+
+<form>
+
+    <div class="form-group"> 
+        <label for="cep">Cep</label>
+        <input type="text" class="form-control" id="cep" aria-describedby="cep" @bind="cep" placeholder="Entre com o Cep">
+    
+    </div>
+    <button type="submit" class="btn btn-primary" onclick="ConsultarCep">Consultar Cep </button>
+
+    <CamposDoCep Cep="Cep"></CamposDoCep>
+</form>
+
+@code {
+
+    public BuscaCep Cep {get;set;}
+
+    public string cep {get;set;}
+
+    public string cep { get; set; }
+
+    public string MensagemErro { get; set; }
+
+
+    public async void ConsultarCep()
+    {
+
+        if(!string.IsNullOrEmpty(cep))
+        {
+            var url = $"https://viacep.com.br/ws/{cep}/json/";
+            Cep = await http.GetFromJsonAsync<Cep>(url);
+
+            if(Cep == null)
+            {
+                MensagemErro = "Cep não encontrado".
+            }
+       }
+    }
+ 
+}

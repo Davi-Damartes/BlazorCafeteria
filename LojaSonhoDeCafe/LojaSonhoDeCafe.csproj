@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Shared\BuscaCepApi.razor" />
+    <Content Remove="Components\Shared\CamposDoCep.razor" />
     <Content Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
   </ItemGroup>
 
@@ -32,6 +34,8 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\Pages\ExibirProdutosFavoritos.razor" />
+    <_ContentIncludedByDefault Remove="Components\Shared\BuscaCepApi.razor" />
+    <_ContentIncludedByDefault Remove="Components\Shared\CamposDoCep.razor" />
     <_ContentIncludedByDefault Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
   </ItemGroup>
 
@@ -39,6 +43,8 @@
     <None Include="Components\Layout\ProdutosCategoriaNavMenu.razor" />
     <None Include="Components\Pages\CadastroProduto.razor" />
     <None Include="Components\Pages\ExibirProdutosFavoritos.razor" />
+    <None Include="Components\Shared\BuscaCepApi.razor" />
+    <None Include="Components\Shared\CamposDoCep.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,6 +53,14 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\ImagemWeb\ImagensCafeteria\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Shared\BuscaCepApi.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Shared\CamposDoCep.razor" />
   </ItemGroup>
 
 </Project>
