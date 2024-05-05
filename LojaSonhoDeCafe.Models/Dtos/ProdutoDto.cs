@@ -6,11 +6,11 @@ namespace LojaSonhoDeCafe.Models.Dtos
     {
         public Guid Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo Nome é obrigatório!!!")]
         [StringLength(60, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string? Nome { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "O campo Descrição é obrigatório!!!")]
         [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string? Descricao { get; set; }
 
@@ -24,8 +24,8 @@ namespace LojaSonhoDeCafe.Models.Dtos
 
         public decimal Preco { get; set; }
 
-        [Required(ErrorMessage = "O campo {0} é obrigatório!!!")]
-        [Range(1, 150, ErrorMessage = "O campo {0} deve estar entre {1} e {2}.")]
+        [Required(ErrorMessage = "O campo quantidade em estoque é obrigatório!!!")]
+        [Range(1, 150, ErrorMessage = "O campo quantidade em estoque deve estar entre {1} e {2}.")]
         public int QuantidadeEmEstoque { get; set; }
 
         public bool IsFavorito { get; set; }
