@@ -27,10 +27,10 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
             }
             if (LojaAberta == false)
             {
-                _logger.LogError("Pagamento inválido a Loja está fechada}");
+                _logger.LogError("Pagamento Inválido a Loja está fechada!!!");
                 return;
             }
-
+            
 
             var pagamento = pagamentoDiarioDto.ConvertePagamentoDtoParaPagamento();
 
@@ -46,14 +46,6 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
 
             return pagamentosDto;
         }
-
-
-
-
-
-
-
-
 
         private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
         {
