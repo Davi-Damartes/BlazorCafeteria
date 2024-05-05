@@ -33,7 +33,7 @@ else
                         <i class="bi bi-heart-fill"></i>
                     </div>
                     <p>@Produto.Preco.ToString("c")&nbsp;(@Produto.QuantidadeEmEstoque items)</p>
-                    <button class="btn btn-success"
+                    <button class="btn btn-success shadow-none"
                             @onclick="() => AdicionarAoCarrinho_Click(new CarrinhoItemAdicionaDto
                                         {
                                          CarrinhoId = UsuarioLogado.CarrinhoId,
@@ -104,6 +104,7 @@ else
             {
 
                 var carrinhoItemDto = await CarrinhoCompraService!.AdicionaItemDto(carrinhoItemAdicionaDto);
+
 
                 if (carrinhoItemDto != null)
                 {
