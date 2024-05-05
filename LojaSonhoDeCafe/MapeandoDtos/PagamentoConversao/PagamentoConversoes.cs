@@ -15,7 +15,7 @@ namespace LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao
                 TotalQuantDiaria = diarioDto.TotalQuantDiaria,
                 TotalPrecoDiaria = diarioDto.TotalPrecoDiaria,
                 EPagamento = (ETipoPagamento)diarioDto.EPagamento,
-                HoraDoPagamento = DateTime.Now,
+                HoraDoPagamento = diarioDto.HoraDoPagamento,
 
             };
         }
