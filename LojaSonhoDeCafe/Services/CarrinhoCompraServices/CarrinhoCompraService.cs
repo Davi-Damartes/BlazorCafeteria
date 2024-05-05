@@ -54,12 +54,12 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
                 _logger.LogError("Erro ao buscar item do carrinho");
             }
 
-            var produtoIds = carrinhoItens.Select(item => item.ProdutoId).ToList();
+            var produtoIds = carrinhoItens!.Select(item => item.ProdutoId).ToList();
             var produtos = await _produtoRepository.ObterTodosOsProdutos();
 
             // Converter cada item do carrinho em um DTO
             var carrinhoItemDtos = new List<CarrinhoItemDto>();
-            foreach (var carrinhoItem in carrinhoItens)
+            foreach (var carrinhoItem in carrinhoItens!)
             {
                 var produto = produtos.FirstOrDefault(p => p.Id == carrinhoItem.ProdutoId);
                 var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto!);
@@ -104,7 +104,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
             {
                 _logger.LogError("Erro ao Deletar Produto");
             }
-            var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItem.ProdutoId);
+            var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItem!.ProdutoId);
 
             var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
 
@@ -112,6 +112,11 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
 
         }
 
+
+        public async Task LimpaItensCarrinhoDeCompra()
+        {
+             await _carrinhocompraRepository.LimpaItensDoCarrinho();       
+        }
 
 
         public void RaiseEventCarrinhoCompraChanged(int totalQuantidade)
@@ -121,7 +126,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
                 OnCarrinhoCompraChanged.Invoke(totalQuantidade);
             }
 
-
         }
+      
     }
 }
