@@ -5,7 +5,7 @@ namespace LojaSonhoDeCafe.Data
 {
     public class BancoDeDados : DbContext
     {
-        public BancoDeDados(DbContextOptions<BancoDeDados> options) : base(options)
+        public BancoDeDados(DbContextOptions<BancoDeDados> options ) : base(options)
         {
         }
 
@@ -149,135 +149,33 @@ namespace LojaSonhoDeCafe.Data
             //    IconeCss = "fa-solid fa-burger"
             //});
 
-            //Add users
-            //modelBuilder.Entity<Usuario>().HasData(new Usuario
-            //{
-            //    Id = Guid.NewGuid(),
-            //    NomeUsuario = "Davi"
+            //         //Add users
+            //        modelBuilder.Entity<Usuario>().HasData(new Usuario
+            //        {
+            //            Id = Guid.NewGuid(),
+            //            NomeUsuario = "Macoratti"
 
-            //});
-            //modelBuilder.Entity<Usuario>().HasData(new Usuario
-            //{
-            //    Id = Guid.NewGuid(),
-            //    NomeUsuario = "Janice"
+            //        });
+            //        modelBuilder.Entity<Usuario>().HasData(new Usuario
+            //        {
+            //            Id = Guid.NewGuid(),
+            //            NomeUsuario = "Janice"
 
-            //});
-            modelBuilder.Entity<Produto>().HasData(
-                    new Produto
-                    {
-                        CategoriaId = 1,
-                        Descricao = "Café suave e cremoso, feito com leite vaporizado.",
-                        FotoUrl = "/Imagens/Cafes/latte.jpg",
-                        IsFavorito = false,
-                        Nome = "Café Latte",
-                        Preco = 4.00m,
-                        QuantidadeEmEstoque = 80
-                    },
-                    new Produto
-                    {
-                        CategoriaId = 4,
-                        Descricao = "Sanduíche fresco com frango grelhado e cream cheese.",
-                        FotoUrl = "/Imagens/Lanches/sanduiche_frango.jpg",
-                        IsFavorito = false,
-                        Nome = "Sanduíche de Frango com Cream Cheese",
-                        Preco = 8.00m,
-                        QuantidadeEmEstoque = 50
-                    },
-                    new Produto
-                    {
-                        CategoriaId = 3,
-                        Descricao = "Torta cremosa de limão com uma base crocante.",
-                        FotoUrl = "/Imagens/Doces/torta_limao.jpg",
-                        IsFavorito = false,
-                        Nome = "Torta de Limão",
-                        Preco = 7.00m,
-                        QuantidadeEmEstoque = 40
-                    },
-                    new Produto
-                    {
-                        CategoriaId = 4,
-                        Descricao = "Baguete recheada com presunto, queijo e vegetais frescos.",
-                        FotoUrl = "/Imagens/Lanches/baguete.jpg",
-                        IsFavorito = false,
-                        Nome = "Baguete de Presunto e Queijo",
-                        Preco = 7.50m,
-                        QuantidadeEmEstoque = 40
-                    },
-                new Produto
-                {
-                    CategoriaId = 1,
-                    Descricao = "Café cremoso com uma generosa camada de espuma de leite e canela por cima.",
-                    FotoUrl = "/Imagens/Cafes/capuccino.jpg",
-                    IsFavorito = false,
-                    Nome = "Café Capuccino",
-                    Preco = 4.50m,
-                    QuantidadeEmEstoque = 70
-                },
-                new Produto
-                {
-                    CategoriaId = 2,
-                    Descricao = "Pão de queijo quentinho e delicioso.",
-                    FotoUrl = "/Imagens/Salgados/pao_queijo.jpg",
-                    IsFavorito = false,
-                    Nome = "Pão de Queijo",
-                    Preco = 3.00m,
-                    QuantidadeEmEstoque = 70
-                },
-                new Produto
-                {
-                    CategoriaId = 3,
-                    Descricao = "Bolo de cenoura macio coberto com ganache de chocolate.",
-                    FotoUrl = "/Imagens/Doces/bolo_cenoura.jpg",
-                    IsFavorito = false,
-                    Nome = "Bolo de Cenoura com Chocolate",
-                    Preco = 6.50m,
-                    QuantidadeEmEstoque = 30
-                },
-                new Produto
-                {
-                    CategoriaId = 1,
-                    Descricao = "Café forte e encorpado, ideal para quem gosta de um sabor intenso.",
-                    FotoUrl = "/Imagens/Cafes/espresso.jpg",
-                    IsFavorito = false,
-                    Nome = "Café Espresso",
-                    Preco = 3.50m,
-                    QuantidadeEmEstoque = 100
-                },
-                new Produto
-                {
-                    CategoriaId = 2,
-                    Descricao = "Croissant recheado com queijo derretido.",
-                    FotoUrl = "/Imagens/Salgados/croissant_queijo.jpg",
-                    IsFavorito = false,
-                    Nome = "Croissant de Queijo",
-                    Preco = 5.00m,
-                    QuantidadeEmEstoque = 60
-                },
-                new Produto
-                {
-                    CategoriaId = 2,
-                    Descricao = "Coxinha deliciosa e crocante.",
-                    FotoUrl = "/Imagens/Salgados/coxinha_de_frango.jpg",
-                    IsFavorito = false,
-                    Nome = "Coxinha de Frango",
-                    Preco = 3.00m,
-                    QuantidadeEmEstoque = 70
-                }
-            );
+            //        });
 
-            //Create Shopping Carrinho for Users
-            modelBuilder.Entity<Carrinho>().HasData(new Carrinho
-            {
-                Id = 1,
-                UsuarioId = "1",
+            //        //Create Shopping Carrinho for Users
+            //        modelBuilder.Entity<Carrinho>().HasData(new Carrinho
+            //        {
+            //            Id = 1,
+            //            UsuarioId = "1",
 
-            });
-            modelBuilder.Entity<Carrinho>().HasData(new Carrinho
-            {
-                Id = 2,
-                UsuarioId = "2",
+            //        });
+            //        modelBuilder.Entity<Carrinho>().HasData(new Carrinho
+            //        {
+            //            Id = 2,
+            //            UsuarioId = "2",
 
-            });
+            //        });
 
 
             modelBuilder.Entity<Categoria>().HasData(new Categoria
@@ -321,9 +219,6 @@ namespace LojaSonhoDeCafe.Data
         public DbSet<Usuario> Usuarios { get; set; }
 
         public DbSet<PagamentoDiario> PagamentosDiarios { get; set; }
-
-
-        public DbSet<RelatorioVendasMensal> RelatorioVendasMensalis { get; set; }
 
 
     }
