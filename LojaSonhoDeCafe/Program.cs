@@ -77,6 +77,14 @@ builder.Services.AddScoped<ILocalStorageProdutosService,
 builder.Services.AddScoped<ILocalStorageCarrinhoItensService, 
                            LocalStorageCarrinhoItensService>();
 
+//var baseUrl = "https://viacep.com.br/ws";
+//builder.Services.AddSingleton(sp => new HttpClient
+//{
+//    BaseAddress = new Uri(baseUrl)
+//});
+
+
+
 
 var app = builder.Build();
 
