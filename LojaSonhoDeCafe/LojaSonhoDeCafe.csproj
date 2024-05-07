@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Pages\BuscaCepBrasilApi.razor" />
     <Content Remove="Components\Shared\FormBrasilApiCep.razor" />
     <Content Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
   </ItemGroup>
@@ -32,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Pages\BuscaCepBrasilApi.razor" />
     <_ContentIncludedByDefault Remove="Components\Pages\ExibirProdutosFavoritos.razor" />
     <_ContentIncludedByDefault Remove="Components\Shared\FormBrasilApiCep.razor" />
     <_ContentIncludedByDefault Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
@@ -40,6 +42,7 @@
   <ItemGroup>
     <None Include="Components\Pages\BuscaCep.razor" />
     <None Include="Components\Layout\ProdutosCategoriaNavMenu.razor" />
+    <None Include="Components\Pages\BuscaCepBrasilApi.razor" />
     <None Include="Components\Pages\CadastroProduto.razor" />
     <None Include="Components\Pages\ExibirProdutosFavoritos.razor" />
     <None Include="Components\Shared\FormBrasilApiCep.razor" />
@@ -55,6 +58,10 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Components\Shared\FormBrasilApiCep.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\BuscaCepBrasilApi.razor" />
   </ItemGroup>
 
 </Project>
