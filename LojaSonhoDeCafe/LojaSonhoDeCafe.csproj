@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Shared\FormBrasilApiCep.razor" />
     <Content Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
   </ItemGroup>
 
@@ -32,13 +33,16 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\Pages\ExibirProdutosFavoritos.razor" />
+    <_ContentIncludedByDefault Remove="Components\Shared\FormBrasilApiCep.razor" />
     <_ContentIncludedByDefault Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Components\Pages\BuscaCep.razor" />
     <None Include="Components\Layout\ProdutosCategoriaNavMenu.razor" />
     <None Include="Components\Pages\CadastroProduto.razor" />
     <None Include="Components\Pages\ExibirProdutosFavoritos.razor" />
+    <None Include="Components\Shared\FormBrasilApiCep.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,7 +50,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\ImagemWeb\ImagensCafeteria\" />
+    <Folder Include="wwwroot\ImagensCafeteria\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Shared\FormBrasilApiCep.razor" />
   </ItemGroup>
 
 </Project>
