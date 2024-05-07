@@ -1,11 +1,6 @@
 ﻿@page "/Faturamento"
 
-@if (PagamentosDiarios is null && MensagemErro is null)
-{
-    <ExibirSpinner />
-    <h3>Nenhum Pamento encontrado...</h3>
-}
-else if (MensagemErro is not null)
+@if (MensagemErro is not null)
 {
     <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
 }
@@ -15,11 +10,11 @@ else
         <thead>
             <tr>
                 <th><h1>Faturamento Mensal</h1></th>
-                <th></th>
+                <th> </th>
                 <th></th>
             </tr>
             <tr>
-                <th>Valor das Vendas</th>
+                <th>Valor das Vendas do mês de</th>
                 <th>Quantidade de Produtos</th>
                 <th>Quantidade de Usuarios</th>
             </tr>
@@ -32,33 +27,23 @@ else
             </tr>
         </tbody>
     </table>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Usuário</th>
-                <th>Email</th>
-                <th>Preço Total</th>
-                <th>Quantidade Total</th>
-                <th>Forma de Pagamento</th>
-                <th>Data do Pagamento</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var pagamento in PagamentosDiarios!)
-            {
-                <tr>
-                    <td>@pagamento.Usuario</td>
-                    <td>@pagamento.Email</td>
-                    <td>@pagamento.TotalPrecoDiaria</td>
-                    <td>@pagamento.TotalQuantDiaria</td>
-                    <td>@pagamento.EPagamento</td>
-                    <td>@pagamento.HoraDoPagamento</td>
-                </tr>
-            }
-        </tbody>
-    </table>
 
-    <!-- Tabela 2: Resumo Mensal -->
+    <h1>Escolha o mês para buscar o Faturamento</h1>
+    <div class="select-container" >
+        <select class="select-box" @bind="mesDoAno">
+            <option value=" " selected>mês</option>
+            @foreach (var mes in mesesDoAno)
+            {
+                <option value="@mes.Value">@mes.Key</option>            
+            }
+        </select>
+    </div>
+        <button class="btn btn-success" @onclick="(()=> MostrarFaturamento(mesDoAno))">
+            Mostrar Faturamento
+        </button>
+
+    <TabelaFaturamentoMensal PagamentosDiarios="PagamentosDiarios"></TabelaFaturamentoMensal>
+
   
 
 }
@@ -77,11 +62,28 @@ else
 
     private int TotalQuantUsuarios { get; set; }
 
-    protected override async Task OnInitializedAsync( )
+    private int mesDoAno { get; set; }
+
+    private string? nomeDomes { get; set; }
+
+    public int SelecionarMes { get; set; }
+    Dictionary<string, int> mesesDoAno = new Dictionary<string, int>()
+    {
+        { "Janeiro", 1 },{ "Fevereiro", 2 }, { "Março", 3 },
+        { "Abril", 4 },{ "Maio", 5 },  { "Junho", 6 },
+        { "Julho", 7 },  { "Agosto", 8 },   { "Setembro", 9 },
+        { "Outubro", 10 }, { "Novembro", 11 },{ "Dezembro", 12 }
+    };
+
+
+
+
+    public async void MostrarFaturamento(int mesDoAno)
     {
         try
         {
-            PagamentosDiarios = await PagamentoService!.ObterTodosPagamentosPorMes(5);
+            
+            PagamentosDiarios = await PagamentoService!.ObterTodosPagamentosPorMes(mesDoAno);
             CalcularPrecoTotal();
         }
         catch (Exception ex)
@@ -89,6 +91,19 @@ else
             MensagemErro = $"Erro: {ex.Message}";
         }
     }
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     try
+    //     {
+    //         PagamentosDiarios = await PagamentoService!.ObterTodosPagamentosPorMes(5);
+    //         CalcularPrecoTotal();
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         MensagemErro = $"Erro: {ex.Message}";
+    //     }
+    // }
 
     private void CalcularPrecoTotal( )
     {
