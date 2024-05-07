@@ -1,0 +1,32 @@
+﻿@page "/BuscaCepBrailApi"
+
+<h1>Olá</h1>
+
+<form>
+    <div class="form-group">
+        <label for="inputCep">Cep:</label>
+        <input type="text" class="form-control shadow-none" id="inputCep" @bind="cep" placeholder="Digite so Brsil CEP">
+    </div>
+    <button type="button" class="btn btn-primary" @onclick="BuscarDadosBrasilCep">Consultar CEP</button>
+</form>
+
+
+<FormBrasilApiCep BrasilCep="BrasilCep"> </FormBrasilApiCep>
+
+
+@code {
+
+
+    public HttpClient httpClient = new();
+
+    public BrasilCep BrasilCep { get; set; }
+
+    public string cep { get; set; }
+
+    private async Task BuscarDadosBrasilCep( )
+    {
+        var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
+        CepDigitado = await httpClient.GetFromJsonAsync<BrasilCep>(url);
+    }
+
+}
