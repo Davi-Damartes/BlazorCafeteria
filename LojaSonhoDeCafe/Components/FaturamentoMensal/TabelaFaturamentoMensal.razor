@@ -1,0 +1,38 @@
+@if (PagamentosDiarios != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Email</th>
+                <th>Preço Total</th>
+                <th>Quantidade Total</th>
+                <th>Forma de Pagamento</th>
+                <th>Data do Pagamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pagamento in PagamentosDiarios!)
+            {
+                <tr>
+                    <td>@pagamento.Usuario</td>
+                    <td>@pagamento.Email</td>
+                    <td>@pagamento.TotalPrecoDiaria</td>
+                    <td>@pagamento.TotalQuantDiaria</td>
+                    <td>@pagamento.EPagamento</td>
+                    <td>@pagamento.HoraDoPagamento</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h1>Não há Dados desse mês</h1>
+}
+@code{
+    [Parameter]
+    public IEnumerable<PagamentoDiarioDto>? PagamentosDiarios { get; set; }
+
+
+}
