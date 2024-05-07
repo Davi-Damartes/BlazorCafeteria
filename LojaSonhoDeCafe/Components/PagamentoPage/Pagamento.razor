@@ -13,7 +13,7 @@ else if (MensagemErro is not null)
     <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
 }
 else
-{  
+{
     <EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -25,9 +25,9 @@ else
                     <div class="flex">
                         <div class="input-box">
                             <p>Quantidade de itens: @QuantidadeTotal</p>
-
                         </div>
                     </div>
+
                     <span class="titulo-cartoes"><b>Nome:</b></span>
                     <div class="input-box">
                         <label for="Nome"></label>
@@ -38,11 +38,36 @@ else
                         <label for="Email"></label>
                         <InputText id="Email" type="text" class="input-form" @bind-Value="PagamentoDiario.Email" placeholder="Email" />
                     </div>
-                    <span class="titulo-cartoes"><b>Cep:</b></span>
+                     <div class="input-box">
+                        <label for="cep"></label>
+                        <input id="cep" type="text" @bind="cep" class="input-form" placeholder="Digite o Cep: " /> 
+                        <button class="button" @onclick="BuscarCep_click">
+                            <i class="fa-solid fa-magnifying-glass icone-Lupa-BuscarCep"></i>
+                        </button>
+                     </div>
+
+                    @* <span class="titulo-cartoes"><b>Cep:</b></span>
                     <div class="input-box">
                         <label for="Cep"></label>
-                        <input id="Cep" type="text" class="input-form" placeholder="Cep" />
+                        <input id="Cep" type="text" @bind="BrasilCep!.Cep" class="input-form" placeholder="Cep" />                 
+                    </div> *@
+                    <span class="titulo-cartoes"><b>Rua:</b></span>
+                    <div class="input-box">
+                        <label for="Rua"></label>
+                        <input id="Rua" type="text" @bind-value="BrasilCep!.Street" class="input-form" placeholder="Rua" />
                     </div>
+                    <span class="titulo-cartoes"><b>Bairro:</b></span>
+                    <div class="input-box">
+                        <label for="Bairro"></label>
+                        <input id="Bairro" type="text" @bind-value="BrasilCep.Neighborhood" class="input-form" placeholder="Bairro" />
+                    </div>
+
+                    <span class="titulo-cartoes"><b>Cidade:</b></span>
+                    <div class="input-box">
+                        <label for="Cidade"></label>
+                        <input id="Cidade" type="text" @bind-value="BrasilCep.State" class="input-form" placeholder="Cidade" />
+                    </div>             
+
                 </div>
 
                 <div class="column">
@@ -117,11 +142,30 @@ else
 
     public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
 
+
+    public BrasilCep? BrasilCep { get; set; } = new();
+
+    public HttpClient httpClient = new();
+    public string? cep { get; set; }
+
+
     public decimal PrecoTotal { get; set; }
 
     public int QuantidadeTotal { get; set; }
 
     public string? MensagemErro { get; set; }
+
+
+
+    private async void BuscarCep_click()
+    {
+        // Erro caso o cep n exista.
+        var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
+        BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url);
+
+    }
+
+
 
     private async void AdicionaPagamento_Click( )
     {
@@ -154,11 +198,11 @@ else
     }
 
 
-    public async Task ShowSuccessToastr()
+    public async Task ShowSuccessToastr( )
     {
         await jsruntime.ToastrSuccess("Obrigado pele preferência!");
     }
-    public async Task ShowFailToastr()
+    public async Task ShowFailToastr( )
     {
         await jsruntime.ToastrFail("Tente novamente ou refaça o pedido!");
     }
@@ -166,7 +210,7 @@ else
 
 
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync( )
     {
         try
         {
