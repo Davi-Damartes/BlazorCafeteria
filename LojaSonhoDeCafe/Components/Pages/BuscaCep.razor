@@ -10,28 +10,14 @@
 </form>
     
 <br />
-<form>
-    <div class="form-group">
-        <label for="inputCep2">Cep2</label>
-        <input type="text" class="form-control shadow-none" id="inputCep2" @bind="cep2" placeholder="Digite o  Brsil CEP">
-    </div>
-    <button type="button" class="btn btn-primary" @onclick="BuscarDadosBrasilCep">Consultar CEP</button>
-</form>
-
-
 <PreenchedoFormCep Cep="CepDigitado"></PreenchedoFormCep>
 
-@* <FormBrasilApiCep BrasilCep="BrasilCep"></FormBrasilApiCep>
-
- *@
 
 @code {
 
     public Cep? CepDigitado { get; set; }
     public string? cep { get; set; }
 
-    public BrasilCep? BrasilCep { get; set; }
-    public string? cep2 { get; set; }
 
     public string? MensagemErro { get; set; }
     public HttpClient httpClient = new();
@@ -41,12 +27,6 @@
     {
         var url = $"https://viacep.com.br/ws/{cep}/json/";
         CepDigitado = await httpClient.GetFromJsonAsync<Cep>(url);
-    }
-
-    private async Task BuscarDadosBrasilCep()
-    {
-        var url2 = $"https://brasilapi.com.br/api/cep/v1/{cep2}";
-        BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url2);
     }
 }
 
