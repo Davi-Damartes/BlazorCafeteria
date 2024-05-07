@@ -1,0 +1,23 @@
+﻿@if(Cep != null)
+{
+    <div>
+        <span>
+            <span>Cep: @Cep.cep</span><br />
+            <span>Bairro: @Cep.Bairro</span><br />
+            <span>Localidade: @Cep.Localidade</span><br />
+            <span>UF: @Cep.UF</span><br />
+            <span>Complemento:  @Cep.Complemento</span><br />
+        </span>
+    </div>
+}
+else
+{
+    <div>
+        <span>Não há informaçoes do Cep</span>
+    </div>
+}
+@code {
+
+    [Parameter]
+    public Cep Cep { get; set; }
+}
