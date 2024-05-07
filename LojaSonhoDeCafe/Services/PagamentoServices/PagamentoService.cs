@@ -30,9 +30,9 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
                 _logger.LogError("Pagamento Inválido a Loja está fechada!!!");
                 return;
             }
-            
 
             var pagamento = pagamentoDiarioDto.ConvertePagamentoDtoParaPagamento();
+
 
             await _pagamentoRepository.AdicionarPagamento(pagamento);
         }
