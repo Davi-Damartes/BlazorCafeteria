@@ -1,0 +1,37 @@
+﻿.select-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 250px;
+    height: 30px;
+
+    margin-bottom: 30px;
+
+}
+.select-box {
+    border-color: black;
+    appearance: none;
+    padding: 0 30px 0px 15px;
+    width: 100%;
+    color: white;
+    background-color: #808080;
+    font-size: 20px;
+    border-radius: 6px;
+
+    margin-right: 30px;
+}
+
+.select-container .icon-container {
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000000;
+}
+
+
+
+
