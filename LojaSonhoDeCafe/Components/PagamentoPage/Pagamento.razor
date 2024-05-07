@@ -2,8 +2,6 @@
 
 @inject IJSRuntime jsruntime
 
-@rendermode InteractiveServer
-
 @if (CarrinhoCompraItens is null && MensagemErro is null)
 {
     <ExibirSpinner />
@@ -19,15 +17,11 @@ else
         <ValidationSummary />
         <div class="container">
             <div class="row">
-                <h1 class="titulo">Simulador de Pagamento</h1>
+                <h2 class="titulo">Simulador de Pagamento</h2>
+                <h2>Total:@PrecoTotal.ToString("C")</h2>
+                <h3>Quantidade de itens: @QuantidadeTotal</h3>
                 <div class="column">
-                    <h1>Total:@PrecoTotal.ToString("C")</h1>
-                    <div class="flex">
-                        <div class="input-box">
-                            <p>Quantidade de itens: @QuantidadeTotal</p>
-                        </div>
-                    </div>
-
+                   
                     <span class="titulo-cartoes"><b>Nome:</b></span>
                     <div class="input-box">
                         <label for="Nome"></label>
@@ -38,36 +32,42 @@ else
                         <label for="Email"></label>
                         <InputText id="Email" type="text" class="input-form" @bind-Value="PagamentoDiario.Email" placeholder="Email" />
                     </div>
+
+
+
+                    <span class="titulo-cartoes"><b>Cep:</b></span>
                      <div class="input-box">
                         <label for="cep"></label>
-                        <input id="cep" type="text" @bind="cep" class="input-form" placeholder="Digite o Cep: " /> 
-                        <button class="button" @onclick="BuscarCep_click">
-                            <i class="fa-solid fa-magnifying-glass icone-Lupa-BuscarCep"></i>
-                        </button>
+                        <input id="cep" type="text" @bind="cep" class="input-form" placeholder="Digite o Cep: "/>
+                        <div class="formatacao-botao">
+                            <button class="botao lupa-BuscarCep" @onclick:preventDefault="true" @onclick="BuscarCepBrasilApi_click">
+                                <i class="fa-solid fa-magnifying-glass-location"></i>
+                            </button>
+                        </div>
                      </div>
 
-                    @* <span class="titulo-cartoes"><b>Cep:</b></span>
-                    <div class="input-box">
-                        <label for="Cep"></label>
-                        <input id="Cep" type="text" @bind="BrasilCep!.Cep" class="input-form" placeholder="Cep" />                 
-                    </div> *@
                     <span class="titulo-cartoes"><b>Rua:</b></span>
                     <div class="input-box">
                         <label for="Rua"></label>
-                        <input id="Rua" type="text" @bind-value="BrasilCep!.Street" class="input-form" placeholder="Rua" />
+                        <InputText id="Rua" class="input-form" @bind-Value="BrasilCep!.Street"  placeholder="Rua" />
                     </div>
+
                     <span class="titulo-cartoes"><b>Bairro:</b></span>
                     <div class="input-box">
                         <label for="Bairro"></label>
-                        <input id="Bairro" type="text" @bind-value="BrasilCep.Neighborhood" class="input-form" placeholder="Bairro" />
+                        <InputText id="Bairro" class="input-form" @bind-Value="BrasilCep.Neighborhood"  placeholder="Bairro" />
                     </div>
 
                     <span class="titulo-cartoes"><b>Cidade:</b></span>
                     <div class="input-box">
                         <label for="Cidade"></label>
-                        <input id="Cidade" type="text" @bind-value="BrasilCep.State" class="input-form" placeholder="Cidade" />
-                    </div>             
-
+                        <InputText id="Cidade" class="input-form" @bind-Value="BrasilCep.City"  placeholder="Cidade" />
+                    </div>
+                    <span class="titulo-cartoes"><b>Estado:</b></span>
+                    <div class="input-box">
+                        <label for="Estado"></label>
+                        <InputText id="Estado" class="input-form" @bind-Value="BrasilCep.State"  placeholder="Estado" />
+                    </div>
                 </div>
 
                 <div class="column">
@@ -126,9 +126,9 @@ else
 
 
 @code {
+
     [Inject]
     public NavigationManager? NavigationManager { get; set; }
-
 
     [Inject]
     public IPagamentoService? PagamentoService { get; set; }
@@ -145,6 +145,8 @@ else
 
     public BrasilCep? BrasilCep { get; set; } = new();
 
+    public Cep? Cep { get; set; } = new();
+
     public HttpClient httpClient = new();
     public string? cep { get; set; }
 
@@ -156,12 +158,55 @@ else
     public string? MensagemErro { get; set; }
 
 
-
-    private async void BuscarCep_click()
+    protected override async Task OnInitializedAsync( )
     {
-        // Erro caso o cep n exista.
-        var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
-        BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url);
+        try
+        {
+            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            AtualizarPrecoEQuantidade();
+
+            foreach (var item in CarrinhoCompraItens)
+            {
+                ObtemItemDoCarrinho(item.Id);
+            }
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+    }
+
+    private async void BuscarCepBrasilApi_click()
+    {
+        try
+        {
+            var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
+            BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url);
+        }
+        catch (Exception ex)
+        {
+            if(BrasilCep == null)
+            {
+                MensagemErro = ex.Message;
+            }
+        }
+       
+    }
+
+    private async void BuscarCep_click( )
+    {
+        try
+        {
+            var url = $"https://viacep.com.br/ws/{cep}/json/";
+            Cep = await httpClient.GetFromJsonAsync<Cep>(url);
+        }
+        catch (Exception ex)
+        {
+            if (Cep == null)
+            {
+                MensagemErro = ex.Message;
+            }
+        }
 
     }
 
@@ -209,25 +254,6 @@ else
 
 
 
-
-    protected override async Task OnInitializedAsync( )
-    {
-        try
-        {
-            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
-            AtualizarPrecoEQuantidade();
-
-            foreach (var item in CarrinhoCompraItens)
-            {
-                ObtemItemDoCarrinho(item.Id);
-            }
-        }
-        catch (Exception ex)
-        {
-            MensagemErro = ex.Message;
-        }
-
-    }
 
     private CarrinhoItemDto ObtemItemDoCarrinho(int id)
     {
