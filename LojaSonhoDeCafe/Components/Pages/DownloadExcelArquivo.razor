@@ -1,0 +1,114 @@
+﻿@page "/Excel"
+
+
+@inject IJSRuntime js
+
+
+
+<button type="button" class="btn btn-sm btn-primary" @onclick="DownloadTable">
+    <i class="bi bi-download"></i>
+        Download
+</button>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    private List<PagamentoDiario>? pagamentos = new List<PagamentoDiario>()
+{
+    new PagamentoDiario
+    {
+        Usuario = "Exemplo1",
+        Email = "exemplo1@example.com",
+        TotalQuantDiaria = 10,
+        TotalPrecoDiaria = 100.50m,
+        EPagamento = ETipoPagamento.visa,
+        HoraDoPagamento = DateTime.Now
+    },
+    new PagamentoDiario
+    {
+        Usuario = "Exemplo2",
+        Email = "exemplo2@example.com",
+        TotalQuantDiaria = 15,
+        TotalPrecoDiaria = 150.75m,
+        EPagamento = ETipoPagamento.codigoBarra,
+        HoraDoPagamento = DateTime.Now.AddDays(-1)
+    },
+    new PagamentoDiario
+    {
+        Usuario = "Exemplo3",
+        Email = "exemplo3@example.com",
+        TotalQuantDiaria = 20,
+        TotalPrecoDiaria = 200.90m,
+        EPagamento = ETipoPagamento.codigoBarra,
+        HoraDoPagamento = DateTime.Now.AddDays(-2)
+    }
+};
+
+
+
+    // private async Task CarregarArquivo(InputFileChangeEventArgs e)
+    // {
+    //     if (e.File is not null)
+    //     {
+    //         var file = e.File;
+    //         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+    //             {
+    //                 HasHeaderRecord = true
+    //             };
+    //         using(var reader = new StreamReader(file.OpenReadStream(maxAllowedSize: 2097152)))
+    //         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+    //         {
+    //             var pagamentos = new List<PagamentoDiario>();
+    //             await foreach (var pagamento in csv.GetRecordsAsync<PagamentoDiario>())
+    //             {
+    //                 pagamentos.Add(pagamento);
+    //             }
+    //         }
+    //     }
+    // }
+
+    private async Task DownloadTable()
+    {
+        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = true
+            };
+        using (var memoryStream = new MemoryStream())
+        using (TextWriter textWriter = new StreamWriter(memoryStream))
+        using (var csvWriter = new CsvWriter(textWriter, config))
+        {
+            await csvWriter.WriteRecordsAsync(pagamentos);
+
+            textWriter.Flush();
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            using var streamRef = new DotNetStreamReference(memoryStream);
+            await js.InvokeVoidAsync("downloadFileFromStream", "pagamentos.csv", streamRef);
+        }
+    }
+}
