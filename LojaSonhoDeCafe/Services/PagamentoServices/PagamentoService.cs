@@ -33,6 +33,7 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
 
             var pagamento = pagamentoDiarioDto.ConvertePagamentoDtoParaPagamento();
 
+            pagamento.HoraDoPagamento = new DateTime(2024, 06, 03, 13, 10, 05);
 
             await _pagamentoRepository.AdicionarPagamento(pagamento);
         }
