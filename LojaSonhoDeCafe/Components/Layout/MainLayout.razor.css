@@ -95,3 +95,27 @@ main {
         top: 0.5rem;
     }
 
+.formatando-Menu {
+    text-align: left;
+    justify-content: left;
+    background-color: #808080;
+    position: absolute;
+    height: 10em;
+    width: 100%;
+    border: none;
+}
+
+.logo img {
+    height: auto;
+    width: 100px;
+}
+
+.container-fluid {
+    background-color: #808080;
+}
+
+.navbar-nav {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
