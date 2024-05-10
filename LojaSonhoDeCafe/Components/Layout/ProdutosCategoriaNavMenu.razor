@@ -1,6 +1,5 @@
 ﻿@if (CategoriasDto == null && MensagemErro == null)
 {
-
     <ExibirSpinner />
 }
 else if (MensagemErro != null)
@@ -36,7 +35,7 @@ else
         {
             try
             {
-                CategoriasDto = await ProdutoService.BuscarCategorias();
+                CategoriasDto = await ProdutoService!.BuscarCategorias();
             }
             catch (Exception ex)
             {
