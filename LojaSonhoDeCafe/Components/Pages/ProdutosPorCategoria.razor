@@ -69,7 +69,7 @@ else
 
     private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
     {
-        var listaDeProdutos = await GerenciaProdutoLocalStorage.GetCollection();
+        var listaDeProdutos = await GerenciaProdutoLocalStorage!.GetCollection();
 
         if(listaDeProdutos != null)
         {
