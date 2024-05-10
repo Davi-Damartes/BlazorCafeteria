@@ -1,15 +1,81 @@
 ﻿@inherits LayoutComponentBase
-
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<div class="top-bar">
 
     <main>
-        <div class="top-row px-4 formatando-Menu">
-            <ProdutoFavMenu > </ProdutoFavMenu> 
-            <CarrinhoMenu > </CarrinhoMenu>
+        @* <div class="top-row  container-fluid px-4 formatando-Menu">
+
+            <div class="nav-icons">
+                <div class="nav-item px-3">
+                    <a class="logo" href="">
+                        <img src="/Imagens/Logo/LogoCafe.svg" class="imagem-Formatacao" />
+                    </a>
+                </div>
+
+                <ProdutosCategoriaNavMenu />
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-tab" href="CadastroProduto">
+                        <i class="fa-solid fa-clipboard-list mudandoImagem"></i> Cadastrar Produto
+                    </NavLink>
+                </div>
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-tab" href="Faturamento">
+                        <i class="fa-solid fa-cash-register mudandoImagem"></i> Faturamento
+                    </NavLink>
+                </div>
+
+
+
+                <div class="nav-item px-3">
+                    <ProdutoFavMenu> </ProdutoFavMenu>
+                </div>
+
+                <div class="nav-item px-3">
+                    <CarrinhoMenu> </CarrinhoMenu>
+                </div>
+            </div>
         </div>
+ *@
+        <nav class="navbar navbar-expand-lg bg-body-tertiary bg-light text-white">
+            <div class="container-fluid">
+
+                 <div class="nav-item px-3">
+                    <a class="logo" href="">
+                        <img src="/Imagens/Logo/LogoCafe.svg" class="imagem-Formatacao" />
+                    </a>
+                </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">                       
+                           <ProdutosCategoriaNavMenu />
+
+                         <div class="nav-item px-3">
+                            <NavLink class="nav-tab" href="CadastroProduto">
+                                <i class="fa-solid fa-clipboard-list mudandoImagem"></i> Cadastrar Produto
+                            </NavLink>
+                          </div>
+                        
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-tab" href="Faturamento">
+                                <i class="fa-solid fa-cash-register mudandoImagem"></i> Faturamento
+                            </NavLink>
+                        </div>
+
+                        
+                        <div class="nav-item px-3">
+                            <ProdutoFavMenu> </ProdutoFavMenu>
+                        </div>
+
+                        <div class="nav-item px-3">
+                            <CarrinhoMenu> </CarrinhoMenu>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
         <article class="content px-4">
             @Body
