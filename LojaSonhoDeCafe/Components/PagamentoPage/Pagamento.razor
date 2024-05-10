@@ -34,7 +34,6 @@ else
                     </div>
 
 
-
                     <span class="titulo-cartoes"><b>Cep:</b></span>
                      <div class="input-box">
                         <label for="cep"></label>
@@ -190,8 +189,16 @@ else
                 MensagemErro = ex.Message;
             }
         }
-       
+
     }
+
+
+    private CarrinhoItemDto ObtemItemDoCarrinho(int id)
+    {
+        CarrinhoItem = CarrinhoCompraItens!.FirstOrDefault(x => x.Id == id)!;
+        return CarrinhoItem;
+    }
+
 
     private async void BuscarCep_click( )
     {
@@ -226,9 +233,11 @@ else
 
 
                 await Task.Delay(2500);
+                await CarrinhoCompraService!.LimpaItensCarrinhoDeCompra();
+
+                ZerarContadorCarrinhoCompra();
 
                 NavigationManager!.NavigateTo("/ ");
-
             }
             else
             {
@@ -242,6 +251,12 @@ else
         }
     }
 
+    private void ZerarContadorCarrinhoCompra( 
+    )
+    {
+        QuantidadeTotal = 0;
+        CarrinhoCompraService!.RaiseEventCarrinhoCompraChanged(QuantidadeTotal);
+    }
 
     public async Task ShowSuccessToastr( )
     {
@@ -254,15 +269,7 @@ else
 
 
 
-
-    private CarrinhoItemDto ObtemItemDoCarrinho(int id)
-    {
-        CarrinhoItem = CarrinhoCompraItens!.FirstOrDefault(x => x.Id == id)!;
-        return CarrinhoItem;
-    }
-
-
-    private void AtualizarPrecoEQuantidade( )
+    private void AtualizarPrecoEQuantidade()
     {
         SetPrecoTotal();
         SetQuantidadeTotal();
