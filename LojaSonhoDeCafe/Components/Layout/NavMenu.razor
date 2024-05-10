@@ -1,24 +1,9 @@
 ﻿@implements IDisposable
 @inject ICarrinhoCompraService carrinhoCompraService
-@using LojaSonhoDeCafe.Components.Pages
 
 @inject NavigationManager NavigationManager
 
-<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">LojaSonhoDeCafe</a>
-    </div>
-</div>
-
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
 
         <ProdutosCategoriaNavMenu />
 
@@ -34,7 +19,7 @@
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
+        <div class="nav-item px-3 d-sm-none">
             <NavLink class="nav-link" href="CarrinhoCompra">
                 <i class="fa-solid fa-cart-arrow-down"></i>&nbsp;Carrinho(<b>@carrinhoCompraItemContador</b>)
             </NavLink>
@@ -47,18 +32,12 @@
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="BuscarCepBrasilApi">
-                <i class="fa-solid fa-barcode mudandoImagem"></i> Buscar Cep Brasil Api
-            </NavLink>
-        </div>
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="Excel">
                 <i class="fa-solid fa-barcode mudandoImagem"></i> Excel
             </NavLink>
         </div>
-
 
 @* 
         <div class="nav-item px-3">
@@ -96,15 +75,15 @@
                     </NavLink>
                 </div>
             </NotAuthorized>
-        </AuthorizeView> *@
-    </nav>
-</div>
+        </AuthorizeView>
+     </nav>
+ </div> 
+ *@
+
 
 @code {
 
-
     private string? currentUrl;
-
 
     private int carrinhoCompraItemContador = 0;
 
