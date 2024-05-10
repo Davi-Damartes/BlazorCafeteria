@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\ImagensCafeteria\**" />
+    <Content Remove="wwwroot\ImagensCafeteria\**" />
+    <EmbeddedResource Remove="wwwroot\ImagensCafeteria\**" />
+    <None Remove="wwwroot\ImagensCafeteria\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Components\Pages\BrasilApi.razor" />
     <Content Remove="Components\Shared\FormBrasilApiCep.razor" />
     <Content Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
@@ -54,15 +61,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\ImagensCafeteria\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <UpToDateCheckInput Remove="Components\Shared\FormBrasilApiCep.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Components\Pages\BrasilApi.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\ImagensCadastro\" />
   </ItemGroup>
 
 </Project>
