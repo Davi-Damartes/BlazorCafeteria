@@ -218,7 +218,6 @@ else
     }
 
 
-
     private async void AdicionaPagamento_Click( )
     {
         try
@@ -232,7 +231,7 @@ else
                 await ShowSuccessToastr();
 
 
-                await Task.Delay(2500);
+                await Task.Delay(2000);
                 await CarrinhoCompraService!.LimpaItensCarrinhoDeCompra();
 
                 ZerarContadorCarrinhoCompra();
@@ -251,8 +250,7 @@ else
         }
     }
 
-    private void ZerarContadorCarrinhoCompra( 
-    )
+    private void ZerarContadorCarrinhoCompra()
     {
         QuantidadeTotal = 0;
         CarrinhoCompraService!.RaiseEventCarrinhoCompraChanged(QuantidadeTotal);
