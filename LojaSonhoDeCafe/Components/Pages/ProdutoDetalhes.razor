@@ -14,8 +14,8 @@ else
     <h3 class="mb-5">Detalhes do Produto</h3>
     <div class="row">
 
-        <div class="col-md-3 teste">
-            @if (File.Exists(@Produto.FotoUrl))
+        <div class="col-md-3 Imagem-Produto">
+            @if (File.Exists(@Produto!.FotoUrl))
             {
                 <img src="@Produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
             }
@@ -28,7 +28,7 @@ else
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@Produto.Nome</h5>
-                    <p class="card-text">@Produto.Descricao.</p>
+                    <p class="card-text">@Produto.Descricao</p>
                     <div>
                         <i class="bi bi-heart-fill"></i>
                     </div>
