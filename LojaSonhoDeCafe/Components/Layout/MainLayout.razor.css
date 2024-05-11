@@ -2,6 +2,7 @@ main {
     flex: 1;
 }
 
+
 .sidebar {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
@@ -91,57 +92,66 @@ main {
 
 
 
-
+/*Conteiner Principal Separa o menu do Body*/
 .top-bar {
     margin-top: -10px;
     align-items: center;
     justify-content: center;
+    margin-bottom: 1px;
 }
 
 /*Barra do Menu*/
 
+.logo img {
+    height: auto;
+    width: 120px;
+}
+
 .container-fluid {
     background-image: linear-gradient(180deg,#8B4513 0%, #8B4513 60%);
     display: flex;
-
-
 }
 
 .navbar-nav {
     display: flex;
-    align-items: center; 
+    align-items: center;
 }
 
-    .navbar-nav .nav-item {
-        margin-right: 20px;
-    }
+.navbar-nav .nav-item {
+    margin-right: 20px;
 
-
-.logo img {
-    height: auto;
-    width: 100px;
 }
 
 
+.collapse {
+    max-width: 100%;
+}
 
-/*Produtos Favoritos e Carrinho de Compra*/
+
+/*Produtos Categoria Menu até o Excel*/
+
+.produtos-ate-Excel {
+    white-space: nowrap;
+}
+
+
+/*Icone Produtos Favoritos e Carrinho de Compra*/
 .align-self-end {
-    display: flex; 
-    justify-content: flex-end; 
-    align-items: center; 
+    display: flex;
+
+}
+.navbar-nav.menu-Produtos {
+    white-space: nowrap;
 }
 
-
-.navbar-nav .carrinho-Formatacao{
-    align-content: center;
-    text-align: center;
+.navbar-nav .menu-carrinho-Formatacao {
+    align-items: center;
     justify-content: center;
-
-    
 }
 
-.navbar-nav .produtosFavoritos-Formatacao{
-    align-content: center;
-    
+.navbar-nav .menu-produtosFavoritos-Formatacao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.5rem;
 }
-    
