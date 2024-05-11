@@ -1,29 +1,38 @@
-﻿a {
-text-decoration: none;
-color: #FF0000;
+﻿@font-face {
+    font-family: "RobotoSlab";
+    font-family: "RedditSans";
+    src: url('../../wwwroot/Fonts/RobotoSlab-VariableFont_wght.ttf');
+    src: url('../../wwwroot/Fonts/RedditSans-VariableFont_wght.ttf');
+}
+
+a {
+    text-decoration: none;
+    color: #FF0000;
 }
 
 a:hover .card {
-box-shadow: 0 4px 8px 0 rgb(0, 255, 255), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-transition: box-shadow 0.3s ease-in-out;
+    box-shadow: 0 4px 8px 0 rgb(0, 255, 255), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: box-shadow 0.3s ease-in-out;
 }
 
-a:hover img {
-transform: scale(1.07);
-transition: 0.5s ease-in-out;
+    a:hover img {
+    transform: scale(1.07);
+    transition: 0.5s ease-in-out;
 }
+
 .card {
-transition: box-shadow 0.3s ease-in-out;
-overflow: hidden;
-text-decoration: none;
-display: inline-block;
-margin-right: 15px;
-margin-bottom: 15px;
-transition: box-shadow 0.3s ease-in-out;
-overflow: hidden; 
+    transition: box-shadow 0.3s ease-in-out;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 30px;
+    margin-bottom: 60px;
+    transition: box-shadow 0.3s ease-in-out;
+    overflow: hidden; 
+    color: black;
 
-
-color: black;
+    width: 18rem;
+    border-radius: 15px;
 }
 
 .card:hover {
@@ -36,7 +45,7 @@ color: black;
         margin-bottom: 40px;
 
         width: 220px;
-        border-radius: 5px;
+        border-radius: 18px;
 }
 
 .card:hover img {
@@ -51,13 +60,22 @@ color: black;
 }
 
 
+.card-title {
+    font-family: 'RobotoSlab';
+}
+.card-text {
+    font-family: 'Segoe UI';
+}
+.card-preco{
+    font-family: 'Yu Gothic UI'
+}
+
 
 /*Icone botão Favorito*/
 .icone-coracao {
     color: #808080;
     border-radius: 30px;
     cursor: pointer;
-    
 }
 .icone-coracao:hover {
     color: #ff0000;

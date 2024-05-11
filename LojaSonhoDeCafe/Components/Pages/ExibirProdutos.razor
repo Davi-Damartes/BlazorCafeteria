@@ -2,7 +2,7 @@
 @inject IJSRuntime Js
 @foreach (var produto in Produtos!)
 {
-    <div class="card" style="width: 18rem;">
+    <div class="card">
 
         <div class="btn-group">
             <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn shadow-none" id="btn-@produto.Id">
@@ -24,10 +24,10 @@
                     }
                 </a>
 
-                <h5 class="card-title">@produto.Nome</h5>
+                <h5 class="card-title"><b>@produto.Nome</b></h5>
                 <p class="card-text">@produto.Descricao</p>
                 <a href="/ProdutosDetalhes/@produto.Id">
-                    <h5 class="card-title mb-3">
+                    <h5 class="card-title mb-3 card-preco">
                         @produto.Preco.ToString("c")
                     </h5>
                 </a>
