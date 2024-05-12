@@ -1,7 +1,38 @@
 ﻿@page "/"
-
 <PageTitle>Home</PageTitle>
 
-@* <img src=/CoffeDream.jpg class="background-image"
-asp-append-version="true" alt="BlazorShop" />
- *@
+<div class="container mb-4"> 
+
+    <div id="principalCarousel" class="carousel slide">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#principalCarousel" data-bs-slide-to="0" class="active" ></button>
+            <button type="button" data-bs-target="#principalCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#principalCarousel" data-bs-slide-to="2"></button>
+        </div>
+
+        <div class="carousel-inner">
+
+            <div class="carousel-item active">
+                <img src="/Imagens/BRIGADEIRO2.jpg" class="d-block w-100" alt=" ">
+            </div>
+            <div class="carousel-item ">
+                <img src="/ImagensCadastro/ImagensCafeteria/vfzujrno.Brownies.jpg" class="d-block w-100" alt=" ">
+            </div>
+            <div class="carousel-item">
+                <img src="/ImagensCadastro/ImagensCafeteria/nsvsma0y.Baguete_Recheada.jpg" class="d-block w-100" alt=" ">
+            </div>
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#principalCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" ></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#principalCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" ></span>
+            <span class="visually-hidden">Próximo</span>
+        </button>
+    </div>
+
+</div>
+
