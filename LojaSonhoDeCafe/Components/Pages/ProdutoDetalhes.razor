@@ -27,12 +27,12 @@ else
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">@Produto.Nome</h5>
+                    <h5 class="card-title"><b>@Produto.Nome</b></h5>
                     <p class="card-text">@Produto.Descricao</p>
                     <div>
                         <i class="bi bi-heart-fill"></i>
                     </div>
-                    <p>@Produto.Preco.ToString("c")&nbsp;(@Produto.QuantidadeEmEstoque items)</p>
+                    <p><b>@Produto.Preco.ToString("c")&nbsp;(@Produto.QuantidadeEmEstoque items restantes) </b></p>
                     <button class="btn btn-success shadow-none"
                             @onclick="() => AdicionarAoCarrinho_Click(new CarrinhoItemAdicionaDto
                                         {
