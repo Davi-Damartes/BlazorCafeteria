@@ -91,8 +91,15 @@ main {
     }
 
 
+/*Do Menu até o footer Página completa*/
+.wrapper {
+    min-height: 100vh;
+}
+
 
 /*Conteiner Principal Separa o menu do Body*/
+
+
 .top-bar {
     margin-top: -10px;
     align-items: center;

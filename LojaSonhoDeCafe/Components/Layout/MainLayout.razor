@@ -1,7 +1,9 @@
 ﻿@inherits LayoutComponentBase
 <div class="top-bar">
 
-    <main>
+   
+<div class="d-flex flex-column wrapper"> 
+    
         <nav class="navbar navbar-expand-lg bg-body-tertiary br">
             <div class="container-fluid">
 
@@ -34,14 +36,59 @@
 
             </div>
         </nav>
-
+   
+    <main class="flex-fill">
+        <div class="container">
+            <!-- Conteúdo principal da página -->
+            <article class="content px-4">
+                @Body
+            </article>
+        </div>
     </main>
+
+    <footer class="border-top text-muted bg-light">
+        <div class="container">
+            <div class="row py-3">
+
+                <div class="col-12 col-md-4 text-center">
+                    &copy; 2024 - Loja Sonho de Café Ltda ME<br/>
+                    Rua Sonho de Café, 123, Cafélandia/LSC <br />
+                    CNPJ 11.111.111/0001-11
+                </div>
+                <div class="col-12 col-md-4 text-center">
+                    <a class="text-decoration-none text-dark">
+                        Política de Privacidade
+                    </a><br>
+                    <a  class="text-decoration-none text-dark">
+                        Termos de Uso
+                    </a><br>
+                    <a  class="text-decoration-none text-dark">
+                        Quem Somos
+                    </a><br>
+                    <a  class="text-decoration-none text-dark">
+                        Trocas e Devoluções
+                    </a>
+                </div>
+                <div class="col-12 col-md-4 text-center">
+                    <a  class="text-decoration-none text-dark">
+                        Contato pelo Site
+                    </a><br>
+                    E-mail: <a class="text-decoration-none text-dark">
+                        email@dominio.com
+                    </a><br>
+                    Telefone: <a class="text-decoration-none text-dark">
+                        (99) 99999-9999
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </footer>
+
 </div>
 
-<article class="content px-4">
-    @Body
-</article>
-
+</div>
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>
