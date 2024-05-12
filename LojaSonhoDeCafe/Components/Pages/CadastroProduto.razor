@@ -20,40 +20,43 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="mb-4">
-        <label for="Nome">Nome do Produto: </label>
+    <div class="mb-2">
+        <label for="Nome" class="form-label"><b>Nome do Produto:</b></label>
         <InputText id="Nome" class="form-control" @bind-Value="ProdutoDto!.Nome"></InputText>
     </div>
-    <div class="mb-4">
-        <label for="Descricao">Descrição: </label>
+    <div class="mb-2">
+        <label for="Descricao" class="form-label"><b>Descrição:</b></label>
         <InputText id="Descricao" class="form-control" @bind-Value="ProdutoDto.Descricao"></InputText>
     </div>
-    <div class="mb-4">
-        <label for="FotoProduto">Foto do Produto: </label>
-        <InputFile OnChange="LoadFiles"  class="form-control" multiple accept=".png, .jpg, .jpeg" id="FotoUrl" @bind-Value="ProdutoDto.FotoUrl"></InputFile>
+    <div class="mb-2">
+        <label for="FotoProduto" class="form-label"><b>Foto do Produto:</b></label>
+        <InputFile OnChange="LoadFiles" class="form-control" multiple accept=".png, .jpg, .jpeg" id="FotoUrl" @bind-Value="ProdutoDto.FotoUrl"></InputFile>
     </div>
 
-    <div class="mb-4">
-        <label for="Preco">Preco: </label>
-        <InputNumber id="Preco" class="form-control" @bind-Value="ProdutoDto.Preco"></InputNumber>
-    </div>
-    <div class="mb-4">
-        <label for="QuantidadeEmEstoque">Quantidade Em Estoque: </label>
-        <InputNumber id="QuantidadeEmEstoque" class="form-control" @bind-Value="ProdutoDto.QuantidadeEmEstoque"></InputNumber>
-    </div>
-
-    <div class="mb-4">
-        <label for="CategoriaId">Categoria: </label>
-            <select id="CategoriaId" class="form-control" @bind="ProdutoDto.CategoriaId">
-            <option value=" " selected>Escolha uma Categoria</option>
-                @foreach (var categoria in Categorias!)
-                {
-                    <option value="@categoria.Id">@categoria.Nome</option>
-                }
-            </select> 
+    <div class="row mb-2">
+        <div class="col">
+            <label for="Preco" class="form-label"><b>Preço:</b></label>
+            <InputNumber id="Preco" class="form-control" @bind-Value="ProdutoDto.Preco"></InputNumber>
+        </div>
+        <div class="col">
+            <label for="QuantidadeEmEstoque" class="form-label"><b>Quantidade Em Estoque:</b></label>
+            <InputNumber id="QuantidadeEmEstoque" class="form-control" @bind-Value="ProdutoDto.QuantidadeEmEstoque"></InputNumber>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg">Criar</button>
+    <div class="mb-2">
+        <label for="CategoriaId" class="form-label"><b>Categoria:</b></label>
+        <select id="CategoriaId" class="form-control" @bind="ProdutoDto.CategoriaId">
+            <option value=" " selected><b>Escolha uma Categoria</b></option>
+            @foreach (var categoria in Categorias!)
+            {
+                <option value="@categoria.Id">@categoria.Nome</option>
+            }
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-lg btn-primary mb-4 mt-1">Criar</button>
 </EditForm>
 
 
