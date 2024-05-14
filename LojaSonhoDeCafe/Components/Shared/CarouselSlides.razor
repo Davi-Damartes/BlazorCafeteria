@@ -1,10 +1,15 @@
 ﻿
 <div class="container-fluid mb-4">
     <div id="principalCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" class="active btn btn-light px-4 py-2 fs-4 mt-5 shadow-none" data-bs-target="#principalCarousel" data-bs-slide-to="0"></button>
+            <button type="button" class="btn btn-light px-4 py-2 fs-4 mt-5 shadow-none" data-bs-target="#principalCarousel" data-bs-slide-to="1"></button>
+            <button type="button" class="btn btn-light px-4 py-2 fs-4 mt-5 shadow-none" data-bs-target="#principalCarousel" data-bs-slide-to="2"></button>
+        </div>
         <div class="carousel-inner">
             <div class="carousel-item active c-item" data-bs-interval="5000">
                 <img src="/Imagens/cafe1200.jpg" class="d-block w-100 c-img" alt="...">
-                <div class="carousel-caption botton-0 mt-5">
+                <div class="carousel-caption mb-4 mt-5">
                     <p class="display-1 fw-bolder text-capitalize">
                         Promoção Imperdível produtos Cafeinados</p>
                     <button class="btn btn-dark px-4 py-2 fs-4 mt-1">
@@ -15,7 +20,7 @@
             <div class="carousel-item c-item" data-bs-interval="3000">
                 <img src="/Imagens/Tortadelimao.jpg"
                      class="d-block w-100 c-img" alt="...">
-                <div class="carousel-caption mt-5">
+                <div class="carousel-caption mb-4 mt-5">
                     <p class="display-1 fw-bolder text-capitalize">Promoção Torta de Limão</p>
                     <button class="btn btn-dark">
                         <h1><a href="/ProdutosPorCategoria/3">Clique para aproveitar essa oferta</a></h1>
@@ -23,11 +28,11 @@
                 </div>
 
             </div>
-            <div class="carousel-item c-item " data-bs-interval="3000">
+            <div class="carousel-item c-item" data-bs-interval="3000">
                 <img src="/ImagensCadastro/ImagensCafeteria/nsvsma0y.Baguete_Recheada.jpg"
                      class="d-block w-100 c-img" alt="...">
-                <div class="carousel-caption">
-                    <p class="display-1 fw-bolder text-capitalize">Promoção imperdiivel nosso Baguete Recheada</p>                
+                <div class="carousel-caption mb-4  mt-5">
+                    <p class="display-1 fw-bolder text-capitalize">Promoção Imperdível nosso Baguete Recheada</p>
                     <button class="btn btn-dark">
                         <h1><a href="/ProdutosPorCategoria/4"> Clique para aproveitar essa oferta</a></h1>
                     </button>
@@ -46,6 +51,7 @@
 
     </div>
 </div>
+
 
 
 @code{
