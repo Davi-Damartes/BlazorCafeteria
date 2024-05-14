@@ -9,28 +9,66 @@
 @if (Produtos != null && Produtos.Any())
 {       
         <CarouselSlides></CarouselSlides>
-        <h3 class="mb-5"> Produtos</h3>
+
+        <h3 class="mb-3"> Produtos</h3>
         @if (Produtos.Count() > 0)
         {
             var produtosPorCategoria = from produto in Produtos
                                        group produto by produto.CategoriaId into prodPorCatGrupo
                                        orderby prodPorCatGrupo.Key
                                        select prodPorCatGrupo;
-
-            @foreach (var prodGrup in produtosPorCategoria)
-            {
-                 <h4>@prodGrup.FirstOrDefault(pg => pg.CategoriaId == prodGrup.Key)!.CategoriaNome</h4>
-                <div class="row mt-3">                
-                     <ExibirProdutos Produtos="@prodGrup"> </ExibirProdutos>
+         @*    <div class="row"> *@
+        @*         <div class="col-12 col-md-5 mb-4">
+                    <form class="justify-content-center justify-content-md-start
+                        mb-3 mb-md-0">
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control" placeholder="Digite o nome do Produto">
+                            <button class="btn btn-dark" type="button">Buscar</button>
+                        </div>
+                    </form>
                 </div>
-                <hr />
-            }
+                <div class="col-12 col-md-7">
+                    <div class="d-flex flex-row-reverse justify-content-center justify-content-md-start">
+                        <form class="d-inline-block">
+                            <select class="form-select form-select-lg">
+                                <option>Ordernar por menor Preço </option>
+                                <option>Ordernar por maior Preço </option>
+                            </select>
+                        </form>
+                        <nav class="d-inline-block me-3">
+                            <ul class="pagination pagination-sm my-0">
+                                <li class="page-item">
+                                    <a class="page-link" href="#">1</a>
+                                    </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">2</a>
+                                    </li>
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">3</a>
+                                    </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">4</a>
+                                    </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div> *@
+           @*  </div> *@
+
+                  
+                    @foreach (var prodGrupo in produtosPorCategoria)
+                    {
+                         <div class="row mt-3">
+                             <h4 class="mb-5">@prodGrupo.FirstOrDefault(pg => pg.CategoriaId == prodGrupo.Key)!.CategoriaNome</h4>
+                             <ExibirProdutos Produtos="@prodGrupo"> </ExibirProdutos>   
+                         </div>
+                    }
 
         }
 }
 else
 {
-    <p>Nenhum produto encontrado.</p>
+    <p>Nenhum produto encontrado...</p>
 }
 
 @code {
