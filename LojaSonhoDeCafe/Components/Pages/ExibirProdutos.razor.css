@@ -24,26 +24,26 @@ a:hover .card {
     transition: box-shadow 0.3s ease-in-out;
     overflow: hidden;
     text-decoration: none;
-    display: inline-block;
+    display: flex;
     margin-right: 30px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     transition: box-shadow 0.3s ease-in-out;
-    overflow: hidden; 
+    overflow: hidden;
     color: black;
-
     width: 18rem;
     border-radius: 15px;
+    flex-direction: column;
 }
 
 .card:hover {
-    box-shadow: 0 4px 8px 0 #ffffff, 0 6px 20px 0 #15e6d9;
-    transition: box-shadow 0.3s ease-in-out;
-    }
+box-shadow: 0 4px 8px 0 #ffffff, 0 6px 20px 0 #15e6d9;
+transition: box-shadow 0.3s ease-in-out;
+}
 
 .card img {
         transition: transform 0.5s ease-in-out; 
-        margin-bottom: 40px;
-
+        margin-bottom: 10px;
+        margin-top: 50px;
         width: 220px;
         border-radius: 18px;
 }
@@ -53,12 +53,16 @@ a:hover .card {
 }
 
 .card-body {
-    padding: 1rem;
-    margin-bottom: 5px;
-
     color: #333333;
+    flex: 1;
 }
 
+.card-header {
+    font-family: 'RobotoSlab';
+    color: #FF0000;
+    border: none;
+    text-decoration: none;
+}
 
 .card-title {
     font-family: 'RobotoSlab';
@@ -76,7 +80,9 @@ a:hover .card {
     color: #808080;
     border-radius: 30px;
     cursor: pointer;
+    font-size: 25px;
 }
 .icone-coracao:hover {
     color: #ff0000;
 }
+

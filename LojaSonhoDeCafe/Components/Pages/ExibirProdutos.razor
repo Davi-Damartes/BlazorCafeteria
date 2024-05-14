@@ -1,42 +1,44 @@
 ﻿@inject IConfiguration config
 @inject IJSRuntime Js
-@foreach (var produto in Produtos!)
-{
-    <div class="card">
 
-        <div class="btn-group">
-            <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn shadow-none" id="btn-@produto.Id">
+
+@foreach (var produto in Produtos!)
+{ 
+    <div class="card text-center bg-light d-block" title="Adicionar ao Carrinho">
+        <div class="btn-group position-absolute end-0" title="Favoritar Produto">
+            <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn" id="btn-@produto.Id">
                 <i class="fa-solid fa-heart icone-coracao"></i>
             </button>
         </div>
-
-
-        <a href="/ProdutosDetalhes/@produto.Id">
-            <div class="card-body">
-                <a href="/ProdutosDetalhes/@produto.Id">
-                    @if (!File.Exists(produto.FotoUrl))
-                    {
-                        <img src="@CreateWebPath(produto.FotoUrl!)" class="card-img-top" alt="Imagem do Produto">
-                    }
-                    else
-                    {
-                        <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
-                    }
-                </a>
-
-                <h5 class="card-title"><b>@produto.Nome</b></h5>
-                <p class="card-text">@produto.Descricao</p>
-                <a href="/ProdutosDetalhes/@produto.Id">
-                    <h5 class="card-title mb-3 card-preco">
-                        @produto.Preco.ToString("c")
-                    </h5>
-                </a>
+            <a href="/ProdutosDetalhes/@produto.Id">
+                <div class="card-body">
+                    <a href="/ProdutosDetalhes/@produto.Id">
+                        @if (!File.Exists(produto.FotoUrl))
+                        {
+                            <img src="@CreateWebPath(produto.FotoUrl!)" class="card-img-top" alt="Imagem do Produto">
+                        }
+                        else
+                        {
+                            <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
+                        }
+                    </a>
+                    <div class="card-header card-preco">
+                        <h5><b>@produto.Preco.ToString("C")</b></h5>
+                    </div>
+                    <h5 class="card-title"><b>@produto.Nome</b></h5>
+                    <p class="card-text mb-2">@produto.Descricao</p>
             </div>
-        </a>
-        <DeletarProduto produto="produto"> </DeletarProduto>
+            <div class="card-footer bg-light mb-5 text-center border-0">
+                    <small class="text-success">
+                        <b>Quantidade em Estoque(@produto.QuantidadeEmEstoque)</b>
+                    </small>
+                </div>
+            </a>
+        <div class="mt-6 position-absolute bottom-0 end-0 mb-3 me-3">
+                 <DeletarProduto produto="produto"> </DeletarProduto>
+             </div>
     </div>
-
-
+           
 }
 
 @code {
@@ -62,7 +64,7 @@
     {
         var produto = Produtos?.SingleOrDefault(p => p.Id == produtoId);
         if (produto != null)
-        {  
+        {
             produto.IsFavorito = !produto.IsFavorito;
             await Js.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
             await AtualizaProduto(produto!);
@@ -86,7 +88,7 @@
         StateHasChanged();
     }
 
-    private void OpenDialog()
+    private void OpenDialog( )
     {
         AbrirDialogModal = true;
         StateHasChanged();
