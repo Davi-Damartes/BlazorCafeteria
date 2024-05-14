@@ -38,12 +38,10 @@ else
                      <div class="input-box">
                         <label for="cep"></label>
                         <input id="cep" type="text" @bind="cep" class="input-form" placeholder="Digite o Cep: "/>
-                     </div>
-                        <div class="formatacao-botao">
                             <button class="botao lupa-BuscarCep" @onclick:preventDefault="true" @onclick="BuscarCepBrasilApi_click">
                                 <i class="fa-solid fa-magnifying-glass-location"></i>
                             </button>
-                        </div>
+                     </div>
 
                     <span class="titulo-cartoes"><b>Rua:</b></span>
                     <div class="input-box">
@@ -174,8 +172,8 @@ else
             MensagemErro = ex.Message;
         }
     }
-
-    private async void BuscarCepBrasilApi_click()
+   
+    private async Task BuscarCepBrasilApi_click()
     {
         try
         {
