@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Content Remove="Components\Pages\BrasilApi.razor" />
-    <Content Remove="Components\Pages\SlidesProdutos.razor" />
     <Content Remove="Components\Shared\FormBrasilApiCep.razor" />
     <Content Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
   </ItemGroup>
@@ -44,7 +43,6 @@
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Components\Pages\BrasilApi.razor" />
     <_ContentIncludedByDefault Remove="Components\Pages\ExibirProdutosFavoritos.razor" />
-    <_ContentIncludedByDefault Remove="Components\Pages\SlidesProdutos.razor" />
     <_ContentIncludedByDefault Remove="Components\Shared\FormBrasilApiCep.razor" />
     <_ContentIncludedByDefault Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
   </ItemGroup>
@@ -55,7 +53,6 @@
     <None Include="Components\Layout\ProdutosCategoriaNavMenu.razor" />
     <None Include="Components\Pages\CadastroProduto.razor" />
     <None Include="Components\Pages\ExibirProdutosFavoritos.razor" />
-    <None Include="Components\Pages\SlidesProdutos.razor" />
     <None Include="Components\Shared\FormBrasilApiCep.razor" />
   </ItemGroup>
 
@@ -74,10 +71,6 @@
   <ItemGroup>
     <Folder Include="wwwroot\ImagensCadastro\" />
     <Folder Include="wwwroot\Fonts\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\Pages\SlidesProdutos.razor" />
   </ItemGroup>
 
 </Project>
