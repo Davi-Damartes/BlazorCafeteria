@@ -17,7 +17,7 @@ else
         <ValidationSummary />
         <div class="container">
             <div class="row">
-                <h2 class="titulo">Simulador de Pagamento</h2>
+                <h2 class="text-center">Simulador de Pagamento</h2>
                 <h2>Total:@PrecoTotal.ToString("C")</h2>
                 <h3>Quantidade de itens: @QuantidadeTotal</h3>
                 <div class="column">
@@ -38,7 +38,7 @@ else
                      <div class="input-box">
                         <label for="cep"></label>
                         <input id="cep" type="text" @bind="cep" class="input-form" placeholder="Digite o Cep: "/>
-                            <button class="botao lupa-BuscarCep" @onclick:preventDefault="true" @onclick="BuscarCepBrasilApi_click">
+                        <button class="botao lupa-BuscarCep" @onclick:preventDefault="true" @onclick="BuscarCepBrasilApi_click">
                                 <i class="fa-solid fa-magnifying-glass-location"></i>
                             </button>
                      </div>
@@ -111,7 +111,7 @@ else
                         <input type="text" class="input-form" placeholder="XX/XXXX">
                     </div>
                 </div>
-                <button class="btn" type="submit">
+                <button class="btn" type="submit" disabled="@EnableBtn">
                     Pagar
                 </button>
             </div>
@@ -154,8 +154,10 @@ else
 
     public string? MensagemErro { get; set; }
 
+    public bool EnableBtn { get; set; }
 
-    protected override async Task OnInitializedAsync( )
+
+    protected override async Task OnInitializedAsync()
     {
         try
         {
@@ -172,7 +174,7 @@ else
             MensagemErro = ex.Message;
         }
     }
-   
+
     private async Task BuscarCepBrasilApi_click()
     {
         try
@@ -217,19 +219,23 @@ else
 
 
     private async void AdicionaPagamento_Click( )
-    {
+    {  
+
         try
         {
+            EnableBtn = true;
             PagamentoDiario!.TotalQuantDiaria = CarrinhoItem!.Quantidade;
             PagamentoDiario.TotalPrecoDiaria = CarrinhoItem.PrecoTotal;
 
+            await Task.Delay(1000);
+            EnableBtn = false;
             if (PagamentoDiario != null)
             {
                 await PagamentoService!.AdicionarPagamento(PagamentoDiario);
                 await ShowSuccessToastr();
 
 
-                await Task.Delay(2000);
+                await Task.Delay(1000);
                 await CarrinhoCompraService!.LimpaItensCarrinhoDeCompra();
 
                 ZerarContadorCarrinhoCompra();
