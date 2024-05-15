@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Components\PagamentoPage\Pagamento2.razor" />
     <Content Remove="Components\Pages\BrasilApi.razor" />
     <Content Remove="Components\Shared\FormBrasilApiCep.razor" />
     <Content Remove="Components\Shared\ProdutosCategoriaNavMenu.razor" />
@@ -41,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\PagamentoPage\Pagamento2.razor" />
     <_ContentIncludedByDefault Remove="Components\Pages\BrasilApi.razor" />
     <_ContentIncludedByDefault Remove="Components\Pages\ExibirProdutosFavoritos.razor" />
     <_ContentIncludedByDefault Remove="Components\Shared\FormBrasilApiCep.razor" />
@@ -48,6 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Components\PagamentoPage\Pagamento2.razor" />
     <None Include="Components\Pages\BrasilApi.razor" />
     <None Include="Components\Pages\BuscaCep.razor" />
     <None Include="Components\Layout\ProdutosCategoriaNavMenu.razor" />
@@ -71,6 +74,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\ImagensCadastro\" />
     <Folder Include="wwwroot\Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\PagamentoPage\Pagamento2.razor" />
   </ItemGroup>
 
 </Project>
