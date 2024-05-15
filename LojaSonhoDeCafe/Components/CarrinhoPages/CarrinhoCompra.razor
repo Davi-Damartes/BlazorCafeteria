@@ -15,59 +15,54 @@ else
     <h3 class="mb-5">Carrinho</h3>
     @if (CarrinhoCompraItens?.Count > 0)
     {
-        <div class="row mb-5">
+
+        <div class="row g-3">
             <div class="col-md-9">
                 @foreach (var item in CarrinhoCompraItens!)
                 {
-                    <div class="row mb-3">
-                        <div class="col-md-3">                           
+                    <div class="row mb-5">
+                        <div class="col-4 col-md-3 col-lg-2 h-25 w-25">
+
                             @if (File.Exists(@item.ProdutoFotoUrl))
                             {
-                                <img src="@item.ProdutoFotoUrl" class="card-img-top" width="400" alt="Imagem do Produto">
+                                <img src="@item.ProdutoFotoUrl" class="img-thumbnail card-img-top" alt="Imagem do Produto">
                             }
                             else
                             {
-                                <img src="@CreateWebPath(item.ProdutoFotoUrl)" class="card-img-top" width="500" alt="Imagem do Produto">
+                                <img src="@CreateWebPath(item.ProdutoFotoUrl)" class="img-thumbnail card-img-top" alt="Imagem do Produto">
                             }
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-8 col-md-9 col-lg-7 col-xl-8 text-left align-self-center">
+
                             <h5>@item.ProdutoNome</h5>
-                            <div class="mb-4">
-                                @item.ProdutoDescricao
+                            <h6>@item.ProdutoDescricao </h6>
+
+
+                            <div class="text-start mt-3">
+                                <span>Preço: <b>@item.Preco.ToString("C")</b></span>
+                                <input type="number" class="text-sm-center" @bind="@item.Quantidade" />
+                                <button class="btn btn-info btn-sm shadow-none EscondeButtonAtualizaQnt" @onclick="(()=>
+                                    AtualizarQuantidadeCarrinho_Click(item.Id, item.Quantidade))" title="Adicionar Quantidade">
+                                    <i class="fa-regular fa-circle-check" style="font-size: 25px;"></i>
+                                </button>
+
+                                <button @onclick="(()=> DeletaCarrinhoItem_Click(item.Id))" class="btn btn-danger shadow-none text-end" title="Remover item do Carrinho">
+                                <i class="fa-solid fa-trash-can" style="font-size: 18px;"></i>
+                                </button>
                             </div>
-
-                            <span>
-                                Preço: <b>@item.Preco.ToString("C")</b>
-
-
-                                <input type="number" @bind="@item.Quantidade" />
-
-                                <button class="btn btn-info btn-sm  shadow-none EscondeButtonAtualizaQnt" @onclick="(()=>
-                                    AtualizarQuantidadeCarrinho_Click(item.Id, item.Quantidade))">
-                                    <i class="fa-regular fa-circle-check"></i>
-                                </button>
-
-                                <br />
-
-                                <button @onclick="(()=> DeletaCarrinhoItem_Click(item.Id))" class="btn btn-danger shadow-none" title="Remover item do Carrinho">
-                                    <i class="fa-solid fa-trash-can "></i>
-                                </button>
-
-                            </span>
                         </div>
                     </div>
                 }
-            </div>
-
+         </div>
 
             <div class="col-md-3">
-                <h5>Carrinho - Resumo</h5>
+                <h2>Carrinho - Resumo</h2>
                 <div class="mt-2">
-                    <div><b>Total - (@QuantidadeTotal items)&nbsp;</b><b>@PrecoTotal</b></div>
-                    <a href="/Pagamento" class="btn btn-success">
-                        <i class="fa-solid fa-credit-card shadow-none"></i>&nbsp;Pagamento                  
-                    </a>
-                   
+                    <div class="fs-4"><b>Total - (@QuantidadeTotal items)&nbsp;</b><b>R$ @PrecoTotal</b>
+                    <a href="/Pagamento" class="btn btn-success text-center">
+                        <i class="fa-solid fa-credit-card shadow-none align-self-md-center"></i>&nbsp;Pagamento                  
+                    </a> 
+                    </div>
                 </div>
             </div>
         </div>
