@@ -56,7 +56,9 @@
     </div>
 
 
-    <button type="submit" class="btn btn-lg btn-primary mb-4 mt-1">Criar</button>
+    <button type="submit" class="btn btn-lg btn-primary mb-4 mt-1" 
+            disabled="@EnableBtn" @onclick="DesableBtn">Criar
+      </button>
 </EditForm>
 
 
@@ -80,12 +82,22 @@
     private List<string> erros = new();
 
 
+    public bool EnableBtn { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
         Categorias = await ProdutoService!.BuscarCategorias();
 
     }
+
+    private async Task DesableBtn()
+    {
+        EnableBtn = true;
+        await Task.Delay(1500);
+        EnableBtn = false;
+    }
+
 
     private async Task SubmitForm()
     {
@@ -111,52 +123,52 @@
         }
     }
 
-        private async void LoadFiles(InputFileChangeEventArgs evento)
-        {
-            file = evento.File;
+    private async void LoadFiles(InputFileChangeEventArgs evento)
+    {
+        file = evento.File;
 
-            string relativePath = await CaputurarImagem();
-            ProdutoDto!.FotoUrl = relativePath;
-        }
-
-        private async Task<string> CaputurarImagem()
-        {
-
-        if(file is null)
-        {
-            return "";
-        }
-
-        try
-        {
-           // string imagemCript = Guid.NewGuid() + "_";
-            string newFileName = Path.ChangeExtension(
-                                 Path.GetRandomFileName(),
-                                 Path.GetFileName(file.Name));
-
-            string path = Path.Combine(
-                config.GetValue<string>("ArmazenamentoProdutoImg")!,
-                "ImagensCafeteria",
-                newFileName);
-
-            string relativePath = Path.Combine("ImagensCafeteria", newFileName);
-
-
-            Directory.CreateDirectory(Path.Combine(
-                        config.GetValue<string>("ArmazenamentoProdutoImg")!,
-                        "ImagensCafeteria"));
-
-            await using FileStream fs = new(path, FileMode.Create);
-            await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
-
-            return relativePath;
-        }
-
-        catch (Exception ex)
-        {
-            erros.Add($"File: {file.Name} Erro:{ex.Message}");
-            throw;
-        }
+        string relativePath = await CaputurarImagem();
+        ProdutoDto!.FotoUrl = relativePath;
     }
+
+    private async Task<string> CaputurarImagem()
+    {
+
+    if(file is null)
+    {
+        return "";
+    }
+
+    try
+    {
+        // string imagemCript = Guid.NewGuid() + "_";
+        string newFileName = Path.ChangeExtension(
+                                Path.GetRandomFileName(),
+                                Path.GetFileName(file.Name));
+
+        string path = Path.Combine(
+            config.GetValue<string>("ArmazenamentoProdutoImg")!,
+            "ImagensCafeteria",
+            newFileName);
+
+        string relativePath = Path.Combine("ImagensCafeteria", newFileName);
+
+
+        Directory.CreateDirectory(Path.Combine(
+                    config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                    "ImagensCafeteria"));
+
+        await using FileStream fs = new(path, FileMode.Create);
+        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+
+        return relativePath;
+    }
+
+    catch (Exception ex)
+    {
+        erros.Add($"File: {file.Name} Erro:{ex.Message}");
+        throw;
+    }
+}
 
 }

@@ -1,114 +1,79 @@
-﻿@page "/Excel"
+﻿@page "/Pagamento2"
 
+<h1>Selecione a Forma de Pagamento</h1>
+<h3 class="mb-4">
+    Selecione a forma de pagamento e clique em <b>Continuar</b> para prosseguir para <b>
+        concluir o
+        pedido
+    </b>.
+</h3>
+<div class="d-flex justify-content-between flex-wrap border rounded-top pt-4 px-3">
 
-@inject IJSRuntime js
+    <div class="mb-4 mx-2 flex-even col-lg-5 col-md-5 col-sm-5">
+        <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag1">
+        <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag1">
+            <h3>
+                <b class="text-dark">Cartão de Crédito</b>
+            </h3>
+            <hr>
+            <form action="">
+                <div class="form-floating mb-3">
+                    <input type="text" id="txtNome" class="form-control" placeholder=" " autofocus>
+                    <label for="txtNome" class="text-black-50">Nome Impresso no Cartão</label>
+                </div>
 
+                <div class="form-floating mb-3">
+                    <input type="text" id="txtNumero" class="form-control" placeholder=" ">
+                    <label for="txtNumero" class="text-black-50">Número do Cartão</label>
+                </div>
 
+                <div class="form-floating mb-3">
+                    <input type="text" id="txtValidade" class="form-control" placeholder=" ">
+                    <label for="txtValidade" class="text-black-50">Validade (mm/aa)</label>
+                </div>
 
-<button type="button" class="btn btn-sm btn-primary" @onclick="DownloadTable">
-    <i class="bi bi-download"></i>
-        Download
-</button>
+                <div class="form-floating mb-3">
+                    <input type="text" id="txtCodigo" class="form-control" placeholder=" ">
+                    <label for="txtCodigo" class="text-black-50">Código de Segurança</label>
+                </div>
 
+                <div class="form-floating">
+                    <select id="selParcelas" class="form-select">
+                        <option value="1" selected>À vista</option>
+                        <option value="2">2 x sem juros</option>
+                        <option value="3">3 x sem juros</option>
+                        <option value="4">4 x sem juros</option>
+                        <option value="5">5 x sem juros</option>
+                        <option value="6">6 x sem juros</option>
+                    </select>
+                    <label for="selParcelas" class="text-black-50">Parcelamento</label>
+                </div>
+            </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-        </tr>
-    </tbody>
-</table>
+        </label>
+    </div>
 
-@code {
-    private List<PagamentoDiario>? pagamentos = new List<PagamentoDiario>()
-{
-    new PagamentoDiario
-    {
-        Usuario = "Exemplo1",
-        Email = "exemplo1@example.com",
-        TotalQuantDiaria = 10,
-        TotalPrecoDiaria = 100.50m,
-        EPagamento = ETipoPagamento.visa,
-        HoraDoPagamento = DateTime.Now
-    },
-    new PagamentoDiario
-    {
-        Usuario = "Exemplo2",
-        Email = "exemplo2@example.com",
-        TotalQuantDiaria = 15,
-        TotalPrecoDiaria = 150.75m,
-        EPagamento = ETipoPagamento.codigoBarra,
-        HoraDoPagamento = DateTime.Now.AddDays(-1)
-    },
-    new PagamentoDiario
-    {
-        Usuario = "Exemplo3",
-        Email = "exemplo3@example.com",
-        TotalQuantDiaria = 20,
-        TotalPrecoDiaria = 200.90m,
-        EPagamento = ETipoPagamento.codigoBarra,
-        HoraDoPagamento = DateTime.Now.AddDays(-2)
-    }
-};
+    <div class="mb-4 mx-2 flex-even col-lg-5 col-md-5 col-sm-5">
+        <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag2">
+        <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag2">
+            <h3>
+                <b class="text-dark">Dinheiro</b>
+            </h3>
+            <hr>
+            <form action="">
+                <h4>Valor da Compra: <b>R$ 63,86</b></h4>
+                <br>
+                <p>
+                    Se precisar de troco, informe no campo abaixo.
+                </p>
+                <div class="form-floating mb-3">
+                    <input type="text" id="txtTroco" class="form-control" placeholder=" ">
+                    <label for="txtTroco" class="text-black-50">Precisa de troco para quanto?</label>
+                </div>
+            </form>
 
+        </label>
+    </div>
 
+</div>
 
-    // private async Task CarregarArquivo(InputFileChangeEventArgs e)
-    // {
-    //     if (e.File is not null)
-    //     {
-    //         var file = e.File;
-    //         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-    //             {
-    //                 HasHeaderRecord = true
-    //             };
-    //         using(var reader = new StreamReader(file.OpenReadStream(maxAllowedSize: 2097152)))
-    //         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-    //         {
-    //             var pagamentos = new List<PagamentoDiario>();
-    //             await foreach (var pagamento in csv.GetRecordsAsync<PagamentoDiario>())
-    //             {
-    //                 pagamentos.Add(pagamento);
-    //             }
-    //         }
-    //     }
-    // }
-
-    private async Task DownloadTable()
-    {
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-            {
-                HasHeaderRecord = true
-            };
-        using (var memoryStream = new MemoryStream())
-        using (TextWriter textWriter = new StreamWriter(memoryStream))
-        using (var csvWriter = new CsvWriter(textWriter, config))
-        {
-            await csvWriter.WriteRecordsAsync(pagamentos);
-
-            textWriter.Flush();
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            using var streamRef = new DotNetStreamReference(memoryStream);
-            await js.InvokeVoidAsync("downloadFileFromStream", "pagamentos.csv", streamRef);
-        }
-    }
-}

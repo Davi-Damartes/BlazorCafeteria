@@ -6,7 +6,7 @@
         <label for="inputCep">CEP</label>
         <input type="text" class="form-control shadow-none" id="inputCep" @bind="cep" placeholder="Digite o CEP">
     </div>
-    <button type="button" class="btn btn-primary mt-3" @onclick="BuscarDados">Consultar CEP</button>
+    <button type="button" class="btn btn-primary mt-3" disabled="@EnableBtn" @onclick="BuscarDados">Consultar CEP</button>
 </form>
     
 <br />
@@ -22,11 +22,16 @@
     public string? MensagemErro { get; set; }
     public HttpClient httpClient = new();
 
+    public bool EnableBtn { get; set; }
 
     private async Task BuscarDados()
     {
+        EnableBtn = true;
         var url = $"https://viacep.com.br/ws/{cep}/json/";
         CepDigitado = await httpClient.GetFromJsonAsync<Cep>(url);
+
+        await Task.Delay(1500);
+        EnableBtn = false;
     }
 }
 
