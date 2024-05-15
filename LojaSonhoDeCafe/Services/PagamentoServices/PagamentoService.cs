@@ -33,8 +33,6 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
 
             var pagamento = pagamentoDiarioDto.ConvertePagamentoDtoParaPagamento();
 
-            pagamento.HoraDoPagamento = new DateTime(2024, 06, 03, 13, 10, 05);
-
             await _pagamentoRepository.AdicionarPagamento(pagamento);
         }
 
@@ -51,8 +49,8 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
         private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
         {
             var horaAbertura = new TimeSpan(7, 0, 0);
-            var horaFechamento = new TimeSpan(19, 35, 0);
-
+            var horaFechamento = new TimeSpan(19, 00, 0);
+            pagamento.HoraDoPagamento = new DateTime(2024, 06, 03, 22, 10, 05);
             TimeSpan horaPagamento = pagamento.HoraDoPagamento.TimeOfDay;
 
             // Verifica se a hora do pagamento está entre 07:00:00 e 19:00:00
