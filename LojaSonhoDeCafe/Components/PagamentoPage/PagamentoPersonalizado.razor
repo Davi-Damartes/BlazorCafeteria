@@ -237,40 +237,40 @@ else
 
     }
 
-    private void AdicionaPagamento_Click( )
+    private async Task AdicionaPagamento_Click( )
     {
         EnableBtn = true;
-        // try
-        // {
-        //     EnableBtn = true;
-        //     PagamentoDiario!.TotalQuantDiaria = CarrinhoItem!.Quantidade;
-        //     PagamentoDiario.TotalPrecoDiaria = CarrinhoItem.PrecoTotal;
+        try
+        {
+            EnableBtn = true;
+            PagamentoDiario!.TotalQuantDiaria = CarrinhoItem!.Quantidade;
+            PagamentoDiario.TotalPrecoDiaria = CarrinhoItem.PrecoTotal;
 
-        //     await Task.Delay(1000);
-        //     EnableBtn = false;
-        //     if (PagamentoDiario != null)
-        //     {
-        //         await PagamentoService!.AdicionarPagamento(PagamentoDiario);
-        //         await ShowSuccessToastr();
+            await Task.Delay(1000);
+            EnableBtn = false;
+            if (PagamentoDiario != null)
+            {
+                await PagamentoService!.AdicionarPagamento(PagamentoDiario);
+                await ShowSuccessToastr();
 
 
-        //         await Task.Delay(1000);
-        //         await CarrinhoCompraService!.LimpaItensCarrinhoDeCompra();
+                await Task.Delay(1000);
+                await CarrinhoCompraService!.LimpaItensCarrinhoDeCompra();
 
-        //         ZerarContadorCarrinhoCompra();
+                ZerarContadorCarrinhoCompra();
 
-        //         NavigationManager!.NavigateTo("/ ");
-        //     }
-        //     else
-        //     {
-        //         await ShowFailToastr();
-        //     }
-        //     MensagemErro = "Loja fechada Pagamento Não conclúido";
-        // }
-        // catch (Exception ex)
-        // {
-        //     MensagemErro = ex.Message;
-        // }
+                NavigationManager!.NavigateTo("/ ");
+            }
+            else
+            {
+                await ShowFailToastr();
+            }
+            MensagemErro = "Loja fechada Pagamento Não conclúido";
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
     }
 
 
@@ -301,4 +301,15 @@ else
     {
         QuantidadeTotal = CarrinhoCompraItens!.Sum(p => p.Quantidade);
     }
+
+    public async Task ShowSuccessToastr( )
+    {
+        await jsruntime.ToastrSuccess("Obrigado pele preferência!");
+    }
+    public async Task ShowFailToastr( )
+    {
+        await jsruntime.ToastrFail("Tente novamente ou refaça o pedido!");
+    }
+
+
 }
