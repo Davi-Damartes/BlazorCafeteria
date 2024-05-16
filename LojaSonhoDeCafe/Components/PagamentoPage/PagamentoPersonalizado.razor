@@ -272,4 +272,33 @@ else
         //     MensagemErro = ex.Message;
         // }
     }
+
+
+    private CarrinhoItemDto ObtemItemDoCarrinho(int id)
+    {
+        CarrinhoItem = CarrinhoCompraItens!.FirstOrDefault(x => x.Id == id)!;
+        return CarrinhoItem;
+    }
+
+    private void ZerarContadorCarrinhoCompra( )
+    {
+        QuantidadeTotal = 0;
+        CarrinhoCompraService!.RaiseEventCarrinhoCompraChanged(QuantidadeTotal);
+    }
+
+    private void AtualizarPrecoEQuantidade( )
+    {
+        SetPrecoTotal();
+        SetQuantidadeTotal();
+    }
+
+    private void SetPrecoTotal( )
+    {
+        PrecoTotal = CarrinhoCompraItens!.Sum(p => p.PrecoTotal);
+    }
+
+    private void SetQuantidadeTotal( )
+    {
+        QuantidadeTotal = CarrinhoCompraItens!.Sum(p => p.Quantidade);
+    }
 }
