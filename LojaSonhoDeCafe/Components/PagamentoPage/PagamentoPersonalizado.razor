@@ -18,7 +18,6 @@ else
 <EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click"> 
 <div class="d-flex justify-content-around flex-wrap border rounded-top pt-4 px-3">
 
-
        <div class="mb-4 mx-2 flex-even">
             <input type="radio" class="btn-check" name="cadastro" id="pag1">
             <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag1">
@@ -26,18 +25,13 @@ else
                     <b class="text-dark">Dados de Cadastro</b>
                 </h3>
                 <hr>
-                <form action="">
                     <div class="form-floating mb-3">
-                        <input type="text" id="txtNome" class="form-control" placeholder=" ">
+                        <InputText id="txtNome" type="text" class="form-control" @bind-Value="PagamentoDiario!.Usuario" placeholder="" />
                         <label for="txtNome" class="text-black-50">Nome</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="txtEmail" class="form-control" placeholder=" ">
+                        <InputText id="txtEmail" type="text" class="form-control" @bind-Value="PagamentoDiario!.Email" placeholder="" />
                         <label for="txtEmail" class="text-black-50">Email</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" id="txtTelefone" class="form-control" placeholder=" ">
-                        <label for="txtTelefone" class="text-black-50">Telefone</label>
                     </div>
 
                     <h5>
@@ -62,8 +56,6 @@ else
                         <InputText id="txtCidade" class="form-control" placeholder=" " @bind-Value="BrasilCep.City" />
                         <label for="txtCidade" class="text-black-50">Cidade</label>
                     </div>
-                </form>
-
             </label>
         </div>
 
@@ -172,20 +164,20 @@ else
 }
 @code{
 
-    // [Inject]
-    // public NavigationManager? NavigationManager { get; set; }
+    [Inject]
+    public NavigationManager? NavigationManager { get; set; }
 
-    // [Inject]
-    // public IPagamentoService? PagamentoService { get; set; }
+    [Inject]
+    public IPagamentoService? PagamentoService { get; set; }
 
-    // [Inject]
-    // public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+    [Inject]
+    public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
 
-    // public CarrinhoItemDto? CarrinhoItem { get; set; }
+    public CarrinhoItemDto? CarrinhoItem { get; set; }
 
     private PagamentoDiarioDto? PagamentoDiario { get; set; } = new();
 
-    // public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
+    public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
 
 
 
@@ -199,15 +191,31 @@ else
     public string? cep { get; set; }
 
 
-    // public decimal PrecoTotal { get; set; }
+    public decimal PrecoTotal { get; set; }
 
-    // public int QuantidadeTotal { get; set; }
+    public int QuantidadeTotal { get; set; }
 
 
     public bool EnableBtn { get; set; }
 
 
+    protected override async Task OnInitializedAsync( )
+    {
+        try
+        {
+            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            AtualizarPrecoEQuantidade();
 
+            foreach (var item in CarrinhoCompraItens)
+            {
+                ObtemItemDoCarrinho(item.Id);
+            }
+        }
+        catch (Exception ex)
+        {
+            MensagemErro = ex.Message;
+        }
+    }
 
 
 
