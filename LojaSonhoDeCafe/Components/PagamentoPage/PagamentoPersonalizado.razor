@@ -1,0 +1,267 @@
+﻿@page "/PagamentoPersonalizado"
+
+@inject IJSRuntime jsruntime
+
+@if (MensagemErro is not null)
+{
+<ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+}
+else
+{
+<h1>Selecione a Forma de Pagamento</h1>
+<h3 class="mb-4">
+    Preencha o cadastro e selecione uma das formas de pagamento e clique em <b>Continuar</b> para prosseguir para <b>
+        concluir o pedido
+    </b>.
+</h3>
+
+<EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click"> 
+<div class="d-flex justify-content-around flex-wrap border rounded-top pt-4 px-3">
+
+
+       <div class="mb-4 mx-2 flex-even">
+            <input type="radio" class="btn-check" name="cadastro" id="pag1">
+            <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag1">
+                <h3>
+                    <b class="text-dark">Dados de Cadastro</b>
+                </h3>
+                <hr>
+                <form action="">
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtNome" class="form-control" placeholder=" ">
+                        <label for="txtNome" class="text-black-50">Nome</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtEmail" class="form-control" placeholder=" ">
+                        <label for="txtEmail" class="text-black-50">Email</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtTelefone" class="form-control" placeholder=" ">
+                        <label for="txtTelefone" class="text-black-50">Telefone</label>
+                    </div>
+
+                    <h5>
+                        <b class="text-dark">Endereço</b>
+                    </h5>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtCep" placeholder=" " class="form-control" @bind="cep" />
+                        <button class="botao lupa-BuscarCep" @onclick:preventDefault="true" @onclick="BuscarCepBrasilApi_click" >
+                            <i class="fa-solid fa-magnifying-glass-location"></i>
+                        </button>
+                        <label for="txtCep" class="text-black-50">Cep</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <InputText type="text" id="txtRua" class="form-control" placeholder=" " @bind-Value="BrasilCep.Street" />
+                        <label for="txtRua" class="text-black-50">Rua</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <InputText type="text" id="txtBairro" class="form-control"  placeholder=" " @bind-Value="BrasilCep.Neighborhood" />
+                        <label for="txtBairro" class="text-black-50">Bairro</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <InputText id="txtCidade" class="form-control" placeholder=" " @bind-Value="BrasilCep.City" />
+                        <label for="txtCidade" class="text-black-50">Cidade</label>
+                    </div>
+                </form>
+
+            </label>
+        </div>
+
+
+       <div class="mb-4 mx-2 flex-even">
+        <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag2">
+        <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag2">
+            <h3>
+                <b class="text-dark">Pagamento Cartão</b>
+            </h3>
+            <hr>
+            <form action="">
+                    <h5 class="text-dark"><b>Tipo de Pagamento:</b></h5>
+                    <div class="icones-Pagamento text-dark">
+                        <label class="opcao-pagamento text-dark">
+                                <i class="fa-brands fa-cc-visa"></i>
+                        <input type="radio" class="text-black-50 centralizar-btn" name="opcao-pagamento" value="visa"
+                               @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.visa)">
+                        </label>
+                        <label class="opcao-pagamento text-dark">
+                            <i class="fa-brands fa-cc-mastercard"></i>
+                            <input type="radio" class="text-black-50 centralizar-btn" name="opcao-pagamento" value="mastercard" 
+                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.mastercard)">
+                            </label>
+                        <label class="opcao-pagamento text-dark">
+                            <i class="fa-brands fa-cc-paypal"></i>
+                            <input type="radio" class="text-black-50 centralizar-btn" name="opcao-pagamento" value="paypal" 
+                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.paypal)" />
+                            </label>
+                        <label class="opcao-pagamento text-dark">
+                            <i class="fa-solid fa-barcode"></i>
+
+                            <input type="radio" class="text-black-50 centralizar-btn" name="opcao-pagamento" value="codigoDeBarra" 
+                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.codigoDeBarra)" />
+                            </label>
+                        </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" id="txtNome" class="form-control" placeholder=" " autofocus>
+                                <label for="txtNome" class="text-black-50">Nome Impresso no Cartão</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" id="txtNumero" class="form-control" placeholder=" ">
+                                <label for="txtNumero" class="text-black-50">Número do Cartão</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" id="txtValidade" class="form-control" placeholder=" ">
+                                <label for="txtValidade" class="text-black-50">Validade (mm/aa)</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" id="txtCodigo" class="form-control" placeholder=" ">
+                                <label for="txtCodigo" class="text-black-50">Código de Segurança</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <select id="selParcelas" class="form-select">
+                                    <option value="1" selected>À vista</option>
+                                    <option value="2">2 x sem juros</option>
+                                    <option value="3">3 x sem juros</option>
+                                    <option value="4">4 x sem juros</option>
+                                    <option value="5">5 x sem juros</option>
+                                    <option value="6">6 x sem juros</option>
+                                </select>
+                                <label for="selParcelas" class="text-black-50">Parcelamento</label>
+                             </div>          
+                        </form>
+                    </label>
+                </div>
+
+
+       <div class="mb-4 mx-2 flex-even">
+        <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag3">
+                <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag3">
+                    <h3>
+                        <b class="text-dark">Dinheiro</b>
+                    </h3>
+                    <hr>
+                    <form action="">
+                        <h4>Valor da Compra: <b>R$ 63,86</b></h4>
+                        <br>
+                        <p>
+                            Se precisar de troco, informe no campo abaixo.
+                        </p>
+                        <div class="form-floating mb-3">
+                            <input type="text" id="txtTroco" class="form-control" placeholder=" ">
+                            <label for="txtTroco" class="text-black-50">Troco para quanto?</label>
+                        </div>
+                    </form>
+                </label>
+            </div>
+
+</div>
+ </EditForm> 
+
+<div class="text-end border border-top-0 rounded-bottom p-4 pb-0 mb-4">
+    <a href="/CarrinhoCompra" class="btn btn-outline-success btn-lg mb-4">
+        Voltar para o carrinho
+    </a>
+    <a href="/Pagamento" class="btn btn-danger btn-lg ms-2 mb-4">Confirmar Pagamento</a>
+</div>
+
+
+}
+@code{
+
+    // [Inject]
+    // public NavigationManager? NavigationManager { get; set; }
+
+    // [Inject]
+    // public IPagamentoService? PagamentoService { get; set; }
+
+    // [Inject]
+    // public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+
+    // public CarrinhoItemDto? CarrinhoItem { get; set; }
+
+    private PagamentoDiarioDto? PagamentoDiario { get; set; } = new();
+
+    // public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
+
+
+
+
+    private BrasilCep? BrasilCep { get; set; } = new();
+
+    private string? MensagemErro { get; set; }
+
+    public HttpClient httpClient = new();
+
+    public string? cep { get; set; }
+
+
+    // public decimal PrecoTotal { get; set; }
+
+    // public int QuantidadeTotal { get; set; }
+
+
+    public bool EnableBtn { get; set; }
+
+
+
+
+
+
+
+    private async Task BuscarCepBrasilApi_click()
+    {
+        try
+        {
+            var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
+            BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url);
+        }
+        catch (Exception ex)
+        {
+            if (BrasilCep == null)
+            {
+                MensagemErro = ex.Message;
+            }
+        }
+
+    }
+
+    private void AdicionaPagamento_Click( )
+    {
+        EnableBtn = true;
+        // try
+        // {
+        //     EnableBtn = true;
+        //     PagamentoDiario!.TotalQuantDiaria = CarrinhoItem!.Quantidade;
+        //     PagamentoDiario.TotalPrecoDiaria = CarrinhoItem.PrecoTotal;
+
+        //     await Task.Delay(1000);
+        //     EnableBtn = false;
+        //     if (PagamentoDiario != null)
+        //     {
+        //         await PagamentoService!.AdicionarPagamento(PagamentoDiario);
+        //         await ShowSuccessToastr();
+
+
+        //         await Task.Delay(1000);
+        //         await CarrinhoCompraService!.LimpaItensCarrinhoDeCompra();
+
+        //         ZerarContadorCarrinhoCompra();
+
+        //         NavigationManager!.NavigateTo("/ ");
+        //     }
+        //     else
+        //     {
+        //         await ShowFailToastr();
+        //     }
+        //     MensagemErro = "Loja fechada Pagamento Não conclúido";
+        // }
+        // catch (Exception ex)
+        // {
+        //     MensagemErro = ex.Message;
+        // }
+    }
+}
