@@ -7,6 +7,9 @@
     padding: 30px;
 
     margin-bottom: 35px;
+
+    height: 100%;
+    width: 100%;
 }
 
 .titulo {
@@ -115,6 +118,14 @@
     background-color: #6501d7;
 }
 
+
+.lupa-BuscarCep {
+    height: 160px;
+    width: 15px;
+    margin-top: 15px;
+}
+
+
 .radio-Button{
     color:aqua;
     background-color:aquamarine; 
@@ -125,13 +136,6 @@
     height: 30px;
     filter: drop-shadow(0 0 1px #000000);
 
-}
-
-
-.lupa-BuscarCep {
-    height: 160px;
-    width: 15px;
-    margin-top: 15px;
 }
 
 
