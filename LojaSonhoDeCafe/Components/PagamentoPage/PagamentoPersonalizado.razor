@@ -39,7 +39,7 @@ else
                     </h5>
                     <div class="form-floating mb-3">
                         <input type="text" id="txtCep" placeholder=" " class="form-control" @bind="cep" />
-                        <button class="botao lupa-BuscarCep" @onclick:preventDefault="true" @onclick="BuscarCepBrasilApi_click" >
+                        <button class="botao lupa-BuscarCep" disabled="@EnableBtn" @onclick:preventDefault="true" @onclick="BuscarCepBrasilApi_click">
                             <i class="fa-solid fa-magnifying-glass-location"></i>
                         </button>
                         <label for="txtCep" class="text-black-50">Cep</label>
