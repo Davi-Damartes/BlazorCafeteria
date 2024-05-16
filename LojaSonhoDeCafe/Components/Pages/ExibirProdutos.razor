@@ -71,7 +71,18 @@
         }
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            foreach (var produto in Produtos)
+            {
+                await Js.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
+            }
 
+        }
+
+    }
 
     public async Task AtualizaProduto(ProdutoDto Produto)
     {
