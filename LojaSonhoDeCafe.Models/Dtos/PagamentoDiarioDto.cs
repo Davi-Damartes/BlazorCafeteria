@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 using CsvHelper.Configuration.Attributes;
+using System.Drawing;
 
 namespace LojaSonhoDeCafe.Models.Dtos
 {
@@ -24,16 +24,15 @@ namespace LojaSonhoDeCafe.Models.Dtos
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
-         [Name("Produtos vendido no Dia")]
+        [Name("Produtos vendido no Dia")]
         public decimal TotalPrecoDiaria { get; set; }
 
-        [Required(ErrorMessage = "Por favor, selecione um tipo de pagamento.")]
-        [NotNull]
-         [Name("Tipo De Pagamento")]    
-        public EPagamentoDto EPagamento { get; set; }
+        [Required(ErrorMessage = "Escolha o tipo de pagamento!"), EnumDataType(typeof(EPagamentoDto))]
+        [Name("Tipo De Pagamento")]
+        public EPagamentoDto? EPagamento { get; set; } = null;
 
         [Required]
-         [Name("Hora Do Pagamento")]   
+        [Name("Hora Do Pagamento")]   
         public DateTime HoraDoPagamento { get; set; } = DateTime.Now;
     }
 
