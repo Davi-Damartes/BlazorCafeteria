@@ -50,7 +50,6 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
         {
             var horaAbertura = new TimeSpan(7, 0, 0);
             var horaFechamento = new TimeSpan(19, 00, 0);
-            pagamento.HoraDoPagamento = new DateTime(2024, 06, 03, 22, 10, 05);
             TimeSpan horaPagamento = pagamento.HoraDoPagamento.TimeOfDay;
 
             // Verifica se a hora do pagamento está entre 07:00:00 e 19:00:00
