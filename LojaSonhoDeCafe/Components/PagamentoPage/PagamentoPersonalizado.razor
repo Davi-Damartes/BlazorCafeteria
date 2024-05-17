@@ -2,29 +2,35 @@
 
 @inject IJSRuntime jsruntime
 
-@if (MensagemErro is not null)
+@if (CarrinhoCompraItens is null && MensagemErro is null)
 {
-<ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+    <ExibirSpinner />
+}
+else if (MensagemErro is not null)
+{
+    <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
 }
 else
 {
+
 <h1>Selecione a Forma de Pagamento</h1>
 <h3 class="mb-4">
     Preencha o cadastro e selecione uma das formas de pagamento e clique em <b>Continuar</b> para prosseguir para <b>
         concluir o pedido
     </b>.
 </h3>
+    <EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="d-flex justify-content-around flex-wrap border rounded-top pt-4 px-3">
 
-<EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click"> 
-<div class="d-flex justify-content-around flex-wrap border rounded-top pt-4 px-3">
-
-       <div class="mb-4 mx-2 flex-even">
-            <input type="radio" class="btn-check" name="cadastro" id="pag1">
-            <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag1">
-                <h3>
-                    <b class="text-dark">Dados de Cadastro</b>
-                </h3>
-                <hr>
+            <div class="mb-4 mx-2 flex-even">
+                <input type="radio" class="btn-check" name="cadastro" id="pag1">
+                <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag1">
+                    <h3>
+                        <b class="text-dark">Dados de Cadastro</b>
+                    </h3>
+                    <hr>
                     <div class="form-floating mb-3">
                         <InputText id="txtNome" type="text" class="form-control" @bind-Value="PagamentoDiario!.Usuario" placeholder="" />
                         <label for="txtNome" class="text-black-50">Nome</label>
@@ -45,99 +51,107 @@ else
                         <label for="txtCep" class="text-black-50">Cep</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText type="text" id="txtRua" class="form-control" placeholder=" " @bind-Value="BrasilCep.Street" />
+                        <InputText type="text" id="txtRua" class="form-control" placeholder=" " @bind-Value="BrasilCep!.Street" />
                         <label for="txtRua" class="text-black-50">Rua</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText type="text" id="txtBairro" class="form-control"  placeholder=" " @bind-Value="BrasilCep.Neighborhood" />
+                        <InputText type="text" id="txtBairro" class="form-control" placeholder=" " @bind-Value="BrasilCep.Neighborhood" />
                         <label for="txtBairro" class="text-black-50">Bairro</label>
                     </div>
                     <div class="form-floating mb-3">
                         <InputText id="txtCidade" class="form-control" placeholder=" " @bind-Value="BrasilCep.City" />
                         <label for="txtCidade" class="text-black-50">Cidade</label>
                     </div>
-            </label>
-        </div>
+                </label>
+            </div>
 
 
-       <div class="mb-4 mx-2 flex-even">
-        <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag2">
-        <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag2">
-            <h3>
-                <b class="text-dark">Pagamento Cartão</b>
-            </h3>
-            <hr>
-            <form action="">
-                    <h5 class="text-dark"><b>Tipo de Pagamento:</b></h5>
-                    <div class="icones-Pagamento text-dark">
-                        <label class="opcao-pagamento text-dark">
-                                <i class="fa-brands fa-cc-visa"></i>
-                        <input type="radio" class="text-black-50 centralizar-btn" name="opcao-pagamento" value="visa"
-                               @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.visa)">
-                        </label>
-                        <label class="opcao-pagamento text-dark">
-                            <i class="fa-brands fa-cc-mastercard"></i>
-                            <input type="radio" class="text-black-50 centralizar-btn" name="opcao-pagamento" value="mastercard" 
-                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.mastercard)">
-                            </label>
-                        <label class="opcao-pagamento text-dark">
-                            <i class="fa-brands fa-cc-paypal"></i>
-                            <input type="radio" class="text-black-50 centralizar-btn" name="opcao-pagamento" value="paypal" 
-                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.paypal)" />
-                            </label>
-                        <label class="opcao-pagamento text-dark">
-                            <i class="fa-solid fa-barcode"></i>
+            <div class="mb-4 mx-2 flex-even">
+                <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag2">
+                <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag2">
+                    <h3>
+                        <b class="text-dark">Pagamento Cartão</b>
+                    </h3>
+                    <hr>
+                        <h5 class="text-dark"><b>Tipo de Pagamento:</b></h5>
+                            <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiario.EPagamento">
+                                <div class="icones-Pagamento text-dark">
+                                    <label class="opcao-pagamento text-dark">
+                                        <i class="fa-brands fa-cc-visa"></i>
+                                        <div class="Botao-radio"> 
+                                            <InputRadio Name="EPagamento" class="text-black-50 centralizar-buton" Value="EPagamentoDto.visa" />
+                                        </div>               
+                                    </label>
+                                    <label class="opcao-pagamento text-dark">
+                                        <i class="fa-brands fa-cc-mastercard"></i>
+                                        <div class="radio-Button">
+                                            <InputRadio Name="EPagamento" class="text-black-50 centralizar-buton" Value="EPagamentoDto.mastercard" />
+                                        </div>
+                                    </label>
+                                        <div class="radio-Button">
+                                            <label class="opcao-pagamento text-dark">
+                                                <i class="fa-brands fa-cc-paypal"></i>
+                                                    <InputRadio Name="EPagamento" class="text-black-50 centralizar-buton custom-button" Value="EPagamentoDto.paypal" />
+                                            </label>
+                                        </div>
+                                    <label class="opcao-pagamento text-dark"> 
+                                        <i class="fa-solid fa-barcode"></i>
+                                            <InputRadio Name="EPagamento" class="mudar-buton" Value="EPagamentoDto.boleto" />
+                                    </label>
 
-                            <input type="radio" class="text-black-50 centralizar-btn" name="opcao-pagamento" value="codigoDeBarra" 
-                                       @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.codigoDeBarra)" />
-                            </label>
+                                    <label class="opcao-pagamento">
+                                    <i class="fa-brands fa-cc-mastercard icone"></i>
+                                    <input type="radio" name="opcao-pagamento" value="mastercard"
+                                           @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.mastercard)">
+                                    </label>
+                                </div>
+                             </InputRadioGroup>
+
+                        <div class="form-floating mb-3">
+                            <input type="text" id="txtNome" class="form-control" placeholder=" " autofocus>
+                            <label for="txtNome" class="text-black-50">Nome Impresso no Cartão</label>
                         </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="text" id="txtNome" class="form-control" placeholder=" " autofocus>
-                                <label for="txtNome" class="text-black-50">Nome Impresso no Cartão</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" id="txtNumero" class="form-control" placeholder=" ">
+                            <label for="txtNumero" class="text-black-50">Número do Cartão</label>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="text" id="txtNumero" class="form-control" placeholder=" ">
-                                <label for="txtNumero" class="text-black-50">Número do Cartão</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" id="txtValidade" class="form-control" placeholder=" ">
+                            <label for="txtValidade" class="text-black-50">Validade (mm/aa)</label>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="text" id="txtValidade" class="form-control" placeholder=" ">
-                                <label for="txtValidade" class="text-black-50">Validade (mm/aa)</label>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" id="txtCodigo" class="form-control" placeholder=" ">
+                            <label for="txtCodigo" class="text-black-50">Código de Segurança</label>
+                        </div>
 
-                            <div class="form-floating mb-3">
-                                <input type="text" id="txtCodigo" class="form-control" placeholder=" ">
-                                <label for="txtCodigo" class="text-black-50">Código de Segurança</label>
-                            </div>
-
-                            <div class="form-floating">
-                                <select id="selParcelas" class="form-select">
-                                    <option value="1" selected>À vista</option>
-                                    <option value="2">2 x sem juros</option>
-                                    <option value="3">3 x sem juros</option>
-                                    <option value="4">4 x sem juros</option>
-                                    <option value="5">5 x sem juros</option>
-                                    <option value="6">6 x sem juros</option>
-                                </select>
-                                <label for="selParcelas" class="text-black-50">Parcelamento</label>
-                             </div>          
-                        </form>
-                    </label>
-                </div>
+                        <div class="form-floating">
+                            <select id="selParcelas" class="form-select">
+                                <option value="1" selected>À vista</option>
+                                <option value="2">2 x sem juros</option>
+                                <option value="3">3 x sem juros</option>
+                                <option value="4">4 x sem juros</option>
+                                <option value="5">5 x sem juros</option>
+                                <option value="6">6 x sem juros</option>
+                            </select>
+                            <label for="selParcelas" class="text-black-50">Parcelamento</label>
+                        </div>
+                </label>
+            </div>
 
 
-       <div class="mb-4 mx-2 flex-even">
-        <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag3">
+            <div class="mb-4 mx-2 flex-even">
+                <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag3">
                 <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag3">
                     <h3>
                         <b class="text-dark">Dinheiro</b>
                     </h3>
                     <hr>
                     <form action="">
-                        <h4>Valor da Compra: <b>R$ 63,86</b></h4>
+                        <h4>Valor da Compra: <b>R$ @PrecoTotal</b></h4>
+                        <h4>Quantidade de itens: <b>@QuantidadeTotal</b></h4>
                         <br>
                         <p>
                             Se precisar de troco, informe no campo abaixo.
@@ -149,20 +163,22 @@ else
                     </form>
                 </label>
             </div>
+        </div>
+                <div class="text-end border border-top-0 rounded-bottom p-4 pb-0 mb-4">
+                    <a href="/CarrinhoCompra" class="btn btn-outline-success btn-lg mb-4">
+                        Voltar para o carrinho
+                    </a>
 
-</div>
- </EditForm> 
+                    <button type="submit" class="btn btn-danger btn-lg ms-2 mb-4" disabled="@EnableBtn">
+                        Confirmar Pagamento
+                    </button>
+                </div>
+</EditForm>
 
-<div class="text-end border border-top-0 rounded-bottom p-4 pb-0 mb-4">
-    <a href="/CarrinhoCompra" class="btn btn-outline-success btn-lg mb-4">
-        Voltar para o carrinho
-    </a>
-    <a href="/Pagamento" class="btn btn-danger btn-lg ms-2 mb-4">Confirmar Pagamento</a>
-</div>
 
 
 }
-@code{
+@code {
 
     [Inject]
     public NavigationManager? NavigationManager { get; set; }
@@ -180,8 +196,6 @@ else
     public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
 
 
-
-
     private BrasilCep? BrasilCep { get; set; } = new();
 
     private string? MensagemErro { get; set; }
@@ -189,6 +203,7 @@ else
     public HttpClient httpClient = new();
 
     public string? cep { get; set; }
+
 
 
     public decimal PrecoTotal { get; set; }
@@ -215,26 +230,6 @@ else
         {
             MensagemErro = ex.Message;
         }
-    }
-
-
-
-
-    private async Task BuscarCepBrasilApi_click()
-    {
-        try
-        {
-            var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
-            BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url);
-        }
-        catch (Exception ex)
-        {
-            if (BrasilCep == null)
-            {
-                MensagemErro = ex.Message;
-            }
-        }
-
     }
 
     private async Task AdicionaPagamento_Click( )
@@ -274,6 +269,24 @@ else
     }
 
 
+
+    private async Task BuscarCepBrasilApi_click( )
+    {
+        try
+        {
+            var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
+            BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url);
+        }
+        catch (Exception ex)
+        {
+            if (BrasilCep == null)
+            {
+                MensagemErro = ex.Message;
+            }
+        }
+
+    }
+
     private CarrinhoItemDto ObtemItemDoCarrinho(int id)
     {
         CarrinhoItem = CarrinhoCompraItens!.FirstOrDefault(x => x.Id == id)!;
@@ -302,10 +315,12 @@ else
         QuantidadeTotal = CarrinhoCompraItens!.Sum(p => p.Quantidade);
     }
 
+
     public async Task ShowSuccessToastr( )
     {
         await jsruntime.ToastrSuccess("Obrigado pele preferência!");
     }
+
     public async Task ShowFailToastr( )
     {
         await jsruntime.ToastrFail("Tente novamente ou refaça o pedido!");
