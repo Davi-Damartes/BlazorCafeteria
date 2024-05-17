@@ -1,6 +1,83 @@
 ﻿@page "/BuscarCep"
 
-<h1>Buscar Cep</h1>
+@if (PagamentoDiario is null)
+{
+    <ExibirSpinner />
+}
+else
+{
+   
+<EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="icones-Pagamento text-dark" style="font-size: 40px;">
+            <InputRadioGroup Name="color" @bind-Value="PagamentoDiario.EPagamento">
+
+                <label class="opcao-pagamento">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <InputRadio Name="color" class="text-black-50 centralizar-btn" Value="EPagamentoDto.visa" />
+                </label>
+                <label class="opcao-pagamento">
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <InputRadio Name="color" class="text-black-50 centralizar-btn" Value="EPagamentoDto.mastercard" />
+                </label>
+                <label class="opcao-pagamento">
+                    <i class="fa-brands fa-cc-paypal"></i>
+                    <InputRadio Name="color" class="text-black-50 centralizar-btn" Value="EPagamentoDto.paypal" />
+                </label>
+                <label class="opcao-pagamento">
+                    <i class="fa-solid fa-barcode"></i>
+                    <InputRadio Name="color" class="text-black-50 centralizar-btn" Value="EPagamentoDto.boleto" />
+                </label>
+            </InputRadioGroup>
+    </div>
+
+        <button type="submit" class="btn btn-danger btn-lg ms-2 mb-4" >
+            Confirmar Pagamento
+        </button>
+
+</EditForm>
+
+
+
+}
+
+@code {
+
+    private PagamentoDiarioDto? PagamentoDiario { get; set; } = new();
+    private PagamentoDiarioDto? PagamentoDiario2 { get; set; } = new();
+
+
+    public void AdicionaPagamento_Click( )
+    {
+        PagamentoDiario2 = PagamentoDiario;
+
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <h1>Buscar Cep</h1>
 <form>
     <div class="form-group">
         <label for="inputCep">CEP</label>
@@ -34,5 +111,5 @@
         EnableBtn = false;
     }
 }
-
+ *@
 
