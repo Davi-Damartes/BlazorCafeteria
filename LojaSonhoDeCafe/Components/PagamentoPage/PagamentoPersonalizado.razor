@@ -13,12 +13,12 @@ else if (MensagemErro is not null)
 else
 {
 
-<h1>Selecione a Forma de Pagamento</h1>
-<h3 class="mb-4">
-    Preencha o cadastro e selecione uma das formas de pagamento e clique em <b>Continuar</b> para prosseguir para <b>
-        concluir o pedido
-    </b>.
-</h3>
+    <h1>Selecione a Forma de Pagamento</h1>
+    <h3 class="mb-4">
+        Preencha o cadastro e selecione uma das formas de pagamento e clique em <b>Continuar</b> para prosseguir para <b>
+            concluir o pedido
+        </b>.
+    </h3>
     <EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -73,71 +73,68 @@ else
                         <b class="text-dark">Pagamento Cartão</b>
                     </h3>
                     <hr>
-                        <h5 class="text-dark"><b>Tipo de Pagamento:</b></h5>
-                            <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiario.EPagamento">
-                                <div class="icones-Pagamento text-dark">
-                                    <label class="opcao-pagamento text-dark">
-                                        <i class="fa-brands fa-cc-visa"></i>
-                                        <div class="Botao-radio"> 
-                                            <InputRadio Name="EPagamento" class="text-black-50 centralizar-buton" Value="EPagamentoDto.visa" />
-                                        </div>               
-                                    </label>
-                                    <label class="opcao-pagamento text-dark">
-                                        <i class="fa-brands fa-cc-mastercard"></i>
-                                        <div class="radio-Button">
-                                            <InputRadio Name="EPagamento" class="text-black-50 centralizar-buton" Value="EPagamentoDto.mastercard" />
-                                        </div>
-                                    </label>
-                                        <div class="radio-Button">
-                                            <label class="opcao-pagamento text-dark">
-                                                <i class="fa-brands fa-cc-paypal"></i>
-                                                    <InputRadio Name="EPagamento" class="text-black-50 centralizar-buton custom-button" Value="EPagamentoDto.paypal" />
-                                            </label>
-                                        </div>
-                                    <label class="opcao-pagamento text-dark"> 
-                                        <i class="fa-solid fa-barcode"></i>
-                                            <InputRadio Name="EPagamento" class="mudar-buton" Value="EPagamentoDto.boleto" />
-                                    </label>
-
-                                    <label class="opcao-pagamento">
-                                    <i class="fa-brands fa-cc-mastercard icone"></i>
-                                    <input type="radio" name="opcao-pagamento" value="mastercard"
-                                           @onchange="(() => PagamentoDiario!.EPagamento = EPagamentoDto.mastercard)">
-                                    </label>
+                    <h5 class="text-dark"><b>Tipo de Pagamento:</b></h5>
+                    <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiario.EPagamento">
+                        <div class="icones-Pagamento text-dark">
+                            <label class="opcao-pagamento text-dark">
+                                <i class="fa-brands fa-cc-visa"></i>
+                                <div class="radio-Button">
+                                    <InputRadio Name="EPagamento" class="text-black-50 centralizar-buton" Value="EPagamentoDto.visa" />
                                 </div>
-                             </InputRadioGroup>
+                            </label>
+                            <label class="opcao-pagamento text-dark">
+                                <i class="fa-brands fa-cc-mastercard"></i>
+                                <div class="radio-Button">
+                                    <InputRadio Name="EPagamento" class="text-black-50 centralizar-buton" Value="EPagamentoDto.mastercard" />
+                                </div>
+                            </label>
+                            <label class="opcao-pagamento text-dark">
+                                <i class="fa-brands fa-cc-paypal"></i>
+                                <div class="radio-Button">
+                                    <InputRadio Name="EPagamento" class="text-black-50 radio-Button" Value="EPagamentoDto.paypal" />
+                                </div>
+                            </label>
+                            <label class="opcao-pagamento text-dark">
+                                <i class="fa-solid fa-barcode"></i>
+                                 <div class="radio-Button">
+                                    <InputRadio Name="EPagamento" class="mudar-buton" Value="EPagamentoDto.boleto" />
+                                </div>
+                            </label>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" id="txtNome" class="form-control" placeholder=" " autofocus>
-                            <label for="txtNome" class="text-black-50">Nome Impresso no Cartão</label>
                         </div>
+                    </InputRadioGroup>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" id="txtNumero" class="form-control" placeholder=" ">
-                            <label for="txtNumero" class="text-black-50">Número do Cartão</label>
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtNome" class="form-control" placeholder=" " autofocus>
+                        <label for="txtNome" class="text-black-50">Nome Impresso no Cartão</label>
+                    </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" id="txtValidade" class="form-control" placeholder=" ">
-                            <label for="txtValidade" class="text-black-50">Validade (mm/aa)</label>
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtNumero" class="form-control" placeholder=" ">
+                        <label for="txtNumero" class="text-black-50">Número do Cartão</label>
+                    </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" id="txtCodigo" class="form-control" placeholder=" ">
-                            <label for="txtCodigo" class="text-black-50">Código de Segurança</label>
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtValidade" class="form-control" placeholder=" ">
+                        <label for="txtValidade" class="text-black-50">Validade (mm/aa)</label>
+                    </div>
 
-                        <div class="form-floating">
-                            <select id="selParcelas" class="form-select">
-                                <option value="1" selected>À vista</option>
-                                <option value="2">2 x sem juros</option>
-                                <option value="3">3 x sem juros</option>
-                                <option value="4">4 x sem juros</option>
-                                <option value="5">5 x sem juros</option>
-                                <option value="6">6 x sem juros</option>
-                            </select>
-                            <label for="selParcelas" class="text-black-50">Parcelamento</label>
-                        </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" id="txtCodigo" class="form-control" placeholder=" ">
+                        <label for="txtCodigo" class="text-black-50">Código de Segurança</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <select id="selParcelas" class="form-select">
+                            <option value="1" selected>À vista</option>
+                            <option value="2">2 x sem juros</option>
+                            <option value="3">3 x sem juros</option>
+                            <option value="4">4 x sem juros</option>
+                            <option value="5">5 x sem juros</option>
+                            <option value="6">6 x sem juros</option>
+                        </select>
+                        <label for="selParcelas" class="text-black-50">Parcelamento</label>
+                    </div>
                 </label>
             </div>
 
@@ -164,16 +161,16 @@ else
                 </label>
             </div>
         </div>
-                <div class="text-end border border-top-0 rounded-bottom p-4 pb-0 mb-4">
-                    <a href="/CarrinhoCompra" class="btn btn-outline-success btn-lg mb-4">
-                        Voltar para o carrinho
-                    </a>
+        <div class="text-end border border-top-0 rounded-bottom p-4 pb-0 mb-4">
+            <a href="/CarrinhoCompra" class="btn btn-outline-success btn-lg mb-4">
+                Voltar para o carrinho
+            </a>
 
-                    <button type="submit" class="btn btn-danger btn-lg ms-2 mb-4" disabled="@EnableBtn">
-                        Confirmar Pagamento
-                    </button>
-                </div>
-</EditForm>
+            <button type="submit" class="btn btn-danger btn-lg ms-2 mb-4" disabled="@EnableBtn">
+                Confirmar Pagamento
+            </button>
+        </div>
+    </EditForm>
 
 
 
@@ -270,7 +267,7 @@ else
 
 
 
-    private async Task BuscarCepBrasilApi_click( )
+    private async Task BuscarCepBrasilApi_click()
     {
         try
         {
