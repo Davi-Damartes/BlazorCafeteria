@@ -48,8 +48,9 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
 
         private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
         {
-            var horaAbertura = new TimeSpan(7, 0, 0);
-            var horaFechamento = new TimeSpan(19, 00, 0);
+            var horaAbertura = new TimeSpan(07, 00, 00);
+            var horaFechamento = new TimeSpan(22, 00, 00);
+
             TimeSpan horaPagamento = pagamento.HoraDoPagamento.TimeOfDay;
 
             // Verifica se a hora do pagamento está entre 07:00:00 e 19:00:00
