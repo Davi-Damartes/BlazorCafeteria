@@ -29,7 +29,7 @@ namespace LojaSonhoDeCafe.Models.Dtos
 
         [Required(ErrorMessage = "Escolha o tipo de pagamento!"), EnumDataType(typeof(EPagamentoDto))]
         [Name("Tipo De Pagamento")]
-        public EPagamentoDto? EPagamento { get; set; } = null;
+        public EPagamentoDto EPagamento { get; set; }
 
         [Required]
         [Name("Hora Do Pagamento")]   
