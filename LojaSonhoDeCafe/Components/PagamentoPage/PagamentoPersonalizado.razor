@@ -74,6 +74,7 @@ else
                     </h3>
                     <hr>
                     <h5 class="text-dark"><b>Tipo de Pagamento:</b></h5>
+
                     <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiario.EPagamento">
                         <div class="icones-Pagamento text-dark">
                             <label class="opcao-pagamento text-dark">
@@ -254,9 +255,12 @@ else
                     NavigationManager!.NavigateTo("/ ");
 
                 }
-                await ShowFailToastr();
-                MensagemErro = "Loja fechada!!! Pagamento Não concluíido";
+                else
+                {
+                    await ShowFailToastr();
+                }
 
+                MensagemErro = "Loja fechada!!! Pagamento Não concluído";
             }
         }
         catch (Exception ex)
