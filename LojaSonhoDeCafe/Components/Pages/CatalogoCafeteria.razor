@@ -57,13 +57,13 @@
                  </div>
 
                   
-                    @foreach (var prodGrupo in produtosPorCategoria)
-                    {
-                         <div class="row mt-3">
-                                <h4 class="mb-5">@prodGrupo.FirstOrDefault(pg => pg.CategoriaId == prodGrupo.Key)!.CategoriaNome</h4>
-                                <ExibirProdutos Produtos="@prodGrupo"> </ExibirProdutos>
-                         </div>
-                    }
+                @foreach (var prodGrupo in produtosPorCategoria)
+                {
+                        <div class="row mt-3">
+                            <h4 class="mb-5">@prodGrupo.FirstOrDefault(pg => pg.CategoriaId == prodGrupo.Key)!.CategoriaNome</h4>
+                            <ExibirProdutos Produtos="@prodGrupo"></ExibirProdutos>
+                        </div>
+                }
 
         }
 }
