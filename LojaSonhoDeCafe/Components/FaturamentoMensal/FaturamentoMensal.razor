@@ -39,7 +39,8 @@ else
                 <option value="@mes.Value">@mes.Key</option>
             }
         </select>
-        <button class="btn btn-success icone-butao shadow-none" disabled="@EnableBtn" @onclick="(()=> MostrarFaturamento(mesDoAno))">
+        <button class="btn btn-success icone-butao shadow-none" disabled="@EnableBtn"
+            @onclick="(()=> MostrarFaturamento(mesDoAno))">
             Mostrar Faturamento
         </button>
     </div>
@@ -52,7 +53,11 @@ else
         </button>
     }
 
-    <TabelaFaturamentoMensal PagamentosDiarios="PagamentosDiarios"></TabelaFaturamentoMensal>
+    <TabelaFaturamentoMensal PagamentosDiarios="PagamentosDiarios"
+                             TotalPrecoMes="TotalPrecoMes"
+                             TotalQuantProdutos="TotalQuantProdutos"
+                             TotalQuantUsuarios="TotalQuantUsuarios">
+    </TabelaFaturamentoMensal>
 }
 
 
@@ -94,7 +99,6 @@ else
     {
         try
         {
-
             EnableBtn = true;
             NomeDoMes = mesesDoAno.FirstOrDefault(x => x.Value == mesDoAno).Key;
             PagamentosDiarios = await PagamentoService!.ObterTodosPagamentosPorMes(mesDoAno);
@@ -110,6 +114,31 @@ else
 
     }
 
+    // private async Task DownloadTableForExcel( )
+    // {
+    //     EnableBtnDownLoad = true;
+    //     var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+    //         {
+    //             HasHeaderRecord = true
+    //         };
+    //         using (var memoryStream = new MemoryStream())
+    //         using (TextWriter textWriter = new StreamWriter(memoryStream))
+    //         using (var csvWriter = new CsvWriter(textWriter, config))
+    //         {
+    //             await csvWriter.WriteRecordsAsync(PagamentosDiarios);
+
+    //             textWriter.Flush();
+    //             memoryStream.Seek(0, SeekOrigin.Begin);
+    //             using var streamRef = new DotNetStreamReference(memoryStream);
+    //             string nomeArquivo = $"FaturamentoDe{NomeDoMes}.csv";
+    //             await js.InvokeVoidAsync("downloadFileFromStream", nomeArquivo, streamRef);
+    //         }
+
+    //     await Task.Delay(1000);
+    //     EnableBtnDownLoad = false;
+
+    // }
+
     private async Task DownloadTableForExcel( )
     {
         EnableBtnDownLoad = true;
@@ -117,22 +146,53 @@ else
             {
                 HasHeaderRecord = true
             };
-            using (var memoryStream = new MemoryStream())
-            using (TextWriter textWriter = new StreamWriter(memoryStream))
-            using (var csvWriter = new CsvWriter(textWriter, config))
-            {
-                await csvWriter.WriteRecordsAsync(PagamentosDiarios);
+        using (var memoryStream = new MemoryStream())
+        using (TextWriter textWriter = new StreamWriter(memoryStream))
+        using (var csvWriter = new CsvWriter(textWriter, config))
+        {
+            // Escreve o cabeçalho e os dados da tabela de totais
+            csvWriter.WriteField("Total Preco");
+            csvWriter.WriteField("Total Quantidade");
+            csvWriter.WriteField("Total Usuarios");
+            csvWriter.NextRecord();
+            csvWriter.WriteField(TotalPrecoMes);
+            csvWriter.WriteField(TotalQuantProdutos);
+            csvWriter.WriteField(TotalQuantUsuarios);
+            csvWriter.NextRecord();
 
-                textWriter.Flush();
-                memoryStream.Seek(0, SeekOrigin.Begin);
-                using var streamRef = new DotNetStreamReference(memoryStream);
-                string nomeArquivo = $"FaturamentoDe{NomeDoMes}.csv";
-                await js.InvokeVoidAsync("downloadFileFromStream", nomeArquivo, streamRef);
+            // Escreve uma linha em branco para separar as tabelas
+            csvWriter.NextRecord();
+
+            // Escreve o cabeçalho da segunda tabela
+            csvWriter.WriteField("Usuário");
+            csvWriter.WriteField("Email");
+            csvWriter.WriteField("Preço Total");
+            csvWriter.WriteField("Quantidade Total");
+            csvWriter.WriteField("Forma de Pagamento");
+            csvWriter.WriteField("Data do Pagamento");
+            csvWriter.NextRecord();
+
+            // Escreve os dados da segunda tabela
+            foreach (var pagamento in PagamentosDiarios)
+            {
+                csvWriter.WriteField(pagamento.Usuario);
+                csvWriter.WriteField(pagamento.Email);
+                csvWriter.WriteField(pagamento.TotalPrecoDiaria);
+                csvWriter.WriteField(pagamento.TotalQuantDiaria);
+                csvWriter.WriteField(pagamento.EPagamento);
+                csvWriter.WriteField(pagamento.HoraDoPagamento);
+                csvWriter.NextRecord();
             }
+
+            textWriter.Flush();
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            using var streamRef = new DotNetStreamReference(memoryStream);
+            string nomeArquivo = $"FaturamentoDe{NomeDoMes}.csv";
+            await js.InvokeVoidAsync("downloadFileFromStream", nomeArquivo, streamRef);
+        }
 
         await Task.Delay(1000);
         EnableBtnDownLoad = false;
-
     }
 
 
