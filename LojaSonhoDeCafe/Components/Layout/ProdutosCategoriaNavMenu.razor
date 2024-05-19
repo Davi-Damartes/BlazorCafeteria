@@ -11,10 +11,18 @@ else
     @foreach (var categoria in CategoriasDto!)
     {
         var link = "/ProdutosPorCategoria/" + categoria.Id;
+        string iconColorStyle = categoria.Nome switch
+        {
+            "Bebidas" => "color: #B22222",
+            "Salgados" => "color: #FFD700",
+            "Doces" => "color: #FF69B4",
+            "Lanches" => "color: #FFA500",
+            _ => string.Empty
+        };
 
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="@link">
-                <span class="@categoria.IconeCss"></span>&nbsp;@categoria.Nome
+                <span class="@categoria.IconeCss" style="@iconColorStyle"></span>&nbsp;@categoria.Nome
             </NavLink>
         </div>
     }
