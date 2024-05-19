@@ -1,44 +1,89 @@
 ﻿@inject IConfiguration config
 @inject IJSRuntime Js
 
+<div class="col-12 col-md-5 mb-4">
+    <form class="justify-content-center justify-content-md-start mb-3 mb-md-0">
+        <div class="input-group input-group-lg">
+            <input type="text" class="form-control" placeholder="Digite o nome do Produto">
+                <button class="btn btn-dark" type="button">Buscar</button>
+         </div>        
+    </form>
+</div>
+
+<div class="col-12 col-md-7">
+    <div class="d-flex flex-row-reverse justify-content-center justify-content-md-start mb-4">
+        <form class="d-inline-block">
+            <select class="form-select form-select-lg" @bind="ModoExibicao">
+                <option value="menor">Ordernar por menor Preço </option>
+                <option value="maior">Ordernar por maior Preço </option>
+            </select>
+        </form>
+        <nav class="d-inline-block me-3">
+            <ul class="pagination pagination-lg my-0">
+                <li class="page-item">
+                    <a class="page-link shadow-none" href="produtosPorCategoria/1">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link shadow-none" href="produtosPorCategoria/2">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link shadow-none" href="produtosPorCategoria/3">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link shadow-none" href="produtosPorCategoria/4">4</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+@if (ModoExibicao == "menor")
+{
+    Produtos = Produtos!.OrderBy(x => x.Preco).ToList();
+}
+else @if (ModoExibicao == "maior")
+{
+    Produtos = Produtos!.OrderByDescending(x => x.Preco).ToArray();
+}
+
 
 @foreach (var produto in Produtos!)
-{ 
+{
     <div class="card text-center bg-light d-block" title="Detalhes do Produto">
         <div class="btn-group position-absolute end-0" title="Favoritar Produto">
             <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn" id="btn-@produto.Id">
                 <i class="fa-solid fa-heart icone-coracao"></i>
             </button>
         </div>
-            <a href="/ProdutosDetalhes/@produto.Id">
-                <div class="card-body">
-                    <a href="/ProdutosDetalhes/@produto.Id">
-                        @if (!File.Exists(produto.FotoUrl))
-                        {
-                            <img src="@CreateWebPath(produto.FotoUrl!)" class="card-img-top" alt="Imagem do Produto">
-                        }
-                        else
-                        {
-                            <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
-                        }
-                    </a>
-                    <div class="card-header card-preco">
-                        <h5><b>@produto.Preco.ToString("C")</b></h5>
-                    </div>
-                    <h5 class="card-title"><b>@produto.Nome</b></h5>
+        <a href="/ProdutosDetalhes/@produto.Id">
+            <div class="card-body">
+                <a href="/ProdutosDetalhes/@produto.Id">
+                    @if (!File.Exists(produto.FotoUrl))
+                    {
+                        <img src="@CreateWebPath(produto.FotoUrl!)" class="card-img-top" alt="Imagem do Produto">
+                    }
+                    else
+                    {
+                        <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
+                    }
+                </a>
+                <div class="card-header card-preco">
+                    <h5><b>@produto.Preco.ToString("C")</b></h5>
+                </div>
+                <h5 class="card-title"><b>@produto.Nome</b></h5>
                 <p class="card-text mb-2 w-100 limitarLinhas-Card">@produto.Descricao</p>
             </div>
             <div class="card-footer bg-light mb-5 text-center border-0">
-                    <small class="text-success">
-                        <b>Quantidade em Estoque(@produto.QuantidadeEmEstoque)</b>
-                    </small>
-                </div>
-            </a>
-             <div class="mt-6 position-absolute bottom-0 end-0 mb-3 me-3">
-                 <DeletarProduto produto="produto"> </DeletarProduto>
-             </div>
+                <small class="text-success">
+                    <b>Quantidade em Estoque(@produto.QuantidadeEmEstoque)</b>
+                </small>
+            </div>
+        </a>
+        <div class="mt-6 position-absolute bottom-0 end-0 mb-3 me-3">
+            <DeletarProduto produto="produto"> </DeletarProduto>
+        </div>
     </div>
-           
+
 }
 
 @code {
@@ -52,7 +97,9 @@
     [Inject]
     public NavigationManager? NavigationManager { get; set; }
 
+    private string? ModoExibicao { get; set; }
 
+    private string? BuscarPorNome { get; set; } = string.Empty;
 
 
     private string CreateWebPath(string relativePath)
