@@ -16,24 +16,25 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
             _logger = logger;
         }
 
-        public async Task AdicionarPagamento(PagamentoDiarioDto pagamentoDiarioDto)
+        public async Task<bool> AdicionarPagamento(PagamentoDiarioDto pagamentoDiarioDto)
         {
             var LojaAberta = ValidarDataPagamento(pagamentoDiarioDto);
 
             if (pagamentoDiarioDto == null || LojaAberta == false)
             {
                 _logger.LogError("Pagamento inválido");
-                return; 
+                return false; 
             }
             if (LojaAberta == false)
             {
                 _logger.LogError("Pagamento Inválido a Loja está fechada!!!");
-                return;
+                return false;
             }
 
             var pagamento = pagamentoDiarioDto.ConvertePagamentoDtoParaPagamento();
 
             await _pagamentoRepository.AdicionarPagamento(pagamento);
+            return true;
         }
 
         public async Task<IEnumerable<PagamentoDiarioDto>> ObterTodosPagamentosPorMes(int mes)
@@ -49,7 +50,7 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
         private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
         {
             var horaAbertura = new TimeSpan(07, 00, 00);
-            var horaFechamento = new TimeSpan(22, 00, 00);
+            var horaFechamento = new TimeSpan(21, 00, 00);
 
             TimeSpan horaPagamento = pagamento.HoraDoPagamento.TimeOfDay;
 
