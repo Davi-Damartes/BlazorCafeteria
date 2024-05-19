@@ -3,6 +3,23 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Total Preco</th>
+                <th>Total Quantidade</th>
+                <th>Total Usuarios</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@TotalPrecoMes</td>
+                <td>@TotalQuantProdutos</td>
+                <td>@TotalQuantUsuarios</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
                 <th>Usuário</th>
                 <th>Email</th>
                 <th>Preço Total</th>
@@ -35,5 +52,11 @@ else
     [Parameter]
     public IEnumerable<PagamentoDiarioDto>? PagamentosDiarios { get; set; }
 
+    [Parameter]
+    public decimal TotalPrecoMes { get; set; }
+    [Parameter]
+    public int TotalQuantProdutos { get; set; }
+    [Parameter]
+    public int TotalQuantUsuarios { get; set; }
 
 }
