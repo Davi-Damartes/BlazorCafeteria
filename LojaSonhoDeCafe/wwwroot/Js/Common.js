@@ -2,6 +2,12 @@
 
     toastr.options.toastClass = "toastr";
 
+    toastr.options = {
+        toastClass: "toastr toastr-custom",
+        timeOut: 2000
+    };
+
+
     if (type === "success") {
         toastr.success(message, "Operação realizado com Sucesso!!!", { timeOut: 2000 });
     }
