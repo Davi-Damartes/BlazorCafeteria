@@ -50,7 +50,7 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
         private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
         {
             var horaAbertura = new TimeSpan(07, 00, 00);
-            var horaFechamento = new TimeSpan(21, 00, 00);
+            var horaFechamento = new TimeSpan(22, 00, 00);
 
             TimeSpan horaPagamento = pagamento.HoraDoPagamento.TimeOfDay;
 
