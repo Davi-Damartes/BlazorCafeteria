@@ -1,4 +1,8 @@
-@if (PagamentosDiarios != null)
+@if (PagamentosDiarios == null)
+{
+    <h1>Não há registros desse mês</h1>
+}
+else @if (PagamentosDiarios != null)
 {
     <table class="table">
         <thead>
@@ -47,6 +51,7 @@ else
 {
     <h1>Não há registros desse mês</h1>
 }
+
 
 @code{
     [Parameter]
