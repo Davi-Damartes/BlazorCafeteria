@@ -1,5 +1,6 @@
-﻿using LojaSonhoDeCafe.Entities;
+﻿
 using LojaSonhoDeCafe.Models.Dtos;
+using LojaSonhoDeCafe.Models.Entity;
 
 namespace LojaSonhoDeCafe.Repositories.Carrinho
 {

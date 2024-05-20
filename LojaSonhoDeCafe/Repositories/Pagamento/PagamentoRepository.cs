@@ -1,5 +1,5 @@
 ﻿using LojaSonhoDeCafe.Data;
-using LojaSonhoDeCafe.Entities;
+using LojaSonhoDeCafe.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LojaSonhoDeCafe.Repositories.Pagamento

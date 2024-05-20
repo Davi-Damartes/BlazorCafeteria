@@ -1,6 +1,6 @@
 ﻿using LojaSonhoDeCafe.Data;
-using LojaSonhoDeCafe.Entities;
 using LojaSonhoDeCafe.Models.Dtos;
+using LojaSonhoDeCafe.Models.Entity;
 using LojaSonhoDeCafe.Repositories.Produtos;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +29,7 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
             return produto;
         }
 
-        public async Task<IEnumerable<Produto>> ObterTodosOsProdutos( )
+        public async Task<IEnumerable<Produto>> ObterTodosOsProdutos()
         {
             var produtos = await _bancoDeDados
                                 .Produtos
@@ -55,14 +55,14 @@ namespace SonhoDeCafe.Server.Repositories.Produtos
             return produtos;
         }
 
-        public async Task<IEnumerable<Categoria>> ObterCategorias( )
+        public async Task<IEnumerable<Categoria>> ObterCategorias()
         {
             var categorias = await _bancoDeDados.Categorias.ToListAsync();
 
             return categorias;
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutosFavoritos( )
+        public async Task<IEnumerable<Produto>> ObterProdutosFavoritos()
         {
             var produtosFavoritos = await _bancoDeDados
                                 .Produtos.AsQueryable()

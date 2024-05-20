@@ -1,5 +1,4 @@
-﻿using LojaSonhoDeCafe.Components.CarrinhoPages;
-using LojaSonhoDeCafe.Entities;
+﻿using LojaSonhoDeCafe.Models.Entity;
 
 namespace LojaSonhoDeCafe.Repositories.Pagamento
 {
