@@ -77,8 +77,8 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
 
                 if (itensPorCategoria == null)
                 {
-
                     _logger.LogError("Erro ao obter Produtos pela Categorias");
+                    return Enumerable.Empty<ProdutoDto>();
                 }
 
                 var itensPorCategoriaDto = itensPorCategoria!.ConvertProdutosParaDto();
@@ -103,6 +103,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
                 if (produtos == null)
                 {
                     _logger.LogError("Erro ao buscar Produto");
+                    return Enumerable.Empty<ProdutoDto>();
                 }
 
                 var produtosDto = produtos!.ConvertProdutosParaDto();
@@ -126,10 +127,12 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
                 if (produtos == null)
                 {
                     _logger.LogError("Erro ao buscar Produto");
+                    return Enumerable.Empty<ProdutoDto>();
                 }
-                var produtosDto = produtos!.ConvertProdutosParaDto();
-                return produtosDto;
-            
+
+                var produtosDto = produtos.ConvertProdutosParaDto();
+                return produtosDto ?? Enumerable.Empty<ProdutoDto>();
+
             }
 
             catch (Exception)
@@ -144,6 +147,11 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
             try
             {
                 var produto = await _produtoRepository.ObterProdutoPorId(Id);
+                if (produto == null)
+                {
+                    _logger.LogError($"Produto com ID: {Id} não encontrado");
+                    return null!;
+                }
 
                 var produtoDto = produto.ConvertProdutoParaDto();
                 return produtoDto;
@@ -166,13 +174,12 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
                 if (produtoExiste != null)
                 {
                     await _produtoRepository.ExcluirProduto(produtoExiste.Id);
-
                 }
             }
 
             catch (Exception)
             {
-                _logger.LogError($"Erro ao excluit Produto");
+                _logger.LogError($"Erro ao excluir Produto");
                 throw;
             }
         
