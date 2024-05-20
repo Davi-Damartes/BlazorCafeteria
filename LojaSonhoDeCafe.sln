@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaSonhoDeCafe.Client", "L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LojaSonhoDeCafe.Models", "LojaSonhoDeCafe.Models\LojaSonhoDeCafe.Models.csproj", "{60C13FC8-AFA8-43AA-BDC5-7D04A783C2F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaSonhoDeCafe.Api", "LojaSonhoDeCafe.Api\LojaSonhoDeCafe.Api.csproj", "{2ABE8AE0-0A8E-4A2E-A15E-7189FD614424}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{60C13FC8-AFA8-43AA-BDC5-7D04A783C2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60C13FC8-AFA8-43AA-BDC5-7D04A783C2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60C13FC8-AFA8-43AA-BDC5-7D04A783C2F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ABE8AE0-0A8E-4A2E-A15E-7189FD614424}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ABE8AE0-0A8E-4A2E-A15E-7189FD614424}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ABE8AE0-0A8E-4A2E-A15E-7189FD614424}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ABE8AE0-0A8E-4A2E-A15E-7189FD614424}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
