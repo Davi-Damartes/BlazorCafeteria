@@ -18,33 +18,44 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
 
         public async Task<bool> AdicionarPagamento(PagamentoDiarioDto pagamentoDiarioDto)
         {
-            var LojaAberta = ValidarDataPagamento(pagamentoDiarioDto);
-
-            if (pagamentoDiarioDto == null || LojaAberta == false)
+            if (pagamentoDiarioDto == null)
             {
-                _logger.LogError("Pagamento inválido");
-                return false; 
-            }
-            if (LojaAberta == false)
-            {
-                _logger.LogError("Pagamento Inválido a Loja está fechada!!!");
+                _logger.LogError("Pagamento inválido: objeto nulo.");
                 return false;
             }
 
-            var pagamento = pagamentoDiarioDto.ConvertePagamentoDtoParaPagamento();
+            if (!ValidarDataPagamento(pagamentoDiarioDto))
+            {
+                _logger.LogError("Pagamento Inválido: a loja está fechada.");
+                return false;
+            }
 
-            await _pagamentoRepository.AdicionarPagamento(pagamento);
-            return true;
+            try
+            {
+                var pagamento = pagamentoDiarioDto.ConvertePagamentoDtoParaPagamento();
+                await _pagamentoRepository.AdicionarPagamento(pagamento);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao adicionar pagamento.");
+                return false;
+            }
         }
 
         public async Task<IEnumerable<PagamentoDiarioDto>> ObterTodosPagamentosPorMes(int mes)
         {
-            var pagamentos = await _pagamentoRepository.BucarTodosPagamentosPeloMes(mes);
-
-            var pagamentosDto = pagamentos.ConvertListPagamentosParaListPagamentosDto();
-
-
-            return pagamentosDto;
+            try
+            {
+                var pagamentos = await _pagamentoRepository.BucarTodosPagamentosPeloMes(mes);
+                var pagamentosDto = pagamentos.ConvertListPagamentosParaListPagamentosDto();
+                return pagamentosDto;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao obter pagamentos por mês.");
+                return Enumerable.Empty<PagamentoDiarioDto>();
+            }
         }
 
         private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
