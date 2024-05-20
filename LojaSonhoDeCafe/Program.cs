@@ -37,6 +37,9 @@ builder.Services.AddAuthentication(options =>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+
+
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -55,18 +58,18 @@ builder.Services.AddServerSideBlazor().AddCircuitOptions(option => { option.Deta
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
-builder.Services.AddScoped<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
+builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddTransient<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
 
-builder.Services.AddScoped<IProdutoService, ProdutoService>();
-builder.Services.AddScoped<ICarrinhoCompraService, CarrinhoCompraService>();
+builder.Services.AddTransient<IProdutoService, ProdutoService>();
+builder.Services.AddTransient<ICarrinhoCompraService, CarrinhoCompraService>();
 
-builder.Services.AddScoped<CarrinhoCompraRepository>();
-builder.Services.AddScoped<ProdutoRepository>();
 
-builder.Services.AddScoped<IPagamentoRepository, PagamentoRepository>();
-builder.Services.AddScoped<IPagamentoService, PagamentoService>();
+builder.Services.AddTransient<IPagamentoRepository, PagamentoRepository>();
+builder.Services.AddTransient<IPagamentoService, PagamentoService>();
 
+builder.Services.AddTransient<CarrinhoCompraRepository>();
+builder.Services.AddTransient<ProdutoRepository>();
 
 builder.Services.AddBlazoredLocalStorage();
 
@@ -76,12 +79,6 @@ builder.Services.AddScoped<ILocalStorageProdutosService,
 
 builder.Services.AddScoped<ILocalStorageCarrinhoItensService, 
                            LocalStorageCarrinhoItensService>();
-
-//var baseUrl = "https://viacep.com.br/ws";
-//builder.Services.AddSingleton(sp => new HttpClient
-//{
-//    BaseAddress = new Uri(baseUrl)
-//});
 
 
 
