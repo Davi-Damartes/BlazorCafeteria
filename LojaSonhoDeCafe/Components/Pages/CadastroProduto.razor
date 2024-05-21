@@ -71,6 +71,10 @@
     [Inject]
     public IProdutoService? ProdutoService { get; set; }
 
+    
+    [Inject]
+    public IProdutoHttpService? ProdutoHttpService { get; set; }
+
     public IEnumerable<CategoriaDto>? Categorias { get; set; } = new List<CategoriaDto>();
 
 
@@ -110,7 +114,7 @@
 
             if(ProdutoDto.FotoUrl != null)
             {
-                await ProdutoService!.AdicionarProduto(ProdutoDto);
+                var resultado = await ProdutoHttpService!.AdicionarNovoProduto(ProdutoDto);
                 StateHasChanged();
                 NavigationManager!.NavigateTo($"/ProdutosPorCategoria/{ProdutoDto.CategoriaId}");
             }

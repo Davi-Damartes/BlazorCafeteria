@@ -22,6 +22,9 @@
     public IProdutoService? ProdutoService { get; set; }
 
     [Inject]
+    public IProdutoHttpService? IProdutoHttpService { get; set; }
+
+    [Inject]
     private NavigationManager? NavigationManager { get; set; }
 
 
@@ -34,7 +37,7 @@
     {
         if (accepted && _produtoToDelete != null)
         {
-            await ProdutoService!.RemoverProduto(_produtoToDelete!.Id);
+            await IProdutoHttpService!.RemoverProduto(_produtoToDelete!.Id);
             await ShowSuccessToastr();
 
 

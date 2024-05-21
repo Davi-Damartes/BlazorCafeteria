@@ -30,6 +30,9 @@ else
     public IProdutoService? ProdutoService { get; set; }
 
     [Inject]
+    public IProdutoHttpService? Produto2Service { get; set; }
+
+    [Inject]
     public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
 
     [Inject]
@@ -40,13 +43,14 @@ else
     public string? NomeCategoria { get; set; }
     public string? MensagemErro { get; set; }
 
-    protected override async Task OnParametersSetAsync( )
+    protected override async Task OnParametersSetAsync()
     {
         try
         {
             //await GerenciaProdutoLocalStorage!.AtualizarDadosLocalStorage(ProdutosDto);
 
-            ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
+            //ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
+            ProdutosDto = await Produto2Service!.BuscarItensPorCategoria(CategoriaId);
             //ProdutosDto = await GetColecaoProdutosPorCategoria(CategoriaId);
 
 

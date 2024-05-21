@@ -1,6 +1,5 @@
 ﻿@page "/ExibiProdutosFavoritos"
 @inject IConfiguration config
-@inject IProdutoService ProdutoService
 
 @if (Produtos is null && MensagemErro is null)
 {
@@ -41,6 +40,10 @@ else
 }
 @code {
 
+    [Inject]
+    public IProdutoHttpService? ProdutoHttpService { get; set; }
+
+
     public IEnumerable<ProdutoDto>? Produtos { get; set; }
 
     private string? MensagemErro { get; set; }
@@ -54,7 +57,7 @@ else
     {
         try
         {
-            Produtos = await ProdutoService.ObterProdutosFavoritos();
+            Produtos = await ProdutoHttpService!.ObterProdutosFavoritos();
         }
         catch (Exception ex)
         {

@@ -1,31 +1,75 @@
 ﻿@page "/BuscarCep"
 
-<h1>Olá</h1>
+<PageTitle>Teste</PageTitle>
+@if (@Produtos == null)
+{
+    <h1>Aguarde...</h1>
+}
 
-<form>
-    <div class="form-group">
-        <label for="inputCep">Cep:</label>
-        <input type="text" class="form-control shadow-none  mb-3" id="inputCep" @bind="cep" placeholder="Digite so Brsil CEP">
+@if (Produtos != null && Produtos.Any())
+{
+    @foreach (var produto in Produtos!)
+    {
+        <div class="card text-center bg-light d-block" title="Detalhes do Produto">
+            <div class="card-body">
+                <div class="card-header card-preco">
+                    <h5><b>@produto.Preco.ToString("C")</b></h5>
+                </div>
+                <h5 class="card-title"><b>@produto.Nome</b></h5>
+                <p class="card-text mb-2 w-100 limitarLinhas-Card">@produto.Descricao</p>
+            </div>
+            <div class="card-footer bg-light mb-5 text-center border-0">
+                <small class="text-success">
+                    <b>Quantidade em Estoque(@produto.QuantidadeEmEstoque)</b>
+                </small>
+            </div>
+        </div>
+    }
+
+    <h1>1 produtos</h1>
+    <div class="card text-center bg-light d-block" title="Detalhes do Produto">
+        <div class="card-body">
+            <div class="card-header card-preco">
+                <h5><b>@Produto.Preco.ToString("C")</b></h5>
+            </div>
+            <h5 class="card-title"><b>@Produto.Nome</b></h5>
+            <p class="card-text mb-2 w-100 limitarLinhas-Card">@Produto.Descricao</p>
+        </div>
+        <div class="card-footer bg-light mb-5 text-center border-0">
+            <small class="text-success">
+                <b>Quantidade em Estoque(@Produto.QuantidadeEmEstoque)</b>
+            </small>
+        </div>
     </div>
-    <button type="button" class="btn btn-primary" @onclick="BuscarDadosBrasilCep">Consultar CEP</button>
-</form>
-
+}
 
 
 
 @code {
 
+    [Inject]
+    private IProdutoHttpService? IProdutoHttpService { get; set; }
 
-    public HttpClient httpClient = new();
+    public IEnumerable<ProdutoDto>? Produtos { get; set; }
 
-    public BrasilCep? BrasilCep { get; set; }
 
-    public string? cep { get; set; }
+    public ProdutoDto? Produto { get; set; }
 
-    private async Task BuscarDadosBrasilCep( )
+    public string? MensagemErro { get; set; }
+
+    protected override async Task OnInitializedAsync( )
     {
-        var url = $"https://brasilapi.com.br/api/cep/v1/{cep}";
-        BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url);
+        try
+        {
+            Produtos = await IProdutoHttpService!.ObterProdutos();
+            var teste = Produtos.First();
+            Produto = await IProdutoHttpService.ObterUmProduto(teste.Id);
+        }
+
+        catch(Exception ex)
+        {
+            MensagemErro = $"erro> {ex}";
+        }
     }
 
 }

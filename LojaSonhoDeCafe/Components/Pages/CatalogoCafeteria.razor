@@ -76,6 +76,8 @@ else
     [Inject]
     private IProdutoService? ProdutoService { get; set; }
     [Inject]
+    private IProdutoHttpService? Produto2Service { get; set; }
+    [Inject]
     public ICarrinhoCompraService?  CarrinhoCompraService { get; set; }
 
     [Inject]
@@ -93,7 +95,8 @@ else
         {
             await LimpaLocalStorage();
 
-            Produtos = await ProdutoService!.ObterProdutos();
+            //Produtos = await ProdutoService!.ObterProdutos();
+            Produtos = await Produto2Service!.ObterProdutos();
             //Produtos = await GerenciaProdutoLocalStorage!.GetCollection();
 
 
