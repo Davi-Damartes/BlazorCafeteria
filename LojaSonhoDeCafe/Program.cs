@@ -8,6 +8,7 @@ using LojaSonhoDeCafe.Repositories.Produtos;
 using LojaSonhoDeCafe.Services.CarrinhoCompraServices;
 using LojaSonhoDeCafe.Services.CarrinhoLocalStorage;
 using LojaSonhoDeCafe.Services.PagamentoServices;
+using LojaSonhoDeCafe.Services.Produto2Services;
 using LojaSonhoDeCafe.Services.ProdutoServices;
 using LojaSonhoDeCafe.Services.ProdutosLocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -62,6 +63,10 @@ builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddTransient<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
 
 builder.Services.AddTransient<IProdutoService, ProdutoService>();
+builder.Services.AddTransient<IProdutoHttpService, ProdutoHttpService>();
+
+
+
 builder.Services.AddTransient<ICarrinhoCompraService, CarrinhoCompraService>();
 
 
@@ -74,13 +79,18 @@ builder.Services.AddTransient<ProdutoRepository>();
 builder.Services.AddBlazoredLocalStorage();
 
 
-builder.Services.AddScoped<ILocalStorageProdutosService, 
+builder.Services.AddScoped<ILocalStorageProdutosService,
                            LocalStorageProdutosService>();
 
-builder.Services.AddScoped<ILocalStorageCarrinhoItensService, 
+builder.Services.AddScoped<ILocalStorageCarrinhoItensService,
                            LocalStorageCarrinhoItensService>();
 
 
+var baseUrl = "https://localhost:7135";
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri(baseUrl)
+});
 
 
 var app = builder.Build();
@@ -97,6 +107,9 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
+
 
 app.UseHttpsRedirection();
 
