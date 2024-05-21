@@ -21,7 +21,6 @@ namespace LojaSonhoDeCafe.Models.Dtos
 
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!!!")]
-
         public decimal Preco { get; set; }
 
         [Required(ErrorMessage = "O campo quantidade em estoque é obrigatório!!!")]
