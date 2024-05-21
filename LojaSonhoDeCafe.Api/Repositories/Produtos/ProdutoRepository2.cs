@@ -67,6 +67,7 @@ namespace LojaSonhoDeCafe.Api.Repositories
         {
             var produtosFavoritos = await _bancoDeDados
                                 .Produtos.AsQueryable()
+                                .Include(a => a.Categoria)
                                 .Where(x => x.IsFavorito == true)
                                 .ToListAsync();
 
