@@ -31,5 +31,24 @@ namespace LojaSonhoDeCafe.Api.Repositories.Pagamento
                                .OrderBy(x => x.HoraDoPagamento)
                                .ToListAsync();
         }
+
+
+        public async Task<IEnumerable<Produto>> ObterTodosProdutosPorCategoria(int id)
+        {
+            var produtos = await _bancoDeDados
+                              .Produtos
+                              .Include(a => a.Categoria)
+                              .Where(x => x.CategoriaId == id)
+                              .ToListAsync();
+
+            return produtos;
+        }
+
+        public async Task<IEnumerable<Categoria>> ObterCategorias( )
+        {
+            var categorias = await _bancoDeDados.Categorias.ToListAsync();
+
+            return categorias;
+        }
     }
 }

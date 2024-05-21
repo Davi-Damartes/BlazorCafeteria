@@ -8,5 +8,10 @@ namespace LojaSonhoDeCafe.Api.Repositories.Pagamento
         Task AdicionarPagamento(PagamentoDiario pagamentoDiario);
 
         Task<IEnumerable<PagamentoDiario>> BucarTodosPagamentosPeloMes(int mes);
+
+        Task<IEnumerable<Produto>> ObterTodosProdutosPorCategoria(int id);
+
+        Task<IEnumerable<Categoria>> ObterCategorias( );
+
     }
 }
