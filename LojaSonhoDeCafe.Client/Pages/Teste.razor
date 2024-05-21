@@ -1,0 +1,53 @@
+﻿@page "/Teste"
+
+<PageTitle>Teste</PageTitle>
+@if(@Produtos == null)
+{
+     <h1>Aguarde...</h1> 
+}
+
+@if (Produtos != null && Produtos.Any())
+{
+    @foreach (var produto in Produtos!)
+    {
+        <div class="card text-center bg-light d-block" title="Detalhes do Produto">
+                <div class="card-body">
+                    <div class="card-header card-preco">
+                        <h5><b>@produto.Preco.ToString("C")</b></h5>
+                    </div>
+                    <h5 class="card-title"><b>@produto.Nome</b></h5>
+                    <p class="card-text mb-2 w-100 limitarLinhas-Card">@produto.Descricao</p>
+                </div>
+                <div class="card-footer bg-light mb-5 text-center border-0">
+                    <small class="text-success">
+                        <b>Quantidade em Estoque(@produto.QuantidadeEmEstoque)</b>
+                    </small>
+                </div>
+        </div>
+    }
+
+}
+
+
+
+@code {
+
+    [Inject]
+    private IProdutoService? ProdutoService { get; set; }
+
+    public IEnumerable<ProdutoDto>? Produtos { get; set; }
+
+    protected override async Task OnInitializedAsync( )
+    {
+        try
+        {
+            Produtos = await ProdutoService.ObterProdutos();
+        }
+
+        catch
+        {
+
+        }
+    }
+
+}
