@@ -1,6 +1,6 @@
-﻿using LojaSonhoDeCafe.Entities;
-using LojaSonhoDeCafe.Enum;
+﻿using LojaSonhoDeCafe.Enum;
 using LojaSonhoDeCafe.Models.Dtos;
+using LojaSonhoDeCafe.Models.Entity;
 
 namespace LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao
 {

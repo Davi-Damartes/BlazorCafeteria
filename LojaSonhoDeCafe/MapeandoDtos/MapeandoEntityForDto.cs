@@ -1,7 +1,5 @@
-﻿using LojaSonhoDeCafe.Components.CarrinhoPages;
-using LojaSonhoDeCafe.Entities;
-using LojaSonhoDeCafe.Enum;
-using LojaSonhoDeCafe.Models.Dtos;
+﻿using LojaSonhoDeCafe.Models.Dtos;
+using LojaSonhoDeCafe.Models.Entity;
 
 namespace SonhoDeCafe.Server.MapeandoDto
 {
