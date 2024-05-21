@@ -1,4 +1,4 @@
-﻿using LojaSonhoDeCafe.Entities;
+﻿using LojaSonhoDeCafe.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LojaSonhoDeCafe.Data
