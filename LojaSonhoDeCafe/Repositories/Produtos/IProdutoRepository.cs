@@ -6,11 +6,13 @@ namespace LojaSonhoDeCafe.Repositories.Produtos
     public interface IProdutoRepository
     {
         Task<IEnumerable<Produto>> ObterTodosOsProdutos();
+
         Task<Produto> ObterProdutoPorId(Guid Id);
+
+        Task<IEnumerable<Produto>> ObterProdutosFavoritos();
 
         Task<IEnumerable<Produto>> ObterTodosProdutosPorCategoria(int id);
 
-        Task<IEnumerable<Produto>> ObterProdutosFavoritos();
 
         Task<IEnumerable<Categoria>> ObterCategorias();
 
