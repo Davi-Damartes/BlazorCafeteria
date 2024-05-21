@@ -17,19 +17,18 @@ namespace SonhoDeCafe.Server.MapeandoDto
                     }).ToList();
         }
 
-        public static IEnumerable<ProdutoDto> ConvertProdutosParaDto(
-                                                this IEnumerable<Produto> produtos)
+        public static IEnumerable<ProdutoDto> ConvertProdutosParaDto(this IEnumerable<Produto> produtos)
         {
             return (from produto in produtos
                     select new ProdutoDto
                     {
-                        Id = produto.Id,
                         Nome = produto.Nome,
                         Descricao = produto.Descricao,
                         FotoUrl = produto.FotoUrl,
                         Preco = produto.Preco,
                         QuantidadeEmEstoque = produto.QuantidadeEmEstoque,
-                        CategoriaId = produto.Categoria!.Id,
+                        IsFavorito = produto.IsFavorito,
+                        CategoriaId = produto.CategoriaId,
                         CategoriaNome = produto.Categoria.Nome
                     }).ToList();
 
