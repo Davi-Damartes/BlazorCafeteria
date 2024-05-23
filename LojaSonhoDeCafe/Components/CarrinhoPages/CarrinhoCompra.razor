@@ -40,7 +40,7 @@ else
 
                             <div class="text-start mt-3">
                                 <span>Preço: <b>@item.Preco.ToString("C")</b></span>
-                                <input type="number" class="text-sm-center" @bind="@item.Quantidade" />
+                                <input type="number" class="text-sm-center" @bind="@item.Quantidade" min="1" />
                                 <button class="btn btn-info btn-sm shadow-none EscondeButtonAtualizaQnt" @onclick="(()=>
                                     AtualizarQuantidadeCarrinho_Click(item.Id, item.Quantidade))" title="Adicionar Quantidade">
                                     <i class="fa-regular fa-circle-check" style="font-size: 25px;"></i>
