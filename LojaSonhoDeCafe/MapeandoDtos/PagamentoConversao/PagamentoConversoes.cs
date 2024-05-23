@@ -10,6 +10,7 @@ namespace LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao
         {
             return new PagamentoDiario
             {
+                //ProdutoId = diarioDto.ProdutoId,
                 Usuario = diarioDto.Usuario,
                 Email = diarioDto.Email,
                 TotalQuantDiaria = diarioDto.TotalQuantDiaria,
@@ -21,12 +22,12 @@ namespace LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao
         }
 
         public static IEnumerable<PagamentoDiarioDto> ConvertListPagamentosParaListPagamentosDto(
-                                                this IEnumerable<PagamentoDiario> pagamentos
-            )
+                                                this IEnumerable<PagamentoDiario> pagamentos)
         {
             return (from pagamento in pagamentos
                     select new PagamentoDiarioDto
                     {
+                        //ProdutoId = pagamento.ProdutoId,
                         Usuario = pagamento.Usuario,
                         Email = pagamento.Email,
                         TotalQuantDiaria = pagamento.TotalQuantDiaria,
@@ -37,7 +38,30 @@ namespace LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao
 
         }
 
-       
+        public static IEnumerable<PagamentoDiarioDto> ConverteListPagamentosParaListPagamentosDtoNOVO(
+                                               this IEnumerable<PagamentoDiario> pagamentos)
+        {
+            return pagamentos.Select(pagamento => new PagamentoDiarioDto
+            {
+                Usuario = pagamento.Usuario,
+                Email = pagamento.Email,
+                TotalQuantDiaria = pagamento.TotalQuantDiaria,
+                TotalPrecoDiaria = pagamento.TotalPrecoDiaria,
+                EPagamento = (EPagamentoDto)pagamento.EPagamento,
+                HoraDoPagamento = pagamento.HoraDoPagamento,
+                ProdutosDoPagamento = pagamento.PagamentoProdutos
+                              .Select(produto => new PagamentoProdutoDto
+                              {
+                                  ProdutoId = produto.ProdutoId,
+                                  QuantidadeComprada = produto.QuantidadeComprada,
+                                  ProdutoNome = produto.ProdutoNome,
+                                  PrecoTotal = produto.PrecoTotal
+                              }).ToList()
+            }).ToList();
+
+        }
+
+
 
     }
 }
