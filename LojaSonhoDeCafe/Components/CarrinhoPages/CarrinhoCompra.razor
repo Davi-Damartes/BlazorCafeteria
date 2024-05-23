@@ -71,7 +71,8 @@ else
     else
     {
         <div>
-            <h3><b>Carrinho De Compra está vazio...</b>.</h3>
+            <img src="/Imagens/CarrinhoEmpty.png">
+            <h3><b>Carrinho De Compra vazio...</b>.</h3>
         </div>
     }
 
@@ -81,6 +82,10 @@ else
 @code {
     [Inject]
     public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+
+    [Inject]
+    public ICarrinhoCompraHttpService? CarrinhoCompraHttpService { get; set; }
+
     [Inject]
     public NavigationManager? NavigationManager { get; set; }
 
@@ -102,13 +107,14 @@ else
     }
 
 
-    protected override async Task OnInitializedAsync( )
+    protected override async Task OnInitializedAsync()
     {
         try
         {
 
             //CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage!.GetCollection();
-            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            //CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            CarrinhoCompraItens = await CarrinhoCompraHttpService.ObterItensCarrinho(UsuarioLogado.UsuarioId);
 
             //CalculaResumoCarrinhoTotal();
             CarrinhoChanged();
@@ -126,6 +132,8 @@ else
     {
         return CarrinhoCompraItens!.FirstOrDefault(i => i.Id == id) ?? null!;
     }
+
+
     protected async Task AtualizarQuantidadeCarrinho_Click(int id, int quantidade)
     {
         try
@@ -138,8 +146,10 @@ else
                         Quantidade = quantidade
                     };
 
-                var retornaItemAtualizadoDto = await CarrinhoCompraService!
-                        .AtualizarQuantidade(atualizaCarrinhoDto.CarrinhoId, atualizaCarrinhoDto);
+               // var retornaItemAtualizadoDto = await CarrinhoCompraService!
+                        //.AtualizarQuantidade(atualizaCarrinhoDto.CarrinhoId, atualizaCarrinhoDto);
+                var retornaItemAtualizadoDto = await CarrinhoCompraHttpService!
+                                              .AtualizarQuantidade(atualizaCarrinhoDto.CarrinhoId, atualizaCarrinhoDto);
 
                 await AtualizarPrecoTotalItem(retornaItemAtualizadoDto);
                 //CalculaResumoCarrinhoTotal();
@@ -167,8 +177,8 @@ else
 
     protected async Task DeletaCarrinhoItem_Click(int id)
     {
-        var carrinhoItemDto = await CarrinhoCompraService!.DeletaItem(id);
-
+        //var carrinhoItemDto = await CarrinhoCompraService!.DeletaItem(id);
+        var carrinhoItemDto = await CarrinhoCompraHttpService!.DeletaItemDoCarrinho(id);
 
         //Remove item da coleção de memória do client
         await RemoveCarrinhoItem(id);
