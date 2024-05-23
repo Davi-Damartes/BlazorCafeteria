@@ -22,6 +22,7 @@ namespace SonhoDeCafe.Server.MapeandoDto
             return (from produto in produtos
                     select new ProdutoDto
                     {
+                        Id = produto.Id,
                         Nome = produto.Nome,
                         Descricao = produto.Descricao,
                         FotoUrl = produto.FotoUrl,
@@ -44,6 +45,7 @@ namespace SonhoDeCafe.Server.MapeandoDto
                 FotoUrl = produto.FotoUrl,
                 Preco = produto.Preco,
                 QuantidadeEmEstoque = produto.QuantidadeEmEstoque,
+                IsFavorito = produto.IsFavorito,
                 CategoriaId = produto.Categoria!.Id,
                 CategoriaNome = produto.Categoria.Nome
             };
