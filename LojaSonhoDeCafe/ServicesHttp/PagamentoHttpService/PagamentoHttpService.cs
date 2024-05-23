@@ -18,6 +18,12 @@ namespace LojaSonhoDeCafe.ServicesHttp.PagamentoHttpService
 
         public async Task<bool> AdicionarPagamento(PagamentoDiarioDto pagamentoDiarioDto)
         {
+            if (!ValidarDataPagamento(pagamentoDiarioDto))
+            {
+                _logger.LogError("Pagamento Inválido: a loja está fechada.");
+                return false;
+            }
+
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("api/Pagamento", pagamentoDiarioDto);
@@ -68,6 +74,17 @@ namespace LojaSonhoDeCafe.ServicesHttp.PagamentoHttpService
                 _logger.LogError($"Erro ao Realizar Pagamento {ex}");
                 throw;
             }
+        }
+
+        private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
+        {
+            var horaAbertura = new TimeSpan(07, 00, 00);
+            var horaFechamento = new TimeSpan(22, 00, 00);
+
+            TimeSpan horaPagamento = pagamento.HoraDoPagamento.TimeOfDay;
+
+            // Verifica se a hora do pagamento está entre 07:00:00 e 19:00:00
+            return horaPagamento >= horaAbertura && horaPagamento <= horaFechamento;
         }
     }
 }
