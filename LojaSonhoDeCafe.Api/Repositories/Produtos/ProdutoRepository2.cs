@@ -1,11 +1,9 @@
 ﻿using LojaSonhoDeCafe.Api.Banco;
-using LojaSonhoDeCafe.Api.Repositories.Produtos;
-using LojaSonhoDeCafe.Data;
 using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace LojaSonhoDeCafe.Api.Repositories
+namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 {
     public class ProdutoRepository2 : IProdutoRepository2
     {
@@ -99,25 +97,17 @@ namespace LojaSonhoDeCafe.Api.Repositories
 
         }
 
-        public async Task AtualizaProduto(ProdutoDto produtoDto)
+        public async Task AtualizaProdutoFavorito(ProdutoDto produtoDto)
         {
-            var produto = await _bancoDeDados.Produtos.SingleOrDefaultAsync(x => x.Id == produtoDto.Id) ;
-
-            if(produto != null)
+            var produto = await _bancoDeDados.Produtos.SingleOrDefaultAsync(x => x.Id == produtoDto.Id); 
+             if(produto != null)
             { 
-                produto.Nome = produtoDto.Nome;
-                produto.Descricao = produtoDto.Descricao;
-                produto.FotoUrl = produtoDto.FotoUrl;
-                produto.Preco = produtoDto.Preco;
-                produto.QuantidadeEmEstoque = produtoDto.QuantidadeEmEstoque;
                 produto.IsFavorito = produtoDto.IsFavorito;
-                produto.CategoriaId = produtoDto.CategoriaId;
-
-
                 await _bancoDeDados.SaveChangesAsync();
             }
-
         }
+
+
         public async Task ExcluirProduto(Guid Id)
         {
             var produtoExiste = await ProdutoIdJaExisteAsync(Id);

@@ -16,7 +16,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
         Task AdicionarNovoProdutoDto(ProdutoDto produto);
 
-        Task AtualizaProduto(ProdutoDto produtoDto);
+        Task AtualizaProdutoFavorito(ProdutoDto produtoDto);
 
         Task ExcluirProduto(Guid Id);
 
