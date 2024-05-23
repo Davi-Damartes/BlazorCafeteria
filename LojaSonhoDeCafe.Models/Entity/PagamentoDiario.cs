@@ -1,7 +1,6 @@
 ﻿using LojaSonhoDeCafe.Enum;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 namespace LojaSonhoDeCafe.Models.Entity
 {
     public class PagamentoDiario : BaseEntity
@@ -28,6 +27,7 @@ namespace LojaSonhoDeCafe.Models.Entity
         [Required]
         public DateTime HoraDoPagamento { get; set; } = DateTime.Now;
 
+        public ICollection<PagamentoProduto>? PagamentoProdutos { get; set; } = new List<PagamentoProduto>();
 
     }
 }
