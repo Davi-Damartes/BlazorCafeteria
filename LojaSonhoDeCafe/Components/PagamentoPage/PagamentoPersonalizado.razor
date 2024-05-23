@@ -185,7 +185,12 @@ else
     public IPagamentoService? PagamentoService { get; set; }
 
     [Inject]
+    public IPagamentoHttpService? PagamentoHttpService { get; set; }
+
+    [Inject]
     public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+    [Inject]
+    public ICarrinhoCompraHttpService? CarrinhoCompraHttpService { get; set; }
 
     public CarrinhoItemDto? CarrinhoItem { get; set; }
 
@@ -216,7 +221,7 @@ else
     {
         try
         {
-            CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+            CarrinhoCompraItens = await CarrinhoCompraHttpService!.ObterItensCarrinho(UsuarioLogado.UsuarioId);
             AtualizarPrecoEQuantidade();
 
             foreach (var item in CarrinhoCompraItens)
@@ -243,11 +248,13 @@ else
             EnableBtn = false;
             if (PagamentoDiario != null)
             {
-                var resultado = await PagamentoService!.AdicionarPagamento(PagamentoDiario);
+                //var resultado = await PagamentoService!.AdicionarPagamento(PagamentoDiario);
+                var resultado = await PagamentoHttpService!.AdicionarPagamento(PagamentoDiario);
                 if (resultado == true)
                 {
                     await Task.Delay(1000);
-                    await CarrinhoCompraService!.LimpaItensCarrinhoDeCompra();
+                    //await CarrinhoCompraService!.LimpaItensCarrinhoDeCompra();
+                    await CarrinhoCompraHttpService!.LimpaItensCarrinhoDeCompra();
 
                     ZerarContadorCarrinhoCompra();
                     await ShowSuccessToastr();
