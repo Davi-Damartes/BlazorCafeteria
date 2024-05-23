@@ -19,7 +19,7 @@ else
             concluir o pedido
         </b>.
     </h3>
-    <EditForm Model="@PagamentoDiario" OnValidSubmit="AdicionaPagamento_Click">
+    <EditForm Model="@PagamentoDiarioPag" OnValidSubmit="AdicionaPagamento_Click">
         <DataAnnotationsValidator />
         <ValidationSummary />
         <div class="d-flex justify-content-around flex-wrap border rounded-top pt-4 px-3">
@@ -32,11 +32,11 @@ else
                     </h3>
                     <hr>
                     <div class="form-floating mb-3">
-                        <InputText id="txtNome" type="text" class="form-control" @bind-Value="PagamentoDiario!.Usuario" placeholder="" />
+                        <InputText id="txtNome" type="text" class="form-control" @bind-Value="PagamentoDiarioPag!.Usuario" placeholder="" />
                         <label for="txtNome" class="text-black-50">Nome</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText id="txtEmail" type="text" class="form-control" @bind-Value="PagamentoDiario!.Email" placeholder="" />
+                        <InputText id="txtEmail" type="text" class="form-control" @bind-Value="PagamentoDiarioPag!.Email" placeholder="" />
                         <label for="txtEmail" class="text-black-50">Email</label>
                     </div>
 
@@ -75,7 +75,7 @@ else
                     <hr>
                     <h5 class="text-dark"><b>Tipo de Pagamento:</b></h5>
 
-                    <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiario.EPagamento">
+                    <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiarioPag.EPagamento">
                         <div class="icones-Pagamento text-dark">
                             <label class="opcao-pagamento text-dark">
                                 <i class="fa-brands fa-cc-visa"></i>
@@ -194,9 +194,11 @@ else
 
     public CarrinhoItemDto? CarrinhoItem { get; set; }
 
-    private PagamentoDiarioDto? PagamentoDiario { get; set; } = new();
+    private PagamentoDiarioDto? PagamentoDiarioPag { get; set; } = new();
 
     public List<CarrinhoItemDto>? CarrinhoCompraItens { get; set; }
+
+    public List<PagamentoProdutoDto>? ListaProdutosPagamento { get; set; } = new List<PagamentoProdutoDto>();
 
 
     private BrasilCep? BrasilCep { get; set; } = new();
@@ -217,12 +219,31 @@ else
     public bool EnableBtn { get; set; }
 
 
-    protected override async Task OnInitializedAsync( )
+    protected override async Task OnInitializedAsync()
     {
         try
         {
             CarrinhoCompraItens = await CarrinhoCompraHttpService!.ObterItensCarrinho(UsuarioLogado.UsuarioId);
             AtualizarPrecoEQuantidade();
+
+
+            ListaProdutosPagamento = new List<PagamentoProdutoDto>();
+
+            // Para cada item no carrinho de compras, crie um novo PagamentoProduto
+            foreach (var item in CarrinhoCompraItens)
+            {
+                var pagamentoProduto = new PagamentoProdutoDto
+                    {                               
+                        ProdutoId = item.ProdutoId,
+                        QuantidadeComprada = item.Quantidade,
+                        ProdutoNome = item.ProdutoNome,
+                        PrecoTotal = item.PrecoTotal
+                    };
+
+                // Adicione o PagamentoProduto à lista de PagamentoProdutos
+                ListaProdutosPagamento.Add(pagamentoProduto);
+            }
+
 
             foreach (var item in CarrinhoCompraItens)
             {
@@ -237,19 +258,23 @@ else
 
     private async Task AdicionaPagamento_Click( )
     {
+      
+       
+
         EnableBtn = true;
         try
-        {
-            EnableBtn = true;
-            PagamentoDiario!.TotalQuantDiaria = CarrinhoItem!.Quantidade;
-            PagamentoDiario.TotalPrecoDiaria = CarrinhoItem.PrecoTotal;
+        {         
 
+            EnableBtn = true;
             await Task.Delay(1000);
             EnableBtn = false;
-            if (PagamentoDiario != null)
+
+            AdicionarListaProdNoPagamento();
+
+            if (PagamentoDiarioPag != null)
             {
                 //var resultado = await PagamentoService!.AdicionarPagamento(PagamentoDiario);
-                var resultado = await PagamentoHttpService!.AdicionarPagamento(PagamentoDiario);
+                var resultado = await PagamentoHttpService!.AdicionarPagamento(PagamentoDiarioPag);
                 if (resultado == true)
                 {
                     await Task.Delay(1000);
@@ -275,6 +300,33 @@ else
             MensagemErro = ex.Message;
         }
     }
+
+
+    private void AdicionarListaProdNoPagamento( )
+    {
+        var ListaProdutosPagamento = new List<PagamentoProdutoDto>();
+
+        // Preenche a lista de PagamentoProdutoDto com os produtos do carrinho
+        foreach (var item in CarrinhoCompraItens)
+        {
+            var pagamentoProduto = new PagamentoProdutoDto
+                {
+                    ProdutoId = item.ProdutoId,
+                    QuantidadeComprada = item.Quantidade,
+                    ProdutoNome = item.ProdutoNome,
+                    PrecoTotal = item.PrecoTotal
+                };
+
+            ListaProdutosPagamento.Add(pagamentoProduto);
+        }
+
+        // Define a lista de produtos do pagamento
+        PagamentoDiarioPag!.TotalPrecoDiaria = PrecoTotal;
+        PagamentoDiarioPag!.TotalQuantDiaria = QuantidadeTotal;
+        PagamentoDiarioPag.ProdutosDoPagamento = ListaProdutosPagamento;
+    }
+
+
 
 
 
@@ -307,7 +359,7 @@ else
         CarrinhoCompraService!.RaiseEventCarrinhoCompraChanged(QuantidadeTotal);
     }
 
-    private void AtualizarPrecoEQuantidade( )
+    private void AtualizarPrecoEQuantidade()
     {
         SetPrecoTotal();
         SetQuantidadeTotal();
