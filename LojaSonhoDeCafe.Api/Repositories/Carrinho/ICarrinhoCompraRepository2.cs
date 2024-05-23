@@ -12,9 +12,9 @@ namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
 
         Task<CarrinhoItem> DeletaItem(int id);
 
-        Task LimpaItensDoCarrinho();
+        Task<bool> LimpaItensDoCarrinho();
 
-        Task<CarrinhoItem> ObtemItemDoCarrinho(int id);
+        Task<CarrinhoItem> ObtemItemDoCarrinhoPorId(int id);
 
         Task<IEnumerable<CarrinhoItem>> ObtemItensDoCarinho(string usuarioId);
 

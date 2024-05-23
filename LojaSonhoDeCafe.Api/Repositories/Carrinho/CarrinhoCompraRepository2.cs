@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
 {
-    public class CarrinhoCompraRepository : ICarrinhoCompraRepository2
+    public class CarrinhoCompraRepository2 : ICarrinhoCompraRepository2
     {
         private readonly BancoDeDado _context;
 
-        public CarrinhoCompraRepository(BancoDeDado context)
+        public CarrinhoCompraRepository2(BancoDeDado context)
         {
             _context = context;
         }
@@ -31,33 +31,6 @@ namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
 
             return carrinhoItemExistente;
         }
-
-        //public async Task<CarrinhoItem> AdicionaItem(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
-        //{
-        //    if (await CarrinhoItemJaExiste(carrinhoItemAdicionaDto.CarrinhoId,
-        //        carrinhoItemAdicionaDto.ProdutoId) == false)
-        //    {
-        //        //verifica se o produto existe 
-        //        //cria um novo item no carrinho
-        //        var itemDoCarrinho = await (from produto in _context.Produtos
-        //                          where produto.Id == carrinhoItemAdicionaDto.ProdutoId
-        //                          select new CarrinhoItem
-        //                          {
-        //                              CarrinhoId = carrinhoItemAdicionaDto.CarrinhoId,
-        //                              ProdutoId = produto.Id,
-        //                              Quantidade = carrinhoItemAdicionaDto.Quantidade
-        //                          }).SingleOrDefaultAsync();
-
-        //        //se o item existe então incluir o item no carrinho.
-        //        if (itemDoCarrinho is not null)
-        //        {
-        //            var resultado = await _context.CarrinhoItens.AddAsync(itemDoCarrinho);
-        //            await _context.SaveChangesAsync();
-        //            return resultado.Entity;
-        //        }
-        //    }
-        //    return null!;
-        //}
 
         public async Task<CarrinhoItem> AdicionaItem(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
         {
@@ -115,7 +88,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
         }
 
 
-        public async Task<CarrinhoItem> ObtemItemDoCarrinho(int id)
+        public async Task<CarrinhoItem> ObtemItemDoCarrinhoPorId(int id)
         {
             return await (from carrinho in _context.Carrinhos
                           join carrinhoItem in _context.CarrinhoItens
@@ -162,12 +135,13 @@ namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
 
         }
 
-        public async Task LimpaItensDoCarrinho()
+        public async Task<bool> LimpaItensDoCarrinho()
         {
             var itensDoCarrinho = await _context.CarrinhoItens.ToListAsync();
 
             _context.CarrinhoItens.RemoveRange(itensDoCarrinho);
             await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
