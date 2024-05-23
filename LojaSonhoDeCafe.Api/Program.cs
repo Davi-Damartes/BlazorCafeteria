@@ -1,5 +1,6 @@
 using LojaSonhoDeCafe.Api.Banco;
-using LojaSonhoDeCafe.Api.Repositories;
+using LojaSonhoDeCafe.Api.Repositories.Carrinho;
+using LojaSonhoDeCafe.Api.Repositories.Pagamento;
 using LojaSonhoDeCafe.Api.Repositories.Produtos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
@@ -19,7 +20,9 @@ builder.Services.AddDbContext<BancoDeDado>(options =>
 
 builder.Services.AddScoped<IProdutoRepository2, ProdutoRepository2>();
 
-//builder.Services.AddScoped<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
+builder.Services.AddScoped<ICarrinhoCompraRepository2, CarrinhoCompraRepository2>();
+
+builder.Services.AddScoped<IPagamentoRepository2, PagamentoRepository2>();
 
 //builder.Services.AddScoped<ICarrinhoCompraService, CarrinhoCompraService>();
 
