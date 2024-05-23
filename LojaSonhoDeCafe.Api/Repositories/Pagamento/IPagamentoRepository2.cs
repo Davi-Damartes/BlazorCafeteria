@@ -1,17 +1,14 @@
 ﻿using LojaSonhoDeCafe.Components.CarrinhoPages;
+using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Models.Entity;
 
 namespace LojaSonhoDeCafe.Api.Repositories.Pagamento
 {
     public interface IPagamentoRepository2
     {
-        Task AdicionarPagamento(PagamentoDiario pagamentoDiario);
-
         Task<IEnumerable<PagamentoDiario>> BucarTodosPagamentosPeloMes(int mes);
 
-        Task<IEnumerable<Produto>> ObterTodosProdutosPorCategoria(int id);
-
-        Task<IEnumerable<Categoria>> ObterCategorias( );
+        Task<bool> AdicionarPagamento(PagamentoDiarioDto pagamentoDiario);
 
     }
 }
