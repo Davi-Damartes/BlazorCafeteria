@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using CsvHelper.Configuration.Attributes;
-using System.Drawing;
 
 namespace LojaSonhoDeCafe.Models.Dtos
 {
     public class PagamentoDiarioDto
     {
+
         [MaxLength(100)]
         [Required(ErrorMessage = "O campo {0} não pode ser nullo!")]
         [Name("Usuario")]
@@ -34,7 +34,9 @@ namespace LojaSonhoDeCafe.Models.Dtos
         [Required]
         [Name("Hora Do Pagamento")]   
         public DateTime HoraDoPagamento { get; set; } = DateTime.Now;
+
+
+        public List<PagamentoProdutoDto> ProdutosDoPagamento { get; set; } = new List<PagamentoProdutoDto>();
+
     }
-
-
 }
