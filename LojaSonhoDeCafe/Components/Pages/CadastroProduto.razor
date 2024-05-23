@@ -71,9 +71,10 @@
     [Inject]
     public IProdutoService? ProdutoService { get; set; }
 
-    
+
     [Inject]
     public IProdutoHttpService? ProdutoHttpService { get; set; }
+
 
     public IEnumerable<CategoriaDto>? Categorias { get; set; } = new List<CategoriaDto>();
 
@@ -91,7 +92,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Categorias = await ProdutoService!.BuscarCategorias();
+       // Categorias = await ProdutoService!.BuscarCategorias();
+        Categorias = await ProdutoHttpService!.BuscaCategorias();
 
     }
 

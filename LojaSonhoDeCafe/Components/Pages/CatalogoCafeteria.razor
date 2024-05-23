@@ -79,6 +79,8 @@ else
     private IProdutoHttpService? Produto2Service { get; set; }
     [Inject]
     public ICarrinhoCompraService?  CarrinhoCompraService { get; set; }
+    [Inject]
+    public ICarrinhoCompraHttpService? CarrinhoCompraHttpService { get; set; }
 
     [Inject]
     public ILocalStorageProdutosService? GerenciaProdutoLocalStorage { get; set; }

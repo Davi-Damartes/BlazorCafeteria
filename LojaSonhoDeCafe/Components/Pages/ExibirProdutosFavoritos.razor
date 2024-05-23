@@ -1,10 +1,9 @@
 ﻿@page "/ExibiProdutosFavoritos"
 @inject IConfiguration config
 
-@if (Produtos is null && MensagemErro is null)
+@if (ProdutosFavoritos is null && MensagemErro is null)
 {
     <ExibirSpinner />
-    <h3>Nenhum Produto escolhido como Favorito...</h3>
 }
 else if (MensagemErro is not null)
 {
@@ -12,39 +11,56 @@ else if (MensagemErro is not null)
 }
 else
 {
-    <h3>Produtos Favoritos</h3>
-    @foreach (var produto in Produtos!)
-    {
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <a href="/produtosdetalhes/@produto.Id">
-                        @if (File.Exists(produto.FotoUrl))
-                        {
-                            <img src="@produto.FotoUrl" class="card-img-top" alt="imagem do produto">
-                        }
-                        else
-                        {
-                            <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" alt="imagem do produto">
-                        }
-                     </a>
-                     <h5 class="card-title">@produto.Nome</h5>
-                     <p class="card-text descricao">@produto.Descricao</p>
-                     <a href="/produtosdetalhes/@produto.Id">
-                        <h5 class="card-title mb-3 preco-formatacao text-center">
-                            @produto.Preco.ToString("c")
-                        </h5>
-                    </a>
-                </div>
-            </div>
-    }
+    <div class="container-flex produtos-container">
+        <div class="row mt-3">
+                @if (ProdutosFavoritos!.Count() > 0)
+                {
+                <h4 class="text-center mb-1 top-100"><b>Produtos Favoritos</b></h4>
+                    <div class="produtos">
+                    @foreach (var produto in ProdutosFavoritos!)
+                    {
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <a href="/produtosdetalhes/@produto.Id">
+                                    @if (File.Exists(produto.FotoUrl))
+                                    {
+                                        <img src="@produto.FotoUrl" class="card-img-top" alt="imagem do produto">
+                                    }
+                                    else
+                                    {
+                                        <img src="@CreateWebPath(produto.FotoUrl)" class="card-img-top" alt="imagem do produto">
+                                    }
+                                    </a>
+                                    <h5 class="card-title">@produto.Nome</h5>
+                                    <p cl ass="card-text descricao">@produto.Descricao</p>
+                                    <a href="/produtosdetalhes/@produto.Id">
+                                    <h5 class="card-title mb-3 preco-formatacao text-center">
+                                        @produto.Preco.ToString("c")
+                                    </h5>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    </div>
+                }
+                else
+                {
+                    <div class="elemento">
+                        <h1>Adicione produtos aos seus favoritos :D</h1>
+                        <h2>Bastar clicar no Iconé de coração <i class="fa-solid fa-heart"></i> na página dos produtos</h2>
+                    </div>
+                }
+        </div>
+    </div>
 }
+
 @code {
 
     [Inject]
     public IProdutoHttpService? ProdutoHttpService { get; set; }
 
 
-    public IEnumerable<ProdutoDto>? Produtos { get; set; }
+    public IEnumerable<ProdutoDto>? ProdutosFavoritos { get; set; }
 
     private string? MensagemErro { get; set; }
 
@@ -57,7 +73,7 @@ else
     {
         try
         {
-            Produtos = await ProdutoHttpService!.ObterProdutosFavoritos();
+            ProdutosFavoritos = await ProdutoHttpService!.ObterProdutosFavoritos();
         }
         catch (Exception ex)
         {

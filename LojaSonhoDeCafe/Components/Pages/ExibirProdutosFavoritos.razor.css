@@ -50,3 +50,18 @@ a:hover .card {
 .preco-formatacao {
    color: green;
 }
+
+
+.container-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.produtos {
+    /* Estilos para a seção de produtos */
+    flex: 1; /* Ocupa todo o espaço disponível no container flexível */
+}
+
+.elemento {
+    margin-top: 50px; /* Espaçamento entre o topo do container e o elemento */
+}

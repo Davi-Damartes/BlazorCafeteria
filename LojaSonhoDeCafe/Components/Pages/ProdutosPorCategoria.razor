@@ -30,10 +30,10 @@ else
     public IProdutoService? ProdutoService { get; set; }
 
     [Inject]
-    public IProdutoHttpService? Produto2Service { get; set; }
+    public IProdutoHttpService? ProdutoHttpService { get; set; }
 
     [Inject]
-    public ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+    public ICarrinhoCompraHttpService? CarrinhoCompraService { get; set; }
 
     [Inject]
     public ILocalStorageProdutosService? GerenciaProdutoLocalStorage { get; set; }
@@ -50,7 +50,7 @@ else
             //await GerenciaProdutoLocalStorage!.AtualizarDadosLocalStorage(ProdutosDto);
 
             //ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
-            ProdutosDto = await Produto2Service!.BuscarItensPorCategoria(CategoriaId);
+            ProdutosDto = await ProdutoHttpService!.BuscarItensPorCategoria(CategoriaId);
             //ProdutosDto = await GetColecaoProdutosPorCategoria(CategoriaId);
 
 

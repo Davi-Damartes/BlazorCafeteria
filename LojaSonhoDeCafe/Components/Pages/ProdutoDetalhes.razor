@@ -56,7 +56,12 @@ else
     private IProdutoService? ProdutoService { get; set; }
 
     [Inject]
+    private IProdutoHttpService? ProdutoHttpService { get; set; }
+
+    [Inject]
     private ICarrinhoCompraService? CarrinhoCompraService { get; set; }
+    [Inject]
+    private ICarrinhoCompraHttpService? CarrinhoCompraHttpService { get; set; }
 
     [Inject]
     public ILocalStorageProdutosService? GerenciaProdutoLocalStorage { get; set; }
@@ -89,8 +94,9 @@ else
         {
             CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage.GetCollection();
 
-            Produto = await ProdutoService!.ObterUmProduto(Id);
-            //Produto = await GetProdutoPorId(Id);
+            //Produto = await ProdutoService!.ObterUmProduto(Id);
+            Produto = await ProdutoHttpService!.ObterUmProduto(Id);
+            //Produto = await GetProdutoPorIdStorage(Id);
         }
 
             catch (Exception ex)
@@ -104,8 +110,8 @@ else
             try
             {
 
-                var carrinhoItemDto = await CarrinhoCompraService!.AdicionaItemDto(carrinhoItemAdicionaDto);
-
+                //var carrinhoItemDto = await CarrinhoCompraService!.AdicionaItemDto(carrinhoItemAdicionaDto);
+                var carrinhoItemDto = await CarrinhoCompraHttpService!.AdicionaItemCarrinhoDto(carrinhoItemAdicionaDto);
 
                 if (carrinhoItemDto != null)
                 {
@@ -125,7 +131,7 @@ else
 
         }
 
-        private async Task<ProdutoDto> GetProdutoPorId(Guid id)
+        private async Task<ProdutoDto> GetProdutoPorIdStorage(Guid id)
         {
             var produtosDto = await GerenciaProdutoLocalStorage!.GetCollection();
 
