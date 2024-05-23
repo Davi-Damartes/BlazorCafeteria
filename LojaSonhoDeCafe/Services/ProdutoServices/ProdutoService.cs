@@ -33,7 +33,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
 
         }
 
-        public async Task AtualizaProdutoService(ProdutoDto produtoDto)
+        public async Task AtualizaProdutoServiceFavorito(ProdutoDto produtoDto)
         {
             try
             {

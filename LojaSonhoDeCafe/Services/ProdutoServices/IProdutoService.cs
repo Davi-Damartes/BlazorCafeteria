@@ -15,7 +15,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
         
         Task AdicionarProduto(ProdutoDto produto);
 
-        Task AtualizaProdutoService(ProdutoDto produtoDto);
+        Task AtualizaProdutoServiceFavorito(ProdutoDto produtoDto);
 
         Task RemoverProduto(Guid Id);
 
