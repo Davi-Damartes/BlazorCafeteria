@@ -1,5 +1,6 @@
 ﻿using LojaSonhoDeCafe.Models.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace LojaSonhoDeCafe.Api.Banco
 {
@@ -67,6 +68,10 @@ namespace LojaSonhoDeCafe.Api.Banco
 
             });
 
+            modelBuilder.Entity<PagamentoProduto>()
+                        .HasOne(pp => pp.PagamentoDiario)
+                        .WithMany(pd => pd.PagamentoProdutos)
+                        .HasForeignKey(pp => pp.PagamentoDiarioId);
 
         }
 
@@ -82,6 +87,7 @@ namespace LojaSonhoDeCafe.Api.Banco
 
         public DbSet<PagamentoDiario> PagamentosDiarios { get; set; }
 
+        public DbSet<PagamentoProduto> PagamentoProdutos { get; set; }
 
     }
 }
