@@ -19,8 +19,4 @@
     <ProjectReference Include="..\LojaSonhoDeCafe\LojaSonhoDeCafe.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\CarrinhoController\" />
-  </ItemGroup>
-
 </Project>
