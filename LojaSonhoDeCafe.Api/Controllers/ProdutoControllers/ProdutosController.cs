@@ -125,6 +125,28 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoControllers
         }
 
 
+        [HttpPatch]
+        public async Task<ActionResult<ProdutoDto>> AtualizarProdutoFavorito(ProdutoDto produtoDto)
+        {
+            try
+            {
+                var produtoExiste = await _produtoRepository.ObterProdutoPorId(produtoDto.Id);
+
+                if (produtoExiste == null)
+                {
+                    return NotFound("Produto não encontrado existe!");
+                }
+                await _produtoRepository.AtualizaProdutoFavorito(produtoDto);
+                return Ok("Produto Atualizado com Sucesso!");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acessar a base de dados");
+            }
+        }
+
+
+
         [HttpPost]
         public async Task<ActionResult<ProdutoDto>> AdicionarProduto(ProdutoDto produtoDto)
         {
