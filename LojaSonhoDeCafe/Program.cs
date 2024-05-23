@@ -8,9 +8,11 @@ using LojaSonhoDeCafe.Repositories.Produtos;
 using LojaSonhoDeCafe.Services.CarrinhoCompraServices;
 using LojaSonhoDeCafe.Services.CarrinhoLocalStorage;
 using LojaSonhoDeCafe.Services.PagamentoServices;
-using LojaSonhoDeCafe.Services.Produto2Services;
 using LojaSonhoDeCafe.Services.ProdutoServices;
 using LojaSonhoDeCafe.Services.ProdutosLocalStorage;
+using LojaSonhoDeCafe.ServicesHttp.CarrinhoComprasHttpService;
+using LojaSonhoDeCafe.ServicesHttp.PagamentoHttpService;
+using LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -56,33 +58,37 @@ builder.Services.AddDbContext<BancoDeDados>(options =>
 builder.Services.AddServerSideBlazor().AddCircuitOptions(option => { option.DetailedErrors = true; });
 
 
-
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
-builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
-builder.Services.AddTransient<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<ICarrinhoCompraRepository, CarrinhoCompraRepository>();
 
-builder.Services.AddTransient<IProdutoService, ProdutoService>();
-builder.Services.AddTransient<IProdutoHttpService, ProdutoHttpService>();
+builder.Services.AddScoped<CarrinhoCompraRepository>();
+builder.Services.AddScoped<ProdutoRepository>();
+
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<ICarrinhoCompraService, CarrinhoCompraService>();
+
+
+builder.Services.AddScoped<IProdutoHttpService, ProdutoHttpService>();
+builder.Services.AddScoped<ICarrinhoCompraHttpService, CarrinhoCompraHttpService>();
+
+builder.Services.AddScoped<IPagamentoHttpService, PagamentoHttpService>();
+
+
+builder.Services.AddScoped<IPagamentoRepository, PagamentoRepository>();
+builder.Services.AddScoped<IPagamentoService, PagamentoService>();
 
 
 
-builder.Services.AddTransient<ICarrinhoCompraService, CarrinhoCompraService>();
-
-
-builder.Services.AddTransient<IPagamentoRepository, PagamentoRepository>();
-builder.Services.AddTransient<IPagamentoService, PagamentoService>();
-
-builder.Services.AddTransient<CarrinhoCompraRepository>();
-builder.Services.AddTransient<ProdutoRepository>();
 
 builder.Services.AddBlazoredLocalStorage();
 
 
-builder.Services.AddScoped<ILocalStorageProdutosService,
+builder.Services.AddTransient<ILocalStorageProdutosService,
                            LocalStorageProdutosService>();
 
-builder.Services.AddScoped<ILocalStorageCarrinhoItensService,
+builder.Services.AddTransient<ILocalStorageCarrinhoItensService,
                            LocalStorageCarrinhoItensService>();
 
 
