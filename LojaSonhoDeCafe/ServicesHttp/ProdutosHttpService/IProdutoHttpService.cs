@@ -16,6 +16,8 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
 
         Task<ProdutoDto> AdicionarNovoProduto(ProdutoDto produto);
 
+        Task AdicionarEstoqueAoProduto(Guid Id,int Quantidade);
+
         Task AtualizaProdutoFavorito(ProdutoDto produtoDto);
 
         Task RemoverProduto(Guid Id);
