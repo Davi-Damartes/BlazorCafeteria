@@ -51,10 +51,11 @@ else @if (ModoExibicao == "maior")
 {
     <div class="card text-center bg-light d-block" title="Detalhes do Produto">
         <div class="btn-group position-absolute end-0" title="Favoritar Produto">
-            <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn" id="btn-@produto.Id">
-                <i class="fa-solid fa-heart icone-coracao"></i>
-            </button>
+                <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn" id="btn-@produto.Id">
+                    <i class="fa-solid fa-heart icone-coracao"></i>
+                </button>               
         </div>
+
         <a href="/ProdutosDetalhes/@produto.Id">
             <div class="card-body">
                 <a href="/ProdutosDetalhes/@produto.Id">
@@ -74,14 +75,26 @@ else @if (ModoExibicao == "maior")
                 <p class="card-text mb-2 w-100 limitarLinhas-Card">@produto.Descricao</p>
             </div>
             <div class="card-footer bg-light mb-5 text-center border-0">
-                <small class="text-success">
-                    <b>Quantidade em Estoque(@produto.QuantidadeEmEstoque)</b>
-                </small>
+                @if (@produto.QuantidadeEmEstoque > 0)
+                {
+                    <small class="text-success">
+                        <b>Quantidade em Estoque(@produto.QuantidadeEmEstoque)</b>
+                    </small>
+                }
+                else
+                {
+                    <h2 class="text-danger">
+                        <b>Produto Esgotado!!!</b>
+                    </h2>
+                }
             </div>
         </a>
+
+
         <div class="mt-6 position-absolute bottom-0 end-0 mb-3 me-3">
             <DeletarProduto produto="produto"> </DeletarProduto>
         </div>
+
     </div>
 
 }
