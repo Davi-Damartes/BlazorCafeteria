@@ -6,6 +6,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
     public interface IProdutoRepository2
     {
         Task<IEnumerable<Produto>> ObterTodosOsProdutos();
+
         Task<Produto> ObterProdutoPorId(Guid Id);
 
         Task<IEnumerable<Produto>> ObterTodosProdutosPorCategoria(int id);
@@ -15,6 +16,8 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
         Task<IEnumerable<Categoria>> ObterCategorias();
 
         Task AdicionarNovoProdutoDto(ProdutoDto produto);
+
+        Task AdicionarEstoqueAoProduto(Guid Id, int Quantidade);
 
         Task AtualizaProdutoFavorito(ProdutoDto produtoDto);
 
