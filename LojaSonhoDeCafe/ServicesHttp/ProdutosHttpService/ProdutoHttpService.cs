@@ -3,6 +3,7 @@ using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Models.Entity;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
 {
@@ -171,6 +172,25 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
 
         }
 
+        public async Task AdicionarEstoqueAoProduto(Guid Id, int Quantidade)
+        {
+            try
+            {
+                var response = await _httpClient.PutAsync($"api/Produtos/{Id}/{Quantidade}", null);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError($"Erro ao atualizar produto favorito: {response.ReasonPhrase}");
+                    throw new Exception("Erro ao atualizar o estoque do produto.");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Erro ao atualizar o estoque {ex}");
+                throw;
+            }
+        }
+
         public async Task AtualizaProdutoFavorito(ProdutoDto produtoDto)
         {
             try
@@ -205,5 +225,7 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
             }
 
         }
+
+        
     }
 }
