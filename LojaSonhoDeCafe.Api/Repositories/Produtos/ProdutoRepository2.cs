@@ -97,6 +97,20 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
         }
 
+
+        public async Task AdicionarEstoqueAoProduto(Guid Id, int Quantidade)
+        {
+            var produto = await ObterProdutoPorId(Id);
+
+            if(produto != null || Quantidade > 0)
+            {
+                produto.QuantidadeEmEstoque = Quantidade;
+                await _bancoDeDados.SaveChangesAsync();
+            }
+
+
+        }
+
         public async Task AtualizaProdutoFavorito(ProdutoDto produtoDto)
         {
             var produto = await _bancoDeDados.Produtos.SingleOrDefaultAsync(x => x.Id == produtoDto.Id); 
@@ -131,5 +145,6 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
             return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
         }
 
+      
     }
 }
