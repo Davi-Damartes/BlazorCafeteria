@@ -32,15 +32,39 @@ else
                         <i class="bi bi-heart-fill"></i>
                     </div>
                     <p><b>@Produto.Preco.ToString("c")&nbsp;(@Produto.QuantidadeEmEstoque items restantes)</b></p>
-                    <button class="btn btn-success shadow-none"
-                            @onclick="() => AdicionarAoCarrinho_Click(new CarrinhoItemAdicionaDto
+                    @if(@Produto.QuantidadeEmEstoque > 0)
+                    {
+                        <button class="btn btn-success shadow-none mt-3"
+                                @onclick="() => AdicionarAoCarrinho_Click(new CarrinhoItemAdicionaDto
                                     {
                                      CarrinhoId = UsuarioLogado.CarrinhoId,
                                      ProdutoId = Produto.Id,
                                      Quantidade = 1
                                      })">
-                        Incluir no Carrinho
-                    </button>
+                            Incluir no Carrinho
+                        </button>
+                    }
+                    else
+                    {
+                        <h1 class="text-danger">
+                            Produto Esgotado!!!
+                        </h1>
+                        <div class="mt-2">  
+                            <button class="btn btn-info shadow-none">
+                                <a href="/ReabastecerProdutos" style="color: white; text-decoration: none">
+                                    Reabastecer Produtos
+                                </a>
+                            </button>
+                        </div>
+
+                        <div class="mt-2">
+                            <button class="btn btn-primary shadow-none">
+                                <a href="/ProdutosPorCategoria/@Produto.CategoriaId" style="color: white; text-decoration: none">
+                                        Voltar para Lista de Produtos
+                                </a>
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -77,7 +101,7 @@ else
     public Guid Id { get; set; }
 
 
-    public ProdutoDto? Produto { get; set; }
+    public ProdutoDto? Produto { get; set; } 
 
 
     public string? MensagemErro {get;set;}
@@ -92,7 +116,7 @@ else
     {
         try
         {
-            CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage.GetCollection();
+            CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage!.GetCollection();
 
             //Produto = await ProdutoService!.ObterUmProduto(Id);
             Produto = await ProdutoHttpService!.ObterUmProduto(Id);
