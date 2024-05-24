@@ -1,0 +1,106 @@
+﻿@font-face {
+    font-family: "RobotoSlab";
+    font-family: "RedditSans";
+    src: url('../../wwwroot/Fonts/RobotoSlab-VariableFont_wght.ttf');
+    src: url('../../wwwroot/Fonts/RedditSans-VariableFont_wght.ttf');
+}
+
+
+
+.container-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.produtos {
+    flex: 1; 
+}
+
+.elemento {
+    margin-top: 50px;
+}
+
+a {
+    text-decoration: none;
+    color: #FF0000;
+}
+
+    a:hover .card {
+        box-shadow: 0 4px 8px 0 rgb(0, 255, 255), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    a:hover img {
+        transform: scale(1.07);
+        transition: 0.5s ease-in-out;
+    }
+
+.card {
+    transition: box-shadow 0.3s ease-in-out;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    margin-right: 15px;
+    margin-bottom: 30px;
+    transition: box-shadow 0.3s ease-in-out;
+    overflow: hidden;
+    color: black;
+    width: 18rem;
+    height: auto;
+    border-radius: 15px;
+    flex-direction: column;
+}
+
+    .card:hover {
+        box-shadow: 0 4px 8px 0 #ffffff, 0 6px 20px 0 #15e6d9;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .card img {
+        transition: transform 0.5s ease-in-out;
+        margin-bottom: 10px;
+        margin-top: 50px;
+        width: 220px;
+        height: 250px;
+        border-radius: 18px;
+    }
+
+    .card:hover img {
+        transform: scale(1.07);
+    }
+
+.card-body {
+    color: #333333;
+    flex: 1;
+}
+
+.card-header {
+    font-family: 'RobotoSlab';
+    color: #FF0000;
+    border: none;
+    text-decoration: none;
+}
+
+.card-title {
+    font-family: 'RobotoSlab';
+}
+
+.card-text {
+    font-family: 'Segoe UI';
+}
+
+.card-preco {
+    font-family: 'Yu Gothic UI'
+}
+
+.card-footer{
+
+}
+
+.card-body .limitarLinhas-Card {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
