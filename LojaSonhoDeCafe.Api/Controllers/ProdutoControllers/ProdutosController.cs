@@ -146,6 +146,30 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoControllers
         }
 
 
+        [HttpPut("{Id:Guid}/{Quantidade:int}")]
+        public async Task<IActionResult> AdicionarEstoqueAoProduto(Guid Id, int Quantidade)
+        {
+            try
+            {
+                var produtoExistente = await _produtoRepository.ObterProdutoPorId(Id);
+
+                if (produtoExistente == null)
+                {
+                    return NotFound("Produto não encontrado existe!");
+                }
+                if(Quantidade <= 0 || Quantidade > 80)
+                {
+                    return BadRequest("Quantidade Inválida");
+                }
+                await _produtoRepository.AdicionarEstoqueAoProduto(Id, Quantidade);
+                return Ok($"Produto Reabastecido com sucesso! {produtoExistente}");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acessar a base de dados");
+            }
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<ProdutoDto>> AdicionarProduto(ProdutoDto produtoDto)
