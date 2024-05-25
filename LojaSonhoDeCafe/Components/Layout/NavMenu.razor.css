@@ -70,8 +70,8 @@
 /*Icone Faturamento E Cadastrar Produto*/
 .nav-item {
     font-size: 0.9rem;
+
     padding-bottom: 0.5rem;
-   
 }
 
     .nav-item ::deep .nav-link {
@@ -84,6 +84,7 @@
         align-items: center;
         line-height: 3rem;
         width: 100%;
+        font-size: 19px;
     }
 
     .nav-item ::deep a.active {
@@ -100,9 +101,6 @@
     .nav-item ::deep .nav-link:hover i{
        text-decoration: none;
     }
-
-
-
 
 
 .nav-scrollable {
