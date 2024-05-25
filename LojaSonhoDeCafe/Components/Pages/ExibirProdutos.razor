@@ -1,16 +1,8 @@
 ﻿@inject IConfiguration config
 @inject IJSRuntime Js
 
-<div class="col-12 col-md-5 mb-4">
-    <form class="justify-content-center justify-content-md-start mb-3 mb-md-0">
-        <div class="input-group input-group-lg">
-            <input type="text" class="form-control" placeholder="Digite o nome do Produto">
-                <button class="btn btn-dark" type="button">Buscar</button>
-         </div>        
-    </form>
-</div>
 
-<div class="col-12 col-md-7">
+<div class="col-12 col-md-12">
     <div class="d-flex flex-row-reverse justify-content-center justify-content-md-start mb-4">
         <form class="d-inline-block">
             <select class="form-select form-select-lg" @bind="ModoExibicao">
