@@ -1,6 +1,7 @@
 ﻿@page "/ReabastecerProdutos"
 
 @inject IConfiguration config
+@inject IJSRuntime jsruntime
 
 @if (@ProdutosEsgotados is null)
 {
@@ -94,20 +95,32 @@ else
 
     private async Task AbastecerProduto_click(Guid Id, int Quantidade)
     {
-        if(Quantidade > 80 && Quantidade <= 0)
+        if(Quantidade > 80 || Quantidade <= 0)
         {
             MensagemErro = "Quantidade Inválida";
+            await ShowFailToastr();
+
         }
-
-        await ProdutoHttpService.AdicionarEstoqueAoProduto(Id, Quantidade);
-
-        NavigationManager!.NavigateTo("/Produtos");
-
+        else
+        {
+            await ProdutoHttpService!.AdicionarEstoqueAoProduto(Id, Quantidade);
+            await ShowSuccessToastr();
+            await Task.Delay(1000);
+            NavigationManager!.NavigateTo("/Produtos");           
+        }
     }
 
 
 
+    public async Task ShowSuccessToastr( )
+    {
+        await jsruntime.ToastrSuccess("Produto reabastecido com Sucesso!!!");
+    }
 
+    public async Task ShowFailToastr( )
+    {
+        await jsruntime.ToastrFail("Erro ao abastecer produto!");
+    }
 
 
     private string CreateWebPath(string relativePath)
