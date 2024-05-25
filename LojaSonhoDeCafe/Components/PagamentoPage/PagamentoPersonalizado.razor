@@ -142,7 +142,7 @@ else
 
             <div class="mb-4 mx-2 flex-even">
                 <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiarioPag.EPagamento">
-                    <InputRadio Name="EPagamento" class="btn-check" autocomplete="off" id="pag3" Value="EPagamentoDto.Dinheiro" />
+                    <InputRadio Name="EPagamento" class="btn-check" autocomplete="off" id="pag3" Value="EPagamentoDto.Dinheiro"/>
                     <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag3">
                         <h3>
                             <b class="text-dark">Dinheiro</b>
@@ -247,10 +247,6 @@ else
 
 
 
-
-
-
-
     protected override async Task OnInitializedAsync()
     {
         try
@@ -313,7 +309,7 @@ else
                     ZerarContadorCarrinhoCompra();
                     await ShowSuccessToastr();
 
-                    NavigationManager!.NavigateTo("/ ");
+                    NavigationManager!.NavigateTo("/Produtos");
 
                 }
                 else
