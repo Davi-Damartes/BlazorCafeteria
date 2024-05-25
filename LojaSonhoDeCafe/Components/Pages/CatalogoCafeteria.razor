@@ -18,16 +18,7 @@
                                        orderby prodPorCatGrupo.Key
                                        select prodPorCatGrupo;
 
-                <div class="row"> 
-                    <div class="col-12 col-md-5 mb-4">
-                        <form class="justify-content-center justify-content-md-start
-                            mb-3 mb-md-0">
-                            <div class="input-group input-group-lg">
-                                <input type="text" class="form-control" placeholder="Digite o nome do Produto">
-                                <button class="btn btn-dark" type="button">Buscar</button>
-                            </div>
-                        </form>
-                    </div>
+                @* <div class="row">                
                     <div class="col-12 col-md-7">
                         <div class="d-flex flex-row-reverse justify-content-center justify-content-md-start">
                             <form class="d-inline-block">
@@ -35,34 +26,18 @@
                                     <option>Ordernar por menor Preço </option>
                                     <option>Ordernar por maior Preço </option>
                                 </select>
-                            </form>
-                            <nav class="d-inline-block me-3">
-                                <ul class="pagination pagination-sm my-0">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">1</a>
-                                        </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
-                                        </li>
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#">3</a>
-                                        </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">4</a>
-                                        </li>
-                                </ul>
-                            </nav>
+                            </form>                       
                         </div>
                     </div> 
-                 </div>
+                 </div> *@
 
                   
                 @foreach (var prodGrupo in produtosPorCategoria)
                 {
-                        <div class="row mt-3">
-                            <h4 class="mb-5">@prodGrupo.FirstOrDefault(pg => pg.CategoriaId == prodGrupo.Key)!.CategoriaNome</h4>
-                            <ExibirProdutos Produtos="@prodGrupo"></ExibirProdutos>
-                        </div>
+                    <div class="row mt-3">
+                        <h4 class="mb-5">@prodGrupo.FirstOrDefault(pg => pg.CategoriaId == prodGrupo.Key)!.CategoriaNome</h4>
+                        <ExibirProdutos Produtos="@prodGrupo"></ExibirProdutos>
+                    </div>
                 }
 
         }
