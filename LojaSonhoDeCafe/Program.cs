@@ -81,6 +81,7 @@ builder.Services.AddScoped<IPagamentoService, PagamentoService>();
 
 
 
+builder.Services.AddQuickGridEntityFrameworkAdapter();
 
 builder.Services.AddBlazoredLocalStorage();
 
