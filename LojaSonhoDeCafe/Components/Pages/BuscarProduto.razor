@@ -1,0 +1,58 @@
+﻿@page "/BuscaProdutos"
+
+@if (ProdutosDtos is null )
+{
+    <ExibirSpinner />
+}
+else
+{
+    <div class="grid">
+        <QuickGrid Items="@BuscandoProdutos">
+            <PropertyColumn Property="@(p => p.Nome)" Sortable="true" Title="ProdutoDto">
+                <ColumnOptions>
+                    <div class="search-box">
+                        <label for="form-control">Buscar Produto</label>
+                        <input type="search" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Nome Produto..." />
+                    </div>
+                </ColumnOptions>
+            </PropertyColumn>
+            <PropertyColumn Property="@(p => p.Descricao)" Title="ProdutoDto" />
+            <PropertyColumn Property="@(p => p.IsFavorito)" Sortable="true" Title="ProdutoDto" />
+        </QuickGrid>
+
+    </div>
+}
+
+
+@code {
+    [Inject]
+    public IProdutoHttpService? ProdutoHttpService { get; set; }
+
+    public IEnumerable<ProdutoDto>? ProdutosDtos { get; set; }
+
+    IQueryable<ProdutoDto>? itemsQueryable;
+
+    string? nameFilter;
+
+    protected override async Task OnInitializedAsync( )
+    {
+        var produtos = await ProdutoHttpService!.ObterProdutos(); 
+        ProdutosDtos = produtos.ToList(); 
+        itemsQueryable = ProdutosDtos.AsQueryable();
+    }
+
+    IQueryable<ProdutoDto> BuscandoProdutos
+    {
+        get
+        {
+            var result = itemsQueryable;
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                result = result.Where(c => c.Nome.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
+            }
+
+            return result;
+        }
+    }
+}
