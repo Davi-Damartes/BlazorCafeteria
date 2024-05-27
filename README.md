@@ -4,7 +4,7 @@
 Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blazor web app, utilizando EF Core e um banco de dados SQL Server. A aplicação inclui componentes modernos como QuickGrid para exibição de dados e Blazored. LocalStorage para armazenamento local. A API web subjacente, construída com ASP.NET Core, permite operações CRUD completas refletindo diretamente no banco de dados, enquanto a biblioteca CsvHelper facilita a exportação de dados csv.
 ## Documentação
 
-[Documentação](https://link-da-documentação)
+[Documentação]([https://link-da-documentação](https://github.com/Davi-Damartes/BlazorCafeteria))
 
 
 ## Funcionalidades
