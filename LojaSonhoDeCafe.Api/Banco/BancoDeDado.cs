@@ -68,10 +68,10 @@ namespace LojaSonhoDeCafe.Api.Banco
 
             });
 
-            modelBuilder.Entity<PagamentoProduto>()
-                        .HasOne(pp => pp.PagamentoDiario)
-                        .WithMany(pd => pd.PagamentoProdutos)
-                        .HasForeignKey(pp => pp.PagamentoDiarioId);
+            //modelBuilder.Entity<PagamentoProduto>()
+            //            .HasOne(pp => pp.PagamentoDiario)
+            //            .WithMany(pd => pd.PagamentoProdutos)
+            //            .HasForeignKey(pp => pp.PagamentoDiarioId);
 
         }
 
