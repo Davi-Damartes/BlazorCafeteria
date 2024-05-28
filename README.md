@@ -16,8 +16,10 @@ Simulador de Pagamento: Processamento de compras com opções de pagamento via c
 
 
 ## Demonstração
+
+- Listagem dos Produtos
  
-https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/99052200-a150-444d-851c-526b6b6f70c8
+https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/c5932993-70c8-454b-91dc-f8a61014eb02
 
 
 - Produtos Separados pela Categoria.
