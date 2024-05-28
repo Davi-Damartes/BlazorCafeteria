@@ -67,6 +67,7 @@ namespace SonhoDeCafe.Server.MapeandoDto
                         Preco = produto.Preco,
                         CarrinhoId = carrinhoItem.CarrinhoId,
                         Quantidade = carrinhoItem.Quantidade,
+                        QuantidadeEmEstoque = produto.QuantidadeEmEstoque,
                         PrecoTotal = produto.Preco * carrinhoItem.Quantidade
                     }).ToList();
         }
