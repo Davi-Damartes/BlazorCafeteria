@@ -19,9 +19,20 @@ Simulador de Pagamento: Processamento de compras com opções de pagamento via c
  
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/99052200-a150-444d-851c-526b6b6f70c8
 
+
+- Produtos Separados pela Categoria.
+  
+https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/394a505c-e4e8-4a66-b8fd-f54f48074ce0
+
+- Produtos Favoritos
+
+  https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/ad764168-95ce-45e1-bfd5-4c0e29995456
+
+
 - Simulação de Pagamento.
- 
-https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/881d4e53-c327-420d-8931-cca5b758e6e6
+
+https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/2fabb9d2-0787-4387-8310-63575fe0c892
+
 
 - Download faturamento:
 
