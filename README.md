@@ -10,7 +10,7 @@ Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blaz
 - Promoções: Carousel dinâmico exibindo produtos em promoção.
 - Gerenciamento de Produtos: Cadastro, reabastecimento, favoritamento e exclusão de produtos com validação de campos.
 - Carrinho de Compras: Adição, remoção e ajuste de quantidade de itens no carrinho.
-- Simulador de Pagamento: Processamento de compras com opções de pagamento via cartão, boleto ou dinheiro, refletindo na quantidade de estoque.
+Simulador de Pagamento: Processamento de compras com opções de pagamento via cartão, boleto ou dinheiro, refletindo na quantidade de estoque. Além de realizar a busca de endereço por CEP através de uma API externa.
 - Controle de Funcionamento: Restrições de pagamento fora do horário de funcionamento da loja.
 - Relatório de Faturamento: Tabela de faturamento mensal com opção de download em formato do Excel (.csv).
 
