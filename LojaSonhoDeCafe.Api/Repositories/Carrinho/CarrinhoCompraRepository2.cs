@@ -99,7 +99,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
                               Id = carrinhoItem.Id,
                               ProdutoId = carrinhoItem.ProdutoId,
                               Quantidade = carrinhoItem.Quantidade,
-                              CarrinhoId = carrinhoItem.CarrinhoId
+                              CarrinhoId = carrinhoItem.CarrinhoId,
                           }).SingleOrDefaultAsync() ?? null!;
         }
 
@@ -115,7 +115,8 @@ namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
                               Id = carrinhoItem.Id,
                               ProdutoId = carrinhoItem.ProdutoId,
                               Quantidade = carrinhoItem.Quantidade,
-                              CarrinhoId = carrinhoItem.CarrinhoId
+                              CarrinhoId = carrinhoItem.CarrinhoId,
+                              QuantidadeEmEstoque = carrinhoItem.QuantidadeEmEstoque
                           }).ToListAsync();
         }
 
