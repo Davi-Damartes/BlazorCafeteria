@@ -12,6 +12,8 @@ namespace LojaSonhoDeCafe.Models.Entity
 
         public int Quantidade { get; set; }
 
+        public int QuantidadeEmEstoque { get; set; }
+
 
         public Carrinho? Carrinho { get; set; }
         public Produto? Produto { get; set; }

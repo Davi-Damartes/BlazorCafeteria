@@ -15,5 +15,7 @@
         public decimal Preco { get; set; }
         public decimal PrecoTotal { get; set; }
 
+        public int QuantidadeEmEstoque { get; set; }
+
     }
 }
