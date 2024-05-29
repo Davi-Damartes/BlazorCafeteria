@@ -13,23 +13,10 @@
         <h3 class="mb-3"> Produtos</h3>
         @if (Produtos.Count() > 0)
         {
-            var produtosPorCategoria = from produto in Produtos
-                                       group produto by produto.CategoriaId into prodPorCatGrupo
-                                       orderby prodPorCatGrupo.Key
-                                       select prodPorCatGrupo;
-
-                @* <div class="row">                
-                    <div class="col-12 col-md-7">
-                        <div class="d-flex flex-row-reverse justify-content-center justify-content-md-start">
-                            <form class="d-inline-block">
-                                <select class="form-select form-select-lg">
-                                    <option>Ordernar por menor Preço </option>
-                                    <option>Ordernar por maior Preço </option>
-                                </select>
-                            </form>                       
-                        </div>
-                    </div> 
-                 </div> *@
+        var produtosPorCategoria = from produto in Produtos
+                                   group produto by produto.CategoriaId into prodPorCatGrupo
+                                   orderby prodPorCatGrupo.Key
+                                   select prodPorCatGrupo;
 
                   
                 @foreach (var prodGrupo in produtosPorCategoria)
