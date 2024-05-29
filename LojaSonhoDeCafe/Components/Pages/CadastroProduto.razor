@@ -3,7 +3,8 @@
 @inject IWebHostEnvironment Environment
 @inject IConfiguration config
 
-<h3>Cadastro de Produto</h3>
+<PageTitle>Cadastrar Produto</PageTitle>
+<h2 class="text-center">Cadastro de Produto</h2>
 
 @if (erros.Count > 0)
 {
@@ -47,7 +48,7 @@
     <div class="mb-2">
         <label for="CategoriaId" class="form-label"><b>Categoria:</b></label>
         <select id="CategoriaId" class="form-control" @bind="ProdutoDto.CategoriaId">
-            <option value=" " selected><b>Escolha uma Categoria</b></option>
+            <option disabled value="0" selected><b>Escolha uma Categoria</b></option>
             @foreach (var categoria in Categorias!)
             {
                 <option value="@categoria.Id">@categoria.Nome</option>

@@ -1,7 +1,7 @@
 ﻿@page "/Faturamento"
 
 @inject IJSRuntime js
-
+<PageTitle>Faturamento</PageTitle>
 @if (MensagemErro is not null)
 {
     <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
@@ -33,7 +33,7 @@ else
     <h1>Escolha o mês para buscar o Faturamento</h1>
     <div class="select-container">
         <select class="select-box" @bind="mesDoAno">
-            <option value="0">Selecione um mês</option>
+            <option disabled value="0">Selecione um mês</option>
             @foreach (var mes in mesesDoAno)
             {
                 <option value="@mes.Value">@mes.Key</option>
