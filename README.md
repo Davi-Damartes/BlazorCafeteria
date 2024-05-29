@@ -46,7 +46,7 @@ https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/f9e40ecb-4fe8-
 
 ## Referência
 
- - [Referência  do projeto feito no canal do Jose Macoratti.](https://www.youtube.com/watch?v=lQaXpJFxbxM&list=PLJ4k1IC8GhW1GFJbYD2uo-_pLfdvX6Pu9)
+ - [Referência do projeto feito no canal do Jose Macoratti.](https://www.youtube.com/watch?v=lQaXpJFxbxM&list=PLJ4k1IC8GhW1GFJbYD2uo-_pLfdvX6Pu9)
 
 
 ## 🔗 Links
