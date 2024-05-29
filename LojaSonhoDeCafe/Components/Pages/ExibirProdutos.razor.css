@@ -25,7 +25,7 @@ a:hover .card {
     overflow: hidden;
     text-decoration: none;
     display: flex;
-    margin-right: 15px;
+    margin-right: 10px;
     margin-bottom: 30px;
     transition: box-shadow 0.3s ease-in-out;
     overflow: hidden;

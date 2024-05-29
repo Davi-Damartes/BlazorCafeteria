@@ -1,24 +1,37 @@
 ﻿@inject IConfiguration config
 @inject IJSRuntime Js
 
-<div class="col-12 col-md-5 mb-4">
-    <form class="justify-content-center justify-content-md-start mb-3 mb-md-0">
-        <div class="input-group input-group-lg">
-            <input type="text" class="form-control" placeholder="Digite o nome do Produto">
+<div class="col-12 d-flex justify-content-between align-items-center mb-4">
+   @*  <div class="col-12 col-md-5">
+        <form class="justify-content-center justify-content-md-start mb-md-0">
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" placeholder="Digite o nome do Produto">
                 <button class="btn btn-dark" type="button">Buscar</button>
-         </div>        
-    </form>
-</div>
+            </div>
+        </form>
+    </div> *@
+    <div class="col-12 col-md-5">
+        <QuickGrid Items="@BuscandoProdutos">          
+                <ColumnOptions>
+                    <div class="search-box mb-4">
+                        <label for="form-control">Buscar Produto</label>
+                        <input type="search" class="form-control" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Nome Produto..." />
+                    </div>
+                </ColumnOptions>
+        </QuickGrid>
+        
+    </div>
+      
 
-<div class="col-12 col-md-12">
-    <div class="d-flex flex-row-reverse justify-content-center justify-content-md-start mb-4">
-        <form class="d-inline-block">
+
+    <div class="d-flex">
+        <form class="d-inline-block me-3">
             <select class="form-select form-select-lg" @bind="ModoExibicao">
-                <option value="menor">Ordernar por menor Preço </option>
-                <option value="maior">Ordernar por maior Preço </option>
+                <option value="menor">Ordernar por menor Preço</option>
+                <option value="maior">Ordernar por maior Preço</option>
             </select>
         </form>
-        <nav class="d-inline-block me-3">
+        <nav class="d-inline-block">
             <ul class="pagination pagination-lg my-0">
                 <li class="page-item">
                     <a class="page-link shadow-none" href="produtosPorCategoria/1">1</a>
@@ -36,7 +49,6 @@
         </nav>
     </div>
 </div>
-
 @if (ModoExibicao == "menor")
 {
     Produtos = Produtos!.OrderBy(x => x.Preco).ToList();
@@ -46,57 +58,64 @@ else @if (ModoExibicao == "maior")
     Produtos = Produtos!.OrderByDescending(x => x.Preco).ToArray();
 }
 
+@{
+    var produtosExibidos = nameFilter != null ? BuscandoProdutos.ToList() : Produtos;
+}
 
-@foreach (var produto in Produtos!)
+@if (!produtosExibidos.Any())
 {
-    <div class="card text-center bg-light d-block" title="Detalhes do Produto">
-        <div class="btn-group position-absolute end-0" title="Favoritar Produto">
-                <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn" id="btn-@produto.Id">
-                    <i class="fa-solid fa-heart icone-coracao"></i>
-                </button>               
-        </div>
+    <div class="alert alert-warning" role="alert">
+        Produto não encontrado. Verifique o nome escrito.
+    </div>
+}
 
-        <a href="/ProdutosDetalhes/@produto.Id">
-            <div class="card-body">
-                <a href="/ProdutosDetalhes/@produto.Id">
-                    @if (!File.Exists(produto.FotoUrl))
+@foreach (var produto in produtosExibidos!)
+{
+    <div class="col-12 d-flex col-md-6 col-lg-3 mb-4">
+        <div class="card text-center bg-light d-block" title="Detalhes do Produto">
+            <div class="btn-group position-absolute end-0" title="Favoritar Produto">
+                <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn shadow-none" id="btn-@produto.Id">
+                    <i class="fa-solid fa-heart icone-coracao shadow-none"></i>
+                </button>
+            </div>
+            <a href="/ProdutosDetalhes/@produto.Id">
+                <div class="card-body">
+                    <a href="/ProdutosDetalhes/@produto.Id">
+                        @if (!File.Exists(produto.FotoUrl))
+                        {
+                            <img src="@CreateWebPath(produto.FotoUrl!)" class="card-img-top" alt="Imagem do Produto">
+                        }
+                        else
+                        {
+                            <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
+                        }
+                    </a>
+                    <div class="card-header card-preco">
+                        <h5><b>@produto.Preco.ToString("C")</b></h5>
+                    </div>
+                    <h4 class="card-title"><b>@produto.Nome</b></h4>
+                    <p class="card-text mb-2 w-100 limitarLinhas-Card">@produto.Descricao</p>
+                </div>
+                <div class="card-footer bg-light mb-5 text-center border-0">
+                    @if (@produto.QuantidadeEmEstoque > 0)
                     {
-                        <img src="@CreateWebPath(produto.FotoUrl!)" class="card-img-top" alt="Imagem do Produto">
+                        <h3 class="text-success">
+                            <b>Quantidade em Estoque (@produto.QuantidadeEmEstoque)</b>
+                        </h3>
                     }
                     else
                     {
-                        <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
+                        <h2 class="text-danger">
+                            <b>Produto Esgotado!!!</b>
+                        </h2>
                     }
-                </a>
-                <div class="card-header card-preco">
-                    <h5><b>@produto.Preco.ToString("C")</b></h5>
                 </div>
-                <h5 class="card-title"><b>@produto.Nome</b></h5>
-                <p class="card-text mb-2 w-100 limitarLinhas-Card">@produto.Descricao</p>
+            </a>
+            <div class="mt-6 position-absolute bottom-0 end-0 mb-3 me-3">
+                <DeletarProduto produto="produto"> </DeletarProduto>
             </div>
-            <div class="card-footer bg-light mb-5 text-center border-0">
-                @if (@produto.QuantidadeEmEstoque > 0)
-                {
-                    <small class="text-success">
-                        <b>Quantidade em Estoque(@produto.QuantidadeEmEstoque)</b>
-                    </small>
-                }
-                else
-                {
-                    <h2 class="text-danger">
-                        <b>Produto Esgotado!!!</b>
-                    </h2>
-                }
-            </div>
-        </a>
-
-
-        <div class="mt-6 position-absolute bottom-0 end-0 mb-3 me-3">
-            <DeletarProduto produto="produto"> </DeletarProduto>
         </div>
-
     </div>
-
 }
 
 @code {
@@ -118,10 +137,37 @@ else @if (ModoExibicao == "maior")
     private string? BuscarPorNome { get; set; } = string.Empty;
 
 
-    private string CreateWebPath(string relativePath)
+    IQueryable<ProdutoDto>? itemsQueryable;
+
+    string? nameFilter;
+
+    IQueryable<ProdutoDto> BuscandoProdutos
     {
-        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath!);
+        get
+        {
+            var produtos = Produtos;
+            Produtos = produtos.ToList();
+            itemsQueryable = Produtos.AsQueryable();
+            var result = itemsQueryable;
+
+            if (!string.IsNullOrEmpty(nameFilter))
+            {
+                result = result.Where(c => c.Nome.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
+
+            }
+
+            return result;
+        }
     }
+
+
+    protected override void OnParametersSet()
+    {
+        nameFilter = null;
+    }
+
+
+
 
     protected async Task MudarCorDoBotao_Click(Guid produtoId)
     {
@@ -147,18 +193,20 @@ else @if (ModoExibicao == "maior")
 
     }
 
-    public async Task AtualizaProdutoFavorito(ProdutoDto Produto)
-    {
-        await ProdutoService!.AtualizaProdutoServiceFavorito(Produto);
-    }
-
-
     public async Task AtualizaProdutoFavorito2(ProdutoDto Produto)
     {
         await ProdutoHttpService!.AtualizaProdutoFavorito(Produto);
     }
 
 
+
+
+
+
+    private string CreateWebPath(string relativePath)
+    {
+        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath!);
+    }
 
     public bool AbrirDialogModal { get; set; }
 
