@@ -8,18 +8,20 @@ else
 {
     <div class="grid">
         <QuickGrid Items="@BuscandoProdutos">
-            <PropertyColumn Property="@(p => p.Nome)" Sortable="true" Title="ProdutoDto">
+            <PropertyColumn Property="@(p => p.Nome)" Sortable="true" Title="ProdutoDto" >
                 <ColumnOptions>
-                    <div class="search-box">
+                    <div class="search-box mb-4">
                         <label for="form-control">Buscar Produto</label>
-                        <input type="search" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Nome Produto..." />
+                        <input type="search" class="form-control" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Nome Produto..." />
                     </div>
                 </ColumnOptions>
             </PropertyColumn>
+            <PropertyColumn Property="@(p => p.Nome)" Sortable="true" Title="ProdutoDto" />
             <PropertyColumn Property="@(p => p.Descricao)" Title="ProdutoDto" />
+            <PropertyColumn Property="@(p => p.Preco)" Sortable="true" Title="ProdutoDto" />
+            <PropertyColumn Property="@(p => p.QuantidadeEmEstoque)" Sortable="true" Title="ProdutoDto" />
             <PropertyColumn Property="@(p => p.IsFavorito)" Sortable="true" Title="ProdutoDto" />
         </QuickGrid>
-
     </div>
 }
 
