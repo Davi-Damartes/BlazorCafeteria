@@ -1,6 +1,62 @@
 ﻿@page "/"
+
+@inject IConfiguration config
+@inject IJSRuntime Js
+
 <PageTitle>Home</PageTitle>
 
 <CarouselSlides></CarouselSlides>
 
+@if(@Produtos == null)
+{
+     <ExibirSpinner /> 
+}
+
+@if (Produtos != null && Produtos.Any())
+{
+    <div class="row">
+        <ExibirProdutos Produtos="Produtos"></ExibirProdutos>
+    </div>
+}
+@code {
+
+
+    [Inject]
+    private IProdutoHttpService? ProdutoServiceHttp { get; set; }
+
+    private IEnumerable<ProdutoDto>? Produtos { get; set; }
+
+
+    // IQueryable<ProdutoDto>? itemsQueryable;
+
+    // string? nameFilter;
+
+    // IQueryable<ProdutoDto> BuscandoProdutos
+    // {
+    //     get
+    //     {      
+    //         var result = itemsQueryable;
+
+    //         if (!string.IsNullOrEmpty(nameFilter))
+    //         {
+    //             result = result.Where(c => c.Nome.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
+
+    //         }
+
+    //         return result;
+    //     }
+    // }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Produtos = await ProdutoServiceHttp!.ObterProdutos();
+    }
+
+
+
+
+
+
+}
 
