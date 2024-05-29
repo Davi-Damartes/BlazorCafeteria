@@ -1,6 +1,6 @@
 ﻿@page "/ProdutosPorCategoria/{CategoriaId:int}"
 
-@if (@ProdutosDto is null && MensagemErro is null)
+@if (@ProdutosPorCategoriaDto is null && MensagemErro is null)
 {
    <ExibirSpinner />
 }
@@ -10,14 +10,17 @@ else if (MensagemErro is not null)
 }
 else
 {
-    <h3>(@NomeCategoria)</h3>
-    if(ProdutosDto!.Count() > 0)
-    {
-        <div class="row mt-1" style="font-size: 30px;">
-            <ExibirProdutos Produtos="@ProdutosDto"></ExibirProdutos>
-        </div>
-    }
 
+        <h3>(@NomeCategoria)</h3>
+        if (ProdutosPorCategoriaDto!.Count() > 0)
+        {
+            <div class="row">
+                <ExibirProdutos Produtos="@ProdutosPorCategoriaDto"></ExibirProdutos>
+
+            </div>
+        }
+
+    
 }
 
 
@@ -38,10 +41,11 @@ else
     [Inject]
     public ILocalStorageProdutosService? GerenciaProdutoLocalStorage { get; set; }
 
-    public IEnumerable<ProdutoDto>? ProdutosDto { get; set; }
+    public IEnumerable<ProdutoDto>? ProdutosPorCategoriaDto { get; set; }
 
     public string? NomeCategoria { get; set; }
     public string? MensagemErro { get; set; }
+
 
     protected override async Task OnParametersSetAsync()
     {
@@ -50,13 +54,13 @@ else
             //await GerenciaProdutoLocalStorage!.AtualizarDadosLocalStorage(ProdutosDto);
 
             //ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
-            ProdutosDto = await ProdutoHttpService!.BuscarItensPorCategoria(CategoriaId);
+            ProdutosPorCategoriaDto = await ProdutoHttpService!.BuscarItensPorCategoria(CategoriaId);
             //ProdutosDto = await GetColecaoProdutosPorCategoria(CategoriaId);
 
 
-            if(ProdutosDto != null && ProdutosDto.Count() > 0)
+            if (ProdutosPorCategoriaDto != null && ProdutosPorCategoriaDto.Count() > 0)
             {
-                var produtoDto = ProdutosDto
+                var produtoDto = ProdutosPorCategoriaDto
                             .FirstOrDefault(s => s.CategoriaId == CategoriaId);
 
                 if(produtoDto != null)
@@ -71,17 +75,17 @@ else
         }
     }
 
-    private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
-    {
-        var listaDeProdutos = await GerenciaProdutoLocalStorage!.GetCollection();
+    // private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
+    // {
+    //     var listaDeProdutos = await GerenciaProdutoLocalStorage!.GetCollection();
 
-        if(listaDeProdutos != null)
-        {
-            return listaDeProdutos.Where(p => p.CategoriaId == categoriaId);
-        }
-        else
-        {
-            return await ProdutoService!.BuscarItensPorCategoria(categoriaId);
-        }
-    }
+    //     if(listaDeProdutos != null)
+    //     {
+    //         return listaDeProdutos.Where(p => p.CategoriaId == categoriaId);
+    //     }
+    //     else
+    //     {
+    //         return await ProdutoService!.BuscarItensPorCategoria(categoriaId);
+    //     }
+    // }
 }
