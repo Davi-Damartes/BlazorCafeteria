@@ -3,6 +3,7 @@
 @inject IConfiguration config
 @inject IJSRuntime jsruntime
 
+<PageTitle>Reabastecer Produto</PageTitle>
 @if (@ProdutosEsgotados is null)
 {
     <ExibirSpinner />
@@ -72,7 +73,6 @@ else
     [Inject]
     public NavigationManager? NavigationManager { get; set; }
 
-    [Parameter]
     public Guid Id { get; set; }
 
     public IEnumerable<ProdutoDto>? Produtos { get; set; }
@@ -86,7 +86,7 @@ else
 
 
 
-    protected override async Task OnInitializedAsync( )
+    protected override async Task OnInitializedAsync()
     {
         Produtos = await ProdutoHttpService!.ObterProdutos();
         ProdutosEsgotados = Produtos.Where(produto => produto.QuantidadeEmEstoque <= 0).ToList();

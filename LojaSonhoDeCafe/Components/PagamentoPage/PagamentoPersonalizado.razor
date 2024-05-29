@@ -2,6 +2,7 @@
 
 @inject IJSRuntime jsruntime
 
+<PageTitle>Pagamento</PageTitle>
 @if (CarrinhoCompraItens is null && MensagemErro is null)
 {
     <ExibirSpinner />
@@ -44,22 +45,22 @@ else
                         <b class="text-dark">Endereço</b>
                     </h5>
                     <div class="form-floating mb-3">
-                        <input type="text" id="txtCep" placeholder=" " class="form-control" @bind="cep" />
+                        <input type="text" id="txtCep" class="form-control" @bind="cep" />
                         <button class="botao lupa-BuscarCep" disabled="@EnableBtn" @onclick:preventDefault="true" @onclick="BuscarCepBrasilApi_click">
                             <i class="fa-solid fa-magnifying-glass-location"></i>
                         </button>
                         <label for="txtCep" class="text-black-50">Cep</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText type="text" id="txtRua" class="form-control" placeholder=" " @bind-Value="BrasilCep!.Street" />
+                        <InputText type="text" id="txtRua" class="form-control" @bind-Value="BrasilCep!.Street" />
                         <label for="txtRua" class="text-black-50">Rua</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText type="text" id="txtBairro" class="form-control" placeholder=" " @bind-Value="BrasilCep.Neighborhood" />
+                        <InputText type="text" id="txtBairro" class="form-control" @bind-Value="BrasilCep.Neighborhood" />
                         <label for="txtBairro" class="text-black-50">Bairro</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText id="txtCidade" class="form-control" placeholder=" " @bind-Value="BrasilCep.City" />
+                        <InputText id="txtCidade" class="form-control" @bind-Value="BrasilCep.City" />
                         <label for="txtCidade" class="text-black-50">Cidade</label>
                     </div>
                 </label>
@@ -106,22 +107,22 @@ else
                     </InputRadioGroup>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="txtNome" class="form-control" placeholder=" " autofocus>
+                        <input type="text" disabled id="txtNome" class="form-control" placeholder=" " autofocus>
                         <label for="txtNome" class="text-black-50">Nome Impresso no Cartão</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="txtNumero" class="form-control" placeholder=" ">
+                        <input type="text" disabled id="txtNumero" class="form-control" placeholder=" ">
                         <label for="txtNumero" class="text-black-50">Número do Cartão</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="txtValidade" class="form-control" placeholder=" ">
+                        <input type="text" disabled id="txtValidade" class="form-control" placeholder=" ">
                         <label for="txtValidade" class="text-black-50">Validade (mm/aa)</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" id="txtCodigo" class="form-control" placeholder=" ">
+                        <input type="text" disabled id="txtCodigo" class="form-control" placeholder=" ">
                         <label for="txtCodigo" class="text-black-50">Código de Segurança</label>
                     </div>
 
