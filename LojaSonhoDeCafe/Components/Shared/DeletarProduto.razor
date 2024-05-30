@@ -1,4 +1,7 @@
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 @inject IJSRuntime jsruntime
+
 <div title="Excluir Produto">
     <i class="fa-solid fa-trash icone-lixeira-Exclusao"
        @onclick="() => OpenDialog(produto!)">
