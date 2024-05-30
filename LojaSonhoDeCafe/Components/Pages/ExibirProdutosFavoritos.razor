@@ -1,5 +1,10 @@
 ﻿@page "/ExibiProdutosFavoritos"
+
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
 @inject IConfiguration config
+
 
 <PageTitle>ProdutosFavoritos</PageTitle>
 @if (ProdutosFavoritos is null && MensagemErro is null)

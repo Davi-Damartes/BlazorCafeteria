@@ -1,5 +1,8 @@
 ﻿@page "/CadastroProduto"
 
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
 @inject IWebHostEnvironment Environment
 @inject IConfiguration config
 
@@ -62,7 +65,7 @@
       </button>
 </EditForm>
 
-
+ 
 
 @code {
 
