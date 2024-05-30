@@ -10,7 +10,8 @@
 }
 else if (MensagemErro is not null)
 {
-    <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+        <ExibirErro MensagemErro="@MensagemErro"></ExibirErro>
+   
 }
 else
 {
@@ -39,14 +40,13 @@ else
                                     <h2 class="text-danger">
                                         <b>Produto Esgotado!!!</b>
                                     </h2>
-                        
-                                <div class="form-floating mt-5">
-                                        <input type="number" class="form-control" @bind="@Quantidade" placeholder="Quantidade" min="1" max="80"/>
+
+                            <div class="form-floating mt-5 fs-">
+                                        <input type="number" class="form-control fs-4" @bind-value="produto.QuantidadeEmEstoque" placeholder="Quantidade" min="1" max="80"/>
                                         <label for="Quantidade" class="text-black-50">Quantidade de Produtos</label>
-                                        <button class="btn btn-primary mt-3" @onclick="(()=> AbastecerProduto_click(produto.Id, Quantidade))">
+                                        <button class="btn btn-primary mt-3" @onclick="(()=> AbastecerProduto_click(produto))">
                                             Abastecer Produto
                                         </button>
-
                                 </div>  
                             
                             </div>
@@ -93,17 +93,19 @@ else
     }
 
 
-    private async Task AbastecerProduto_click(Guid Id, int Quantidade)
+    private async Task AbastecerProduto_click(ProdutoDto produto)
     {
-        if(Quantidade > 80 || Quantidade <= 0)
+        if (produto.QuantidadeEmEstoque > 80 || produto.QuantidadeEmEstoque <= 0)
         {
-            MensagemErro = "Quantidade Inválida";
+            MensagemErro = "Quantidade Inválida!!!";
             await ShowFailToastr();
+            await Task.Delay(1000);
+            NavigationManager!.NavigateTo("/Produtos");
 
         }
         else
         {
-            await ProdutoHttpService!.AdicionarEstoqueAoProduto(Id, Quantidade);
+            await ProdutoHttpService!.AdicionarEstoqueAoProduto(produto.Id, produto.QuantidadeEmEstoque);
             await ShowSuccessToastr();
             await Task.Delay(1000);
             NavigationManager!.NavigateTo("/Produtos");           
