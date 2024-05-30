@@ -1,5 +1,8 @@
 ﻿@page "/"
 
+@using Microsoft.AspNetCore.Authorization
+@attribute [AllowAnonymous]
+
 @inject IConfiguration config
 @inject IJSRuntime Js
 
@@ -14,6 +17,7 @@
 
 @if (Produtos != null && Produtos.Any())
 {
+
     <div class="row">
         <ExibirProdutos Produtos="Produtos"></ExibirProdutos>
     </div>
