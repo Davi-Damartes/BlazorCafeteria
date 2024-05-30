@@ -2,14 +2,15 @@ using LojaSonhoDeCafe.Api.Banco;
 using LojaSonhoDeCafe.Api.Repositories.Carrinho;
 using LojaSonhoDeCafe.Api.Repositories.Pagamento;
 using LojaSonhoDeCafe.Api.Repositories.Produtos;
+using LojaSonhoDeCafe.Repositories.Produtos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using SonhoDeCafe.Server.Repositories.Produtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -18,7 +19,11 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<BancoDeDado>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddControllers();
+
 builder.Services.AddScoped<IProdutoRepository2, ProdutoRepository2>();
+
+//builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
 builder.Services.AddScoped<ICarrinhoCompraRepository2, CarrinhoCompraRepository2>();
 
