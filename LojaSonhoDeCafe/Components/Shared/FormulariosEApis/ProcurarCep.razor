@@ -1,0 +1,35 @@
+﻿@if (BrasilCep != null)
+{
+    <div>
+        <h6>Cep: @BrasilCep.Cep</h6>
+        <h6>Rua: @BrasilCep.Street</h6>
+        <h6>Bairro: @BrasilCep.Neighborhood</h6>
+        <h6>Estado: @BrasilCep.State</h6>
+        <h6>Cidade: @BrasilCep.City</h6>
+    </div>
+
+}
+else
+{
+    <div>
+        <span>Não há informações de CEP</span>
+    </div>
+}
+
+
+@code {
+
+    [Parameter]
+    public BrasilCep? BrasilCep { get; set; }
+
+    [Parameter]
+    public string? Cep { get; set; }
+    public HttpClient httpClient = new();
+
+
+    private async Task BuscarDadosBrasilCep()
+    {
+        var url = $"https://brasilapi.com.br/api/cep/v1/{Cep}";
+        BrasilCep = await httpClient.GetFromJsonAsync<BrasilCep>(url);
+    }
+}
