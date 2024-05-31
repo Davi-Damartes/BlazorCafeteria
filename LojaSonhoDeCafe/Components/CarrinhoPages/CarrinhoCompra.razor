@@ -43,15 +43,14 @@ else
 
                             <div class="text-start mt-3">
                                 <span>Preço: <b>@item.Preco.ToString("C")</b></span>
-
-                                    <input type="number" class="text-lg-center" @bind="@item.Quantidade" min="1" max="@item.QuantidadeEmEstoque" />
-                                    <button class="btn btn-info btn-sm shadow-none EscondeButtonAtualizaQnt" @onclick="(()=>
-                                        AtualizarQuantidadeCarrinho_Click(item.Id, item.Quantidade, item.QuantidadeEmEstoque))" title="Adicionar Quantidade">
-                                        <i class="fa-regular fa-circle-check" style="font-size: 25px;"></i>
-                                    </button>
-                                    <button @onclick="(()=> DeletaCarrinhoItem_Click(item.Id))" class="btn btn-danger shadow-none text-end" title="Remover item do Carrinho">
-                                        <i class="fa-solid fa-trash-can" style="font-size: 18px;"></i>
-                                    </button>
+                                <input type="number" class="text-lg-center" @bind="@item.Quantidade" min="1" max="@item.QuantidadeEmEstoque" />
+                                <button class="btn btn-info btn-sm shadow-none EscondeButtonAtualizaQnt" @onclick="(()=>
+                                    AtualizarQuantidadeCarrinho_Click(item.Id, item.Quantidade, item.QuantidadeEmEstoque))" title="Adicionar Quantidade">
+                                    <i class="fa-regular fa-circle-check" style="font-size: 25px;"></i>
+                                </button>
+                                <button @onclick="(()=> DeletaCarrinhoItem_Click(item.Id))" class="btn btn-danger shadow-none text-end" title="Remover item do Carrinho">
+                                    <i class="fa-solid fa-trash-can" style="font-size: 18px;"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
