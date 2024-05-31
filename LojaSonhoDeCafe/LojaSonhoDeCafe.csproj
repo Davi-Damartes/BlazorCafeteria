@@ -50,12 +50,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Components\Pages\BrasilApi.razor" />
-    <None Include="Components\Pages\BuscaCep.razor" />
-    <None Include="Components\Layout\ProdutosCategoriaNavMenu.razor" />
-    <None Include="Components\Pages\CadastroProduto.razor" />
-    <None Include="Components\Pages\ExibirProdutosFavoritos.razor" />
-    <None Include="Components\Shared\FormBrasilApiCep.razor" />
+    <None Include="Components\Pages\TesteComponentes\BrasilApi.razor" />
+    <None Include="Components\Pages\TesteComponentes\BuscaCep.razor" />
+    <None Include="Components\Layout\ProdutosMenu\ProdutosCategoriaNavMenu.razor" />
+    <None Include="Components\Pages\CriarProduto\CadastroProduto.razor" />
+    <None Include="Components\Pages\ProdutosExibicao\ExibirProdutosFavoritos.razor" />
+    <None Include="Components\Shared\FormulariosEApis\FormBrasilApiCep.razor" />
   </ItemGroup>
 
   <ItemGroup>
