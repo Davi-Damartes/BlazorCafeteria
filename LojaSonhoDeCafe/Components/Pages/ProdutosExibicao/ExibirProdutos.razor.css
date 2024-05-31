@@ -10,15 +10,15 @@ a {
     color: #FF0000;
 }
 
-a:hover .card {
-    box-shadow: 0 4px 8px 0 rgb(0, 255, 255), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    transition: box-shadow 0.3s ease-in-out;
-}
+    a:hover .card {
+        box-shadow: 0 4px 8px 0 rgb(0, 255, 255), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        transition: box-shadow 0.3s ease-in-out;
+    }
 
     a:hover img {
-    transform: scale(1.07);
-    transition: 0.5s ease-in-out;
-}
+        transform: scale(1.07);
+        transition: 0.5s ease-in-out;
+    }
 
 .card {
     transition: box-shadow 0.3s ease-in-out;
@@ -35,22 +35,22 @@ a:hover .card {
     flex-direction: column;
 }
 
-.card:hover {
-box-shadow: 0 4px 8px 0 #ffffff, 0 6px 20px 0 #15e6d9;
-transition: box-shadow 0.3s ease-in-out;
-}
+    .card:hover {
+        box-shadow: 0 4px 8px 0 #ffffff, 0 6px 20px 0 #15e6d9;
+        transition: box-shadow 0.3s ease-in-out;
+    }
 
-.card img {
-        transition: transform 0.5s ease-in-out; 
+    .card img {
+        transition: transform 0.5s ease-in-out;
         margin-bottom: 10px;
         margin-top: 50px;
         width: 220px;
         border-radius: 18px;
-}
+    }
 
-.card:hover img {
+    .card:hover img {
         transform: scale(1.07);
-}
+    }
 
 .card-body {
     color: #333333;
@@ -67,10 +67,12 @@ transition: box-shadow 0.3s ease-in-out;
 .card-title {
     font-family: 'RobotoSlab';
 }
+
 .card-text {
     font-family: 'Segoe UI';
 }
-.card-preco{
+
+.card-preco {
     font-family: 'Yu Gothic UI'
 }
 
@@ -82,9 +84,10 @@ transition: box-shadow 0.3s ease-in-out;
     cursor: pointer;
     font-size: 25px;
 }
-.icone-coracao:hover {
-    color: #ff0000;
-}
+
+    .icone-coracao:hover {
+        color: #ff0000;
+    }
 
 
 .limitarLinhas-Card {
@@ -94,6 +97,3 @@ transition: box-shadow 0.3s ease-in-out;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-
-

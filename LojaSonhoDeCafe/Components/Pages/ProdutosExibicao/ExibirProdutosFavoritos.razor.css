@@ -21,14 +21,13 @@
     object-fit: cover;
     margin-top: 15px;
     margin-bottom: 15px;
-
     border-radius: 25px;
 }
 
-.card-img-top :hover {
+    .card-img-top :hover {
         box-shadow: 0 4px 8px 0 rgb(0, 255, 255), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         transition: box-shadow 0.3s ease-in-out;
-}
+    }
 
 .card-body {
     padding-top: unset;
@@ -48,7 +47,7 @@ a:hover .card {
 }
 
 .preco-formatacao {
-   color: green;
+    color: green;
 }
 
 
