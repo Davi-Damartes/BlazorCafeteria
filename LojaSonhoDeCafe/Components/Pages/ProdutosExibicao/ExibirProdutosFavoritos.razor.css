@@ -57,10 +57,18 @@ a:hover .card {
 }
 
 .produtos {
-    /* Estilos para a seção de produtos */
-    flex: 1; /* Ocupa todo o espaço disponível no container flexível */
+    flex: 1; 
 }
 
 .elemento {
     margin-top: 50px; /* Espaçamento entre o topo do container e o elemento */
 }
+
+.limitarLinhas-Card {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
