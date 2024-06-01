@@ -2,82 +2,78 @@
 @inject ICarrinhoCompraService carrinhoCompraService
 @inject NavigationManager NavigationManager
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+<ProdutosCategoriaNavMenu />
 
-        <div class="nav-item px-3">
-        <NavLink class="nav-link" href="Produtos" >
+<div class="nav-item px-3">
+    <NavLink class="nav-link" href="CadastroProduto">
+        <i class="fa-solid fa-clipboard-list mudandoImagem" style="color: crimson; text-decoration: none">
+        </i> <h6>Cadastrar Produto</h6>
+    </NavLink>
+</div>
+
+<div class="nav-item px-3">
+    <NavLink class="nav-link" href="Faturamento">
+        <svg xmlns="http://www.w3.org/2000/svg" style="height: 25px; width: 25px; margin-right: 5px;" viewBox="0 0 512 512">
+            <path fill="#63E6BE" d="M64 0C46.3 0 32 14.3 32 32V96c0 17.7 14.3
+                32 32 32h80v32H87c-31.6 0-58.5 23.1-63.3 54.4L1.1 364.1C.4 368.8 0 373.6 0 378.4V448c0
+                35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V378.4c0-4.8-.4-9.6-1.1-14.4L488.2 214.4C483.5
+                183.1 456.6 160 425 160H208V128h80c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H64zM96
+                48H256c8.8 0 16 7.2 16 16s-7.2 16-16 16H96c-8.8 0-16-7.2-16-16s7.2-16 16-16zM64 432c0-8.8
+                7.2-16 16-16H432c8.8 0 16 7.2 16 16s-7.2 16-16 16H80c-8.8 0-16-7.2-16-16zm48-168a24 24 0 1 1
+                0-48 24 24 0 1 1 0 48zm120-24a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zM160 344a24 24 0 1 1 0-48 24
+                24 0 1 1 0 48zM328 240a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zM256 344a24 24 0 1 1 0-48 24 24 0 1 1
+                0 48zM424 240a24 24 0 1 1 -48 0 24 24 0 1 1 48 0zM352 344a24 24 0 1 1 0-48 24 24 0 1 1 0 48z" />
+        </svg> Faturamento
+    </NavLink>
+</div>
+
+<div class="nav-item px-3 d-sm-none">
+    <NavLink class="nav-link" href="CarrinhoCompra">
+        <i class="fa-solid fa-cart-arrow-down"></i>&nbsp;Carrinho(<b>@carrinhoCompraItemContador</b>)
+    </NavLink>
+</div>
+<div class="nav-item px-3">
+    <NavLink class="nav-link" href="Produtos">
         <i class="fa-solid fa-clipboard-list mudandoImagem" style=" color: blue; text-decoration: none"></i> Produtos
-            </NavLink>
-        </div>
+    </NavLink>
+</div>
 
-        <ProdutosCategoriaNavMenu />
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="CadastroProduto">
-            <i class="fa-solid fa-clipboard-list mudandoImagem" style="color: crimson; text-decoration: none">
-            </i> Cadastrar Produto
-            </NavLink>
-        </div>
-
-        @* <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Faturamento">
-                <i class="fa-solid fa-cash-register mudandoImagem" style="color: greenyellow; text-decoration: none"></i> Faturamento
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-        <NavLink class="nav-link" href="ReabastecerProdutos">
-        <i class="fa-solid fa-truck-ramp-box mudandoImagem" style="color: purple; text-decoration: none"></i>  Reabastecer Produto
-            </NavLink>
-        </div> *@
-
-
-
-        <div class="nav-item px-3 d-sm-none">
-            <NavLink class="nav-link" href="CarrinhoCompra">
-                <i class="fa-solid fa-cart-arrow-down"></i>&nbsp;Carrinho(<b>@carrinhoCompraItemContador</b>)
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="auth">
-                <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
-            </NavLink>
-        </div>
-
-        <AuthorizeView>
-            <Authorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Manage">
-                        <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
+<AuthorizeView>
+    <Authorized>
+        <!-- Dropdown de usuário logado -->
+        <div class="dropdown nav-item px-3 ">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLogged" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="bi bi-person-fill-nav-menu" aria-hidden="true"></span> @context.User.Identity?.Name
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownLogged">
+                <li><a class="dropdown-item" href="Account/Manage">Gerenciador de Conta</a></li>
+                <li>
                     <form action="Account/Logout" method="post">
                         <AntiforgeryToken />
                         <input type="hidden" name="ReturnUrl" value="@currentUrl" />
-                        <button type="submit" class="nav-link">
-                            <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                        <button type="submit" class="dropdown-item">
+                            Deslogar
                         </button>
                     </form>
-                </div>
-            </Authorized>
-            <NotAuthorized>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Register">
-                        <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Register
-                    </NavLink>
-                </div>
-                <div class="nav-item px-3">
-                    <NavLink class="nav-link" href="Account/Login">
-                        <span class="bi bi-person-badge-nav-menu" aria-hidden="true"></span> Login
-                    </NavLink>
-                </div>
-            </NotAuthorized>
-        </AuthorizeView>
- 
- 
-
+                </li>
+                <li><a class="dropdown-item" href="Auth">Autenticador</a></li>
+            </ul>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <!-- Dropdown de usuário não logado -->
+        <div class="dropdown nav-item px-3">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownNotLogged" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Conta
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownNotLogged">
+                <li><a class="dropdown-item" href="Account/Register">Registrar</a></li>
+                <li><a class="dropdown-item" href="Account/Login">Login</a></li>
+                <li><a class="dropdown-item" href="Auth">Autenticador</a></li>
+            </ul>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
 
@@ -86,7 +82,7 @@
     private int carrinhoCompraItemContador = 0;
 
 
-    protected override void OnInitialized()
+    protected override void OnInitialized( )
     {
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
@@ -114,3 +110,9 @@
 
 }
 
+    @* <div class="nav-item px-3">
+    <NavLink class="nav-link" href="auth">
+        <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Verificar Autenticação
+    </NavLink>
+</div>
+ *@
