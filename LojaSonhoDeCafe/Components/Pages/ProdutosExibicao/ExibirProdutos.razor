@@ -51,7 +51,7 @@ else @if (ModoExibicao == "maior")
     var produtosExibidos = nameFilter != null ? BuscandoProdutos.ToList() : Produtos;
 }
 
-@if (!produtosExibidos.Any())
+@if (!produtosExibidos!.Any())
 {
     <div class="alert alert-warning" role="alert">
         Nome do Produto não encontrado!. Verifique o nome escrito.
