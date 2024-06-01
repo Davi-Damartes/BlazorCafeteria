@@ -96,7 +96,6 @@
     .nav-item ::deep .nav-link:hover {
         background-color: rgba(255,255,255,0.1);
         color: antiquewhite;
-        text-decoration: underline;
     }
 
 .nav-scrollable {
@@ -119,4 +118,9 @@
         height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
+}
+
+h5:hover
+{
+    text-decoration: underline;
 }
