@@ -1,5 +1,5 @@
 
-# Loja Sonho de Café é E-commerce Simplificado de uma Cafeteria.
+# Loja Sonho de Café é um E-commerce Simplificado de uma Cafeteria.
 
 Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blazor web app, utilizando EF Core e um banco de dados SQL Server. A aplicação inclui componentes modernos como QuickGrid para exibição de dados e Blazored. LocalStorage para armazenamento local. A API web subjacente, construída com ASP.NET Core, permite operações CRUD completas refletindo diretamente no banco de dados, enquanto a biblioteca CsvHelper facilita a exportação de dados csv.
 
@@ -35,6 +35,9 @@ https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/394a505c-e4e8-
 
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/2fabb9d2-0787-4387-8310-63575fe0c892
 
+- Reabastecendo Produto
+
+  https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/3e3e94a2-da82-47e9-96ce-31a780667a7f
 
 - Download faturamento:
 
