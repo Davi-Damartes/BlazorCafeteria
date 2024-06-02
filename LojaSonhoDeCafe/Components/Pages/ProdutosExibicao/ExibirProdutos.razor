@@ -122,6 +122,8 @@ else @if (ModoExibicao == "maior")
     public NavigationManager? NavigationManager { get; set; }
 
     private string? ModoExibicao { get; set; }
+    
+    public bool AbrirDialogModal { get; set; }
 
     private string? BuscarPorNome { get; set; } = string.Empty;
 
@@ -165,7 +167,7 @@ else @if (ModoExibicao == "maior")
         {
             produto.IsFavorito = !produto.IsFavorito;
             await Js.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
-            await AtualizaProdutoFavorito2(produto!);
+            await AttProdutoFavorito(produto!);
         }
     }
 
@@ -182,12 +184,10 @@ else @if (ModoExibicao == "maior")
 
     }
 
-    public async Task AtualizaProdutoFavorito2(ProdutoDto Produto)
+    public async Task AttProdutoFavorito(ProdutoDto Produto)
     {
         await ProdutoHttpService!.AtualizaProdutoFavorito(Produto);
     }
-
-
 
 
 
@@ -197,7 +197,6 @@ else @if (ModoExibicao == "maior")
         return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath!);
     }
 
-    public bool AbrirDialogModal { get; set; }
 
     private void DeletaItemEFechaDialog(bool acao)
     {
@@ -206,7 +205,7 @@ else @if (ModoExibicao == "maior")
         StateHasChanged();
     }
 
-    private void OpenDialog( )
+    private void OpenDialog()
     {
         AbrirDialogModal = true;
         StateHasChanged();
