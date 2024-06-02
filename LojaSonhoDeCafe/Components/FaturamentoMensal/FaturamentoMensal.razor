@@ -103,14 +103,11 @@ else
         {
             EnableBtn = true;
             NomeDoMes = mesesDoAno.FirstOrDefault(x => x.Value == mesDoAno).Key;
-
-            //PagamentosDiarios = await PagamentoService!.ObterTodosPagamentosPorMes(mesDoAno);
+           
             PagamentosDiarios = await PagamentoHttpService!.ObterTodosPagamentosPorMes(mesDoAno);
             CalcularPrecoTotal();
             await Task.Delay(1000);
             EnableBtn = false;
-
-
         }
         catch (Exception ex)
         {
@@ -178,10 +175,10 @@ else
     }
 
 
-    private void CalcularPrecoTotal( )
+    private void CalcularPrecoTotal()
     {
 
-        GerarValores();
+        ZerarValores();
         TotalPrecoMes += PagamentosDiarios!.Sum(x => x.TotalPrecoDiaria);
 
         TotalQuantProdutos += PagamentosDiarios!.Sum(x => x.TotalQuantDiaria);
@@ -189,7 +186,7 @@ else
         TotalQuantUsuarios += PagamentosDiarios!.Select(x => x.Usuario).Count();
     }
 
-    public void GerarValores( )
+    public void ZerarValores()
     {
         TotalPrecoMes = 0;
         TotalQuantProdutos = 0;
