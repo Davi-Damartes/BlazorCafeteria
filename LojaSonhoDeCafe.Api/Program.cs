@@ -2,10 +2,8 @@ using LojaSonhoDeCafe.Api.Banco;
 using LojaSonhoDeCafe.Api.Repositories.Carrinho;
 using LojaSonhoDeCafe.Api.Repositories.Pagamento;
 using LojaSonhoDeCafe.Api.Repositories.Produtos;
-using LojaSonhoDeCafe.Repositories.Produtos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
-using SonhoDeCafe.Server.Repositories.Produtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
