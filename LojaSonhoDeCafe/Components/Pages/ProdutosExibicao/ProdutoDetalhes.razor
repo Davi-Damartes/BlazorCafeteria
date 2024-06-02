@@ -1,5 +1,8 @@
 ﻿@page "/ProdutosDetalhes/{Id:guid}"
+
+
 @inject IConfiguration config
+
 
 @if (Produto is null && MensagemErro is null)
 {
@@ -16,11 +19,11 @@ else
         <div class="col-12 col-md-3 Imagem-Produto mb-3 mb-md-0">
             @if (File.Exists(@Produto!.FotoUrl))
             {
-                <img src="@Produto.FotoUrl" class="img-fluid" alt="Imagem do Produto">
+                <img src="@Produto.FotoUrl" class="img-thumbnail img-fluid" alt="Imagem do Produto">
             }
             else
             {
-                <img src="@CreateWebPath(Produto.FotoUrl)" class="img-fluid" alt="Imagem do Produto">
+                <img src="@CreateWebPath(Produto.FotoUrl)" class="img-thumbnail img-fluid" alt="Imagem do Produto">
             }
         </div>
         <div class="col-12 col-md-8">
@@ -112,15 +115,13 @@ else
     }
 
 
-    protected override async Task OnInitializedAsync( )
+    protected override async Task OnInitializedAsync()
     {
         try
         {
             CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage!.GetCollection();
-
-            //Produto = await ProdutoService!.ObterUmProduto(Id);
-            Produto = await ProdutoHttpService!.ObterUmProduto(Id);
-            //Produto = await GetProdutoPorIdStorage(Id);
+            //Produto = await ProdutoHttpService!.ObterUmProduto(Id);
+            Produto = await GetProdutoPorIdStorage(Id);
         }
 
             catch (Exception ex)
@@ -133,13 +134,12 @@ else
         {
             try
             {
-
-                //var carrinhoItemDto = await CarrinhoCompraService!.AdicionaItemDto(carrinhoItemAdicionaDto);
                 var carrinhoItemDto = await CarrinhoCompraHttpService!.AdicionaItemCarrinhoDto(carrinhoItemAdicionaDto);
 
                 if (carrinhoItemDto != null)
                 {
                     CarrinhoCompraItens!.Add(carrinhoItemDto);
+
                     await GerenciaCarrinhoLocalStorage!.SaveCollection(CarrinhoCompraItens);
                 }
 
@@ -160,7 +160,7 @@ else
             var produtosDto = await GerenciaProdutoLocalStorage!.GetCollection();
 
             if(produtosDto != null)
-            {
+            {            
                 return produtosDto.SingleOrDefault(p => p.Id == id) ?? null!;
             }
             return null!;
