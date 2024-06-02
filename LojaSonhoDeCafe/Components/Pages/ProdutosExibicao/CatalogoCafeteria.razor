@@ -1,5 +1,4 @@
 ﻿@page "/produtos"
-@using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 
 <PageTitle>Produtos</PageTitle>
@@ -33,14 +32,14 @@
 }
 else
 {
-    <p>Nenhum produto encontrado...</p>
+    <p>Buscando Produtos...</p>
 }
 
 @code {
     [Inject]
     private IProdutoService? ProdutoService { get; set; }
     [Inject]
-    private IProdutoHttpService? Produto2Service { get; set; }
+    private IProdutoHttpService? ProdutoHttpService { get; set; }
     [Inject]
     public ICarrinhoCompraService?  CarrinhoCompraService { get; set; }
     [Inject]
@@ -61,12 +60,11 @@ else
         {
             await LimpaLocalStorage();
 
-            //Produtos = await ProdutoService!.ObterProdutos();
-            Produtos = await Produto2Service!.ObterProdutos();
-            //Produtos = await GerenciaProdutoLocalStorage!.GetCollection();
+            //Produtos = await ProdutoHttpService!.ObterProdutos();
+            Produtos = await GerenciaProdutoLocalStorage!.GetCollection();
 
 
-            var carrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+             var carrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
             //var carrinhoCompraItens = await GerenciaCarrinhoLocalStorage!
                                            // .GetCollection();
 
