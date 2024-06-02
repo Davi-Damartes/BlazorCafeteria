@@ -1,5 +1,5 @@
 ﻿@page "/ProdutosPorCategoria/{CategoriaId:int}"
-@using Microsoft.AspNetCore.Authorization
+
 @attribute [Authorize]
 
 @if (@ProdutosPorCategoriaDto is null && MensagemErro is null)
@@ -12,16 +12,13 @@ else if (MensagemErro is not null)
 }
 else
 {
-
-        <h3 class="mb-2">(@NomeCategoria)</h3>
-        if (ProdutosPorCategoriaDto!.Count() > 0)
-        {
-            <div class="row">
-                <ExibirProdutos Produtos="@ProdutosPorCategoriaDto"></ExibirProdutos>
-            </div>
-        }
-
-    
+    <h3 class="mb-2">(@NomeCategoria)</h3>
+    if (ProdutosPorCategoriaDto!.Count() > 0)
+    {
+        <div class="row">
+            <ExibirProdutos Produtos="@ProdutosPorCategoriaDto"></ExibirProdutos>
+        </div>
+    }   
 }
 
 
@@ -52,11 +49,9 @@ else
     {
         try
         {
-            //await GerenciaProdutoLocalStorage!.AtualizarDadosLocalStorage(ProdutosDto);
-
-            //ProdutosDto = await ProdutoService!.BuscarItensPorCategoria(CategoriaId);
-            ProdutosPorCategoriaDto = await ProdutoHttpService!.BuscarItensPorCategoria(CategoriaId);
-            //ProdutosDto = await GetColecaoProdutosPorCategoria(CategoriaId);
+            
+            //ProdutosPorCategoriaDto = await ProdutoHttpService!.BuscarItensPorCategoria(CategoriaId);
+            ProdutosPorCategoriaDto = await GetColecaoProdutosPorCategoria(CategoriaId);
 
 
             if (ProdutosPorCategoriaDto != null && ProdutosPorCategoriaDto.Count() > 0)
@@ -76,17 +71,17 @@ else
         }
     }
 
-    // private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
-    // {
-    //     var listaDeProdutos = await GerenciaProdutoLocalStorage!.GetCollection();
+    private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
+    {
+        var listaDeProdutos = await GerenciaProdutoLocalStorage!.GetCollection();
 
-    //     if(listaDeProdutos != null)
-    //     {
-    //         return listaDeProdutos.Where(p => p.CategoriaId == categoriaId);
-    //     }
-    //     else
-    //     {
-    //         return await ProdutoService!.BuscarItensPorCategoria(categoriaId);
-    //     }
-    // }
+        if(listaDeProdutos != null)
+        {
+            return listaDeProdutos.Where(p => p.CategoriaId == categoriaId);
+        }
+        else
+        {
+            return await ProdutoHttpService!.BuscarItensPorCategoria(categoriaId);
+        }
+    }
 }
