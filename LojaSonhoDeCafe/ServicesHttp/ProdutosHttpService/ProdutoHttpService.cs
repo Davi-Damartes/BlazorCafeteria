@@ -1,9 +1,5 @@
-﻿using Azure;
-using LojaSonhoDeCafe.Models.Dtos;
-using LojaSonhoDeCafe.Models.Entity;
+﻿using LojaSonhoDeCafe.Models.Dtos;
 using System.Net;
-using System.Net.Http;
-using System.Net.Http.Json;
 
 namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
 {
@@ -18,8 +14,6 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
             _httpClient = httpClient;
             _logger = logger;
         }
-
-
 
         public async Task<IEnumerable<CategoriaDto>> BuscaCategorias()
         {
