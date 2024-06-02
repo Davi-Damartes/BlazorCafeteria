@@ -6,13 +6,13 @@ using LojaSonhoDeCafe.Repositories.Carrinho;
 using LojaSonhoDeCafe.Repositories.Pagamento;
 using LojaSonhoDeCafe.Repositories.Produtos;
 using LojaSonhoDeCafe.Services.CarrinhoCompraServices;
-using LojaSonhoDeCafe.Services.CarrinhoLocalStorage;
 using LojaSonhoDeCafe.Services.PagamentoServices;
 using LojaSonhoDeCafe.Services.ProdutoServices;
-using LojaSonhoDeCafe.Services.ProdutosLocalStorage;
 using LojaSonhoDeCafe.ServicesHttp.CarrinhoComprasHttpService;
+using LojaSonhoDeCafe.ServicesHttp.CarrinhoLocalStorage;
 using LojaSonhoDeCafe.ServicesHttp.PagamentoHttpService;
 using LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService;
+using LojaSonhoDeCafe.ServicesHttp.ProdutosLocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -88,10 +88,10 @@ builder.Services.AddQuickGridEntityFrameworkAdapter();
 builder.Services.AddBlazoredLocalStorage();
 
 
-builder.Services.AddTransient<ILocalStorageProdutosService,
+builder.Services.AddScoped<ILocalStorageProdutosService,
                            LocalStorageProdutosService>();
 
-builder.Services.AddTransient<ILocalStorageCarrinhoItensService,
+builder.Services.AddScoped<ILocalStorageCarrinhoItensService,
                            LocalStorageCarrinhoItensService>();
 
 
