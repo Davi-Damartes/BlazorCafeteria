@@ -1,7 +1,7 @@
 ﻿using LojaSonhoDeCafe.Api.Repositories.Produtos;
 using LojaSonhoDeCafe.Models.Dtos;
+using LojaSonhoDeCafe.Models.MapeandoDtos.ProdutosMapping;
 using Microsoft.AspNetCore.Mvc;
-using SonhoDeCafe.Server.MapeandoDto;
 
 namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
 {
