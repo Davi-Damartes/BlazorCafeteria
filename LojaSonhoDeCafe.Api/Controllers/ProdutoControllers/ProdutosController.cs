@@ -1,10 +1,9 @@
 ﻿using LojaSonhoDeCafe.Api.Repositories.Produtos;
 using LojaSonhoDeCafe.Models.Dtos;
-using LojaSonhoDeCafe.Repositories.Produtos;
 using Microsoft.AspNetCore.Mvc;
 using SonhoDeCafe.Server.MapeandoDto;
 
-namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoControllers
+namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -23,15 +22,12 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoControllers
             try
             {
                 var produtos = await _produtoRepository.ObterTodosOsProdutos();
-                if (produtos is null)
-                {
+                if (produtos is null)               
                     return NotFound();
-                }
-                else
-                {
-                    var produtoDtos = produtos.ConvertProdutosParaDto();
-                    return Ok(produtoDtos);
-                }
+ 
+                var produtoDtos = produtos.ConvertProdutosParaDto();
+                return Ok(produtoDtos);
+                
             }
 
             catch (Exception)
@@ -172,7 +168,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoControllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ProdutoDto>> AdicionarProduto(ProdutoDto produtoDto)
+        public async Task<ActionResult<ProdutoDto>> CriarNovoProduto(ProdutoDto produtoDto)
         {
             try
             {
@@ -180,7 +176,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoControllers
                 if (produtoExiste == null)
                 {
                     await _produtoRepository.AdicionarNovoProdutoDto(produtoDto);
-                    return CreatedAtAction(nameof(AdicionarProduto), new { id = produtoDto.Id }, produtoDto);
+                    return CreatedAtAction(nameof(CriarNovoProduto), new { id = produtoDto.Id }, produtoDto);
                 }
                 return Conflict("Produto já existe!");
             }
