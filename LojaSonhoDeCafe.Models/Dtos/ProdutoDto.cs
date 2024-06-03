@@ -15,7 +15,6 @@ namespace LojaSonhoDeCafe.Models.Dtos
         public string? Descricao { get; set; }
 
 
-
         [Required(ErrorMessage = "O campo foto é obrigatório!!!")]
         public string? FotoUrl { get; set; }
 
