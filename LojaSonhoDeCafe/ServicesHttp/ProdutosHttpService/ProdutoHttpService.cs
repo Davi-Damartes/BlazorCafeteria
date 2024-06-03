@@ -69,7 +69,7 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
         }
 
 
-        public async Task<IEnumerable<ProdutoDto>> ObterProdutos( )
+        public async Task<IEnumerable<ProdutoDto>> ObterProdutos()
         {
             try
             {
