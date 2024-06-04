@@ -12,12 +12,12 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
     public class CarrinhoController : ControllerBase
     {
         private readonly ICarrinhoCompraRepository2 _carrinhoCompraRepository;
-        private readonly IProdutoRepository2 _produtoRepository;
+        private readonly IProdutoRepositoryApi _produtoRepository;
 
         private ILogger<CarrinhoController> _logger;
 
         public CarrinhoController(ICarrinhoCompraRepository2 carrinhoCompraRepository,
-                                  IProdutoRepository2 produtoRepository,
+                                  IProdutoRepositoryApi produtoRepository,
                                   ILogger<CarrinhoController> logger)
         {
             _carrinhoCompraRepository = carrinhoCompraRepository;
