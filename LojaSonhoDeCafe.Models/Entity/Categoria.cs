@@ -13,7 +13,6 @@ namespace LojaSonhoDeCafe.Models.Entity
 
         public string? IconeCss { get; set; }
 
-
         public Collection<Produto> Produtos { get; set; } = new Collection<Produto>();
 
     }

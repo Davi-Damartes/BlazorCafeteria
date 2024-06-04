@@ -19,7 +19,7 @@ builder.Services.AddDbContext<BancoDeDado>(options =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddScoped<IProdutoRepository2, ProdutoRepository2>();
+builder.Services.AddScoped<IProdutoRepositoryApi, ProdutoRepositoryApi>();
 
 //builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
