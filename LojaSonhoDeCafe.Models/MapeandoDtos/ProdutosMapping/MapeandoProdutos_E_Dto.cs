@@ -46,8 +46,24 @@ namespace LojaSonhoDeCafe.Models.MapeandoDtos.ProdutosMapping
                 Preco = produto.Preco,
                 QuantidadeEmEstoque = produto.QuantidadeEmEstoque,
                 IsFavorito = produto.IsFavorito,
-                CategoriaId = produto.Categoria!.Id,
+                CategoriaId = produto.Categoria.Id,
                 CategoriaNome = produto.Categoria.Nome
+            };
+        }
+        public static Produto ConvertProdutoDtoParaProduto(this ProdutoDto produtoDto)
+        {
+            return new Produto
+            {
+                    Id = produtoDto.Id,
+                    Nome = produtoDto.Nome,
+                    Descricao = produtoDto.Descricao,
+                    FotoUrl = produtoDto.FotoUrl,
+                    Preco = produtoDto.Preco,
+                    QuantidadeEmEstoque = produtoDto.QuantidadeEmEstoque,
+                    IsFavorito = produtoDto.IsFavorito,
+                    CategoriaId = produtoDto.CategoriaId,
+                    Categoria = produtoDto.CategoriaNome != null ? new Categoria { Id = produtoDto.CategoriaId, Nome = produtoDto.CategoriaNome } : null
+            
             };
         }
 
