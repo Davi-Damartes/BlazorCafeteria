@@ -9,8 +9,8 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        private readonly IProdutoRepository2 _produtoRepository;
-        public ProdutosController(IProdutoRepository2 produtoRepository)
+        private readonly IProdutoRepositoryApi _produtoRepository;
+        public ProdutosController(IProdutoRepositoryApi produtoRepository)
         {
             _produtoRepository = produtoRepository;
         }
@@ -38,20 +38,17 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
         }
 
         [HttpGet("{Id:Guid}")]
-        public async Task<ActionResult<IEnumerable<ProdutoDto>>> ObterUmProduto(Guid Id)
+        public async Task<ActionResult<ProdutoDto>> ObterProdutoPorId(Guid Id)
         {
             try
             {
                 var produto = await _produtoRepository.ObterProdutoPorId(Id);
                 if (produto is null)
-                {
                     return NotFound("Produto não encontrado!");
-                }
-                else
-                {
-                    var produtoDto = produto.ConvertProdutoParaDto();
-                    return Ok(produtoDto);
-                }
+                
+                var produtoDto = produto.ConvertProdutoParaDto();
+                return Ok(produtoDto);
+                
             }
 
             catch (Exception)
@@ -67,8 +64,8 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
         {
             try
             {
-                var produtos = await _produtoRepository.ObterTodosProdutosPorCategoria(categoriaId);
-                var produtosDto = produtos.ConvertProdutosParaDto();
+                var produtosPorCategoria = await _produtoRepository.ObterTodosProdutosPorCategoria(categoriaId);
+                var produtosDto = produtosPorCategoria.ConvertProdutosParaDto();
                 return Ok(produtosDto);
             }
             catch (Exception)
@@ -85,6 +82,10 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
             try
             {
                 var categorias = await _produtoRepository.ObterCategorias();
+                if(categorias == null)
+                {
+                    return NotFound("Categorias não encontradas");
+                }
                 var categoriasDto = categorias.ConverterCategoriasParaDto();
                 return Ok(categoriasDto);
             }
@@ -122,17 +123,17 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
 
 
         [HttpPatch]
-        public async Task<ActionResult<ProdutoDto>> AtualizarProdutoFavorito(ProdutoDto produtoDto)
+        public async Task<IActionResult> AtualizarProdutoFavorito(ProdutoDto produtoDto)
         {
             try
             {
                 var produtoExiste = await _produtoRepository.ObterProdutoPorId(produtoDto.Id);
-
                 if (produtoExiste == null)
                 {
                     return NotFound("Produto não encontrado existe!");
                 }
-                await _produtoRepository.AtualizaProdutoFavorito(produtoDto);
+                var produto = produtoDto.ConvertProdutoDtoParaProduto();
+                await _produtoRepository.AtualizaProdutoFavorito(produto);
                 return Ok("Produto Atualizado com Sucesso!");
             }
             catch (Exception)
@@ -173,12 +174,14 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
             try
             {
                 var produtoExiste = await _produtoRepository.ObterProdutoPorId(produtoDto.Id);
-                if (produtoExiste == null)
+                if (produtoExiste != null)
                 {
-                    await _produtoRepository.AdicionarNovoProdutoDto(produtoDto);
-                    return CreatedAtAction(nameof(CriarNovoProduto), new { id = produtoDto.Id }, produtoDto);
+                    return Conflict("Produto já existe!");
                 }
-                return Conflict("Produto já existe!");
+                var produto = produtoDto.ConvertProdutoDtoParaProduto();
+                await _produtoRepository.AdicionarNovoProduto(produto);
+
+                return Created($"Produto Criado com sucesso!{produtoDto.Nome}", produtoDto);
             }
             catch (Exception)
             {
