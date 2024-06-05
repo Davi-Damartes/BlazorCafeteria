@@ -49,9 +49,11 @@ else
     {
         try
         {
-            
-            //ProdutosPorCategoriaDto = await ProdutoHttpService!.BuscarItensPorCategoria(CategoriaId);
-            ProdutosPorCategoriaDto = await GetColecaoProdutosPorCategoria(CategoriaId);
+
+            await LimpaLocalStorage();
+
+            ProdutosPorCategoriaDto = await ProdutoHttpService!.BuscarItensPorCategoria(CategoriaId);
+            //ProdutosPorCategoriaDto = await GetColecaoProdutosPorCategoria(CategoriaId);
 
 
             if (ProdutosPorCategoriaDto != null && ProdutosPorCategoriaDto.Count() > 0)
@@ -83,5 +85,10 @@ else
         {
             return await ProdutoHttpService!.BuscarItensPorCategoria(categoriaId);
         }
+    }
+
+    private async Task LimpaLocalStorage( )
+    {
+        await GerenciaProdutoLocalStorage!.RemoveCollection();
     }
 }
