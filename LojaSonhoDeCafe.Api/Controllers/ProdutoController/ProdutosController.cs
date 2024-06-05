@@ -23,7 +23,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
             {
                 var produtos = await _produtoRepository.ObterTodosOsProdutos();
                 if (produtos is null)               
-                    return NotFound();
+                    return NotFound("Produtos não encontrados!");
  
                 var produtoDtos = produtos.ConvertProdutosParaDto();
                 return Ok(produtoDtos);
@@ -38,10 +38,10 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
         }
 
         [HttpGet("{Id:Guid}")]
-        public async Task<ActionResult<ProdutoDto>> ObterProdutoPorId(Guid Id)
+        public async Task<ActionResult<ProdutoDto>> ObterProdutoId(Guid Id)
         {
             try
-            {
+             {
                 var produto = await _produtoRepository.ObterProdutoPorId(Id);
                 if (produto is null)
                     return NotFound("Produto não encontrado!");
@@ -65,6 +65,9 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
             try
             {
                 var produtosPorCategoria = await _produtoRepository.ObterTodosProdutosPorCategoria(categoriaId);
+                if (produtosPorCategoria is null)
+                    return NotFound("Produtos não encotrados");
+
                 var produtosDto = produtosPorCategoria.ConvertProdutosParaDto();
                 return Ok(produtosDto);
             }
@@ -123,17 +126,15 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
 
 
         [HttpPatch]
-        public async Task<IActionResult> AtualizarProdutoFavorito(ProdutoDto produtoDto)
+        public async Task<IActionResult> AtualizarProdutoFavoritoPorId(Guid Id)
         {
             try
             {
-                var produtoExiste = await _produtoRepository.ObterProdutoPorId(produtoDto.Id);
+                var produtoExiste = await _produtoRepository.ObterProdutoPorId(Id);
                 if (produtoExiste == null)
-                {
-                    return NotFound("Produto não encontrado existe!");
-                }
-                var produto = produtoDto.ConvertProdutoDtoParaProduto();
-                await _produtoRepository.AtualizaProdutoFavorito(produto);
+                    return NotFound("Produto não encontrado!");
+                
+                await _produtoRepository.AtualizaProdutoFavorito(produtoExiste);
                 return Ok("Produto Atualizado com Sucesso!");
             }
             catch (Exception)
@@ -151,19 +152,20 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 var produtoExistente = await _produtoRepository.ObterProdutoPorId(Id);
 
                 if (produtoExistente == null)
-                {
-                    return NotFound("Produto não encontrado existe!");
-                }
-                if(Quantidade <= 0 || Quantidade > 80)
+                    return NotFound("Produto não encontrado!");
+
+                if (Quantidade <= 0 || Quantidade > 80)
                 {
                     return BadRequest("Quantidade Inválida");
                 }
+
                 await _produtoRepository.AdicionarEstoqueAoProduto(Id, Quantidade);
-                return Ok($"Produto Reabastecido com sucesso! {produtoExistente}");
+                return Ok($"Produto Reabastecido com sucesso!");
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acessar a base de dados");
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                                  "Erro ao acessar a base de dados");
             }
         }
 
@@ -181,11 +183,12 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 var produto = produtoDto.ConvertProdutoDtoParaProduto();
                 await _produtoRepository.AdicionarNovoProduto(produto);
 
-                return Created($"Produto Criado com sucesso!{produtoDto.Nome}", produtoDto);
+                return Created($"Produto Criado com sucesso!", produtoDto);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Erro ao acessar a base de dados");
+                return StatusCode(StatusCodes.Status500InternalServerError, 
+                                    "Erro ao acessar a base de dados");
             }
         }
 
