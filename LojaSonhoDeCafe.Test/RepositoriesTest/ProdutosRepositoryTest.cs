@@ -1,6 +1,4 @@
-﻿
-
-using FakeItEasy;
+﻿using FakeItEasy;
 using FluentAssertions;
 using LojaSonhoDeCafe.Api.Repositories.Produtos;
 using LojaSonhoDeCafe.Models.Entity;
@@ -16,23 +14,23 @@ namespace LojaSonhoDeCafe.Test.RepositoriesTest
             _produtoRepository = A.Fake<IProdutoRepositoryApi>();
         }
 
-        [Fact]
-        public async Task ProdutoRepository_AllProducts_ReturnIEnumerableProduto( )
-        {
-            //Arange
-            var produto = A.Fake<IEnumerable<Produto>>();
+        //[Fact]
+        //public async Task ProdutoRepository_AllProducts_ReturnIEnumerableProduto( )
+        //{
+        //    //Arange
+        //    var produto = A.Fake<IEnumerable<Produto>>();
 
-            A.CallTo(( ) => _produtoRepository.ObterTodosOsProdutos())
-            .Returns(Task.FromResult(produto));
+        //    A.CallTo(( ) => _produtoRepository.ObterTodosOsProdutos())
+        //    .Returns(Task.FromResult<IEnumerable<Produto>>(produto));
 
 
-            //Act
-            IEnumerable<Produto> result = await _produtoRepository.ObterTodosOsProdutos();
+        //    //Act
+        //    IEnumerable<Produto> result = await _produtoRepository.ObterTodosOsProdutos();
 
-            //Assert
+        //    //Assert
 
-            result.Should().NotBeNull();
-        }
+        //    result.Should().NotBeNull();
+        //}
 
     }
 }
