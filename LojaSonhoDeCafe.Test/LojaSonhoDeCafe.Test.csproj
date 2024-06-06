@@ -27,11 +27,4 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ProdutoControllerTest\ProdutoDelete\" />
-    <Folder Include="ProdutoControllerTest\ProdutoPost\" />
-    <Folder Include="ProdutoControllerTest\ProdutoPut\" />
-    <Folder Include="ProdutoControllerTest\ProdutoGetTest\" />
-  </ItemGroup>
-
 </Project>
