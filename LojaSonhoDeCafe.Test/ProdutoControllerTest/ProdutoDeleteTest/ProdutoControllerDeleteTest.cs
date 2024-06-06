@@ -30,16 +30,13 @@ namespace LojaSonhoDeCafe.Test.ProdutoControllerTest.ProdutoDeleteTest
 
 
             //Act
-            var resutl = await controller.DeletarProduto(produtoId);
+            var result = await controller.DeletarProduto(produtoId);
 
 
             //Assert
-            resutl.Should().NotBeNull();
-            var actionResult = Assert.IsType<OkObjectResult>(resutl);
+            result.Should().NotBeNull();
+            var actionResult = Assert.IsType<OkObjectResult>(result);
             actionResult.Value.Should().Be("Produto Excluído com sucesso!");
-
-
-
         }
 
         [Fact]
@@ -56,12 +53,12 @@ namespace LojaSonhoDeCafe.Test.ProdutoControllerTest.ProdutoDeleteTest
 
 
             //Act
-            var resutl = await controller.DeletarProduto(produtoId);
+            var result = await controller.DeletarProduto(produtoId);
 
 
             //Assert
-            resutl.Should().NotBeNull();
-            var actionResult = Assert.IsType<OkObjectResult>(resutl);
+            result.Should().NotBeNull();
+            var actionResult = Assert.IsType<OkObjectResult>(result);
             actionResult.Value.Should().Be("Produto Excluído com sucesso!");
 
         }
