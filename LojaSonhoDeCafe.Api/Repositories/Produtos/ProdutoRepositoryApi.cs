@@ -1,5 +1,4 @@
 ﻿using LojaSonhoDeCafe.Api.Banco;
-using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,7 +34,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
                                 .Include(a => a.Categoria)
                                 .ToListAsync();
 
-            if (produtos == null)
+            if (produtos.Count <= 0)
             {
                 return Enumerable.Empty<Produto>();
             }
@@ -54,9 +53,8 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
         public async Task<IEnumerable<Categoria>> ObterCategorias()
         {
-            var categorias = await _bancoDeDados.Categorias.ToListAsync();
+            return await _bancoDeDados.Categorias.ToListAsync();
 
-            return categorias;
         }
 
         public async Task<IEnumerable<Produto>> ObterProdutosFavoritos()
@@ -82,12 +80,11 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
         {
             var produto = await ObterProdutoPorId(Id);
 
-            if(produto != null || Quantidade > 0)
+            if(produto != null && Quantidade > 0)
             {
                 produto.QuantidadeEmEstoque = Quantidade;
                 await _bancoDeDados.SaveChangesAsync();
             }
-
 
         }
 
@@ -117,7 +114,6 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
             }
         }
-
 
 
         public async Task<bool> ProdutoIdJaExisteAsync(Guid produtoId)
