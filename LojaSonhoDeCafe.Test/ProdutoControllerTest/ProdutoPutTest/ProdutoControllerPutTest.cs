@@ -130,7 +130,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoControllerTest.ProdutoPutTest
 
 
         [Fact]
-        public async Task ProdutosController_AdicionarEstoque_DeveRetornarInternalServerError_QuandoOcorreExcecao( )
+        public async Task ProdutosController_AdicionarEstoque_DeveRetornarInternalServerError()
         {
             //Arrange
             var produtoId = Guid.NewGuid();
