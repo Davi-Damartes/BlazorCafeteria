@@ -54,7 +54,7 @@ namespace LojaSonhoDeCafe.Api.Banco
 
             });
 
-            //Create Shopping Carrinho for Users
+            //Criando Carrinho para Usuarios
             modelBuilder.Entity<Carrinho>().HasData(new Carrinho
             {
                 Id = 1,
