@@ -6,11 +6,11 @@ using LojaSonhoDeCafe.Enum;
 
 namespace LojaSonhoDeCafe.Api.Repositories.Pagamento
 {
-    public class PagamentoRepository2 : IPagamentoRepository2
+    public class PagamentoRepositoryApi : IPagamentoRepositoryApi
     {
         private readonly BancoDeDado _bancoDeDados;
 
-        public PagamentoRepository2(BancoDeDado bancoDeDados)
+        public PagamentoRepositoryApi(BancoDeDado bancoDeDados)
         {
             _bancoDeDados = bancoDeDados;
         }
