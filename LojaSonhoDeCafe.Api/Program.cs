@@ -21,13 +21,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IProdutoRepositoryApi, ProdutoRepositoryApi>();
 
-//builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
-builder.Services.AddScoped<ICarrinhoCompraRepository2, CarrinhoCompraRepository2>();
+builder.Services.AddScoped<ICarrinhoCompraRepositoryApi, CarrinhoCompraRepositoryApi>();
 
-builder.Services.AddScoped<IPagamentoRepository2, PagamentoRepository2>();
-
-//builder.Services.AddScoped<ICarrinhoCompraService, CarrinhoCompraService>();
+builder.Services.AddScoped<IPagamentoRepositoryApi, PagamentoRepositoryApi>();
 
 
 //builder.Services.AddScoped<IPagamentoRepository, PagamentoRepository>();
