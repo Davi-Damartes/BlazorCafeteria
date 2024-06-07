@@ -10,8 +10,8 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
     [ApiController]
     public class PagamentoController : ControllerBase
     {
-        private readonly IPagamentoRepository2 _pagamentoRepository;
-        public PagamentoController(IPagamentoRepository2 pagamentoRepository)
+        private readonly IPagamentoRepositoryApi _pagamentoRepository;
+        public PagamentoController(IPagamentoRepositoryApi pagamentoRepository)
         {
             _pagamentoRepository = pagamentoRepository;
 
