@@ -3,7 +3,7 @@ using LojaSonhoDeCafe.Models.Entity;
 
 namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
 {
-    public interface ICarrinhoCompraRepository2
+    public interface ICarrinhoCompraRepositoryApi
     {
         Task<CarrinhoItem> AdicionaItem(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto);
 

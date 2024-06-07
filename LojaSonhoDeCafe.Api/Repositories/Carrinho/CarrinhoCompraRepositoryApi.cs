@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
 {
-    public class CarrinhoCompraRepository2 : ICarrinhoCompraRepository2
+    public class CarrinhoCompraRepositoryApi : ICarrinhoCompraRepositoryApi
     {
         private readonly BancoDeDado _context;
 
-        public CarrinhoCompraRepository2(BancoDeDado context)
+        public CarrinhoCompraRepositoryApi(BancoDeDado context)
         {
             _context = context;
         }
