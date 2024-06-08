@@ -2,12 +2,12 @@
 using LojaSonhoDeCafe.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 
-namespace LojaSonhoDeCafe.Test.ProdutoRepositoriesTest
+namespace LojaSonhoDeCafe.Test.ProdutoRepositoriesTest.BancoInMemoryMetodo
 {
-    public static class BancoDeDadosRepositorioMock
+    public static class BancoDeDadosInMemory
     {
 
-        private static async Task<BancoDeDado> GetBancoDeDado()
+        public static async Task<BancoDeDado> GetBancoDeDado()
         {
             var options = new DbContextOptionsBuilder<BancoDeDado>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
