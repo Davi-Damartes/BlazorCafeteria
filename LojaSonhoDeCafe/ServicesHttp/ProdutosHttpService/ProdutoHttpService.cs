@@ -15,31 +15,7 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
             _logger = logger;
         }
 
-        public async Task<IEnumerable<CategoriaDto>> BuscaCategorias()
-        {
-            try
-            {
-                var response = await _httpClient.GetAsync("api/Produtos/BuscarCategorias");
-                if (response.IsSuccessStatusCode)
-                {
-                    if (response.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        return Enumerable.Empty<CategoriaDto>();
-                    }
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<CategoriaDto>>();
-                }
-                else
-                {
-                    var message = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Http Status Code - {response.StatusCode} Message - {message}");
-                }
-            }
-            catch (Exception)
-            {
-                _logger.LogError("Erro ao buscar Categorias");
-                throw;
-            }
-        }
+ 
 
         public async Task<IEnumerable<ProdutoDto>> BuscarItensPorCategoria(int categoriaId)
         {
@@ -75,8 +51,10 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
             {
                 var produtosDto = await _httpClient.GetFromJsonAsync<IEnumerable<ProdutoDto>>
                                                     ("api/produtos");
+                if(produtosDto != null )
+                    return produtosDto;
 
-                return produtosDto;
+                return Enumerable.Empty<ProdutoDto>();
             }
 
             catch (Exception)
@@ -86,6 +64,31 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
             }
 
         }
+        public async Task<IEnumerable<CategoriaDto>> BuscaCategorias()
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("api/Produtos/BuscarCategorias");
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        return Enumerable.Empty<CategoriaDto>();
+                    }
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<CategoriaDto>>();
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"Http Status Code - {response.StatusCode} Message - {message}");
+                }
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Erro ao buscar Categorias");
+                throw;
+            }
+        }
 
         public async Task<IEnumerable<ProdutoDto>> ObterProdutosFavoritos()
         {
@@ -94,7 +97,10 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
                 var produtosFavoritosDto = await _httpClient.GetFromJsonAsync<IEnumerable<ProdutoDto>>
                                            ("api/Produtos/BuscarProdutoFavoritos");
 
-                return produtosFavoritosDto;
+                if(produtosFavoritosDto != null)
+                    return produtosFavoritosDto;
+
+                return null!;
             }
 
             catch (Exception)
@@ -211,6 +217,8 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
             try
             {
                 var response = await _httpClient.DeleteAsync($"api/produtos/{Id}");
+                var responseBody = response.Content.ReadAsStringAsync();
+
             }
             catch (Exception)
             {
