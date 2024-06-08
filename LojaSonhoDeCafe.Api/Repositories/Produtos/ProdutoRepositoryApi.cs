@@ -80,7 +80,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
         {
             var produto = await ObterProdutoPorId(Id);
 
-            if(produto != null && Quantidade > 0)
+            if(produto != null && Quantidade > 0 && produto.QuantidadeEmEstoque == 0)
             {
                 produto.QuantidadeEmEstoque = Quantidade;
                 await _bancoDeDados.SaveChangesAsync();
@@ -101,18 +101,13 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
         public async Task ExcluirProduto(Guid Id)
         {
-            var produtoExiste = await ProdutoIdJaExisteAsync(Id);
-
-            if (produtoExiste == true)
+            var produtoExclusao = await ObterProdutoPorId(Id);
+            if (produtoExclusao != null)
             {
-                var produtoExclusao = await _bancoDeDados
-                                            .Produtos
-                                            .SingleOrDefaultAsync(x => x.Id == Id);
-
-                _bancoDeDados.Produtos.Remove(produtoExclusao!);
+                _bancoDeDados.Produtos.Remove(produtoExclusao);
                 await _bancoDeDados.SaveChangesAsync();
 
-            }
+            }          
         }
 
 
