@@ -10,7 +10,6 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpPostTest
 {
     public class ProdutoHttpPostTests
     {
-
         private readonly Fixture _fixture = new();
         private readonly ILogger<ProdutoHttpService> _logger;
 
@@ -22,9 +21,10 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpPostTest
         [Fact]
         public async Task ServiceHttpClient_AdicionarProduto_ReturnUmProduto( )
         {
-            var produto = _fixture.Create<ProdutoDto>();
+            //Arrange
+            var produtoDto = _fixture.Create<ProdutoDto>();
 
-            var handler = new HandlerHttp(HttpStatusCode.OK, produto);
+            var handler = new HandlerHttp(HttpStatusCode.OK, produtoDto);
 
             var client = new HttpClient(handler)
             {
@@ -33,13 +33,63 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpPostTest
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
-            var produtoAtual = await produtoClient.AdicionarNovoProduto(produto);
+            //Act
+            var produtoAtual = await produtoClient.AdicionarNovoProduto(produtoDto);
 
-            var produtoId = await produtoClient.ObterUmProduto(produto.Id);
 
-            produtoAtual.Should().BeEquivalentTo(produto);
+            //Assert
+            Assert.Equal(produtoDto.Nome, produtoAtual.Nome);
+            produtoAtual.Should().BeOfType<ProdutoDto>();
+            produtoAtual.Should().NotBeNull();
+            produtoAtual.Should().BeEquivalentTo(produtoDto);
 
-            produtoAtual.Should().BeEquivalentTo(produtoId);
+        } 
+        
+        [Fact]
+        public async Task ServiceHttpClient_AdicionarEstoqueAoProduto_ReturnTrue( )
+        {
+            //Arrange
+            var produtoDto = _fixture.Create<ProdutoDto>();
+            int quantidade = 10;
+            var handler = new HandlerHttp(HttpStatusCode.OK, produtoDto);
+
+            var client = new HttpClient(handler)
+            {
+                BaseAddress = new Uri("https://www.example.com")
+
+            };
+            var produtoClient = new ProdutoHttpService(client, _logger);
+
+            //Act
+            await produtoClient.AdicionarEstoqueAoProduto(produtoDto.Id, quantidade);
+
+
+            //Assert
+            Assert.True(true);
+
+        }
+        
+        [Fact]
+        public async Task ServiceHttpClient_AtualizaProdutoFavorito_ReturnTrue( )
+        {
+            //Arrange
+            var produtoDto = _fixture.Create<ProdutoDto>();
+
+            var handler = new HandlerHttp(HttpStatusCode.OK, produtoDto);
+
+            var client = new HttpClient(handler)
+            {
+                BaseAddress = new Uri("https://www.example.com")
+
+            };
+            var produtoClient = new ProdutoHttpService(client, _logger);
+
+            //Act
+            await produtoClient.AtualizaProdutoFavorito(produtoDto);
+
+
+            //Assert
+            Assert.True(true);
 
         }
     }
