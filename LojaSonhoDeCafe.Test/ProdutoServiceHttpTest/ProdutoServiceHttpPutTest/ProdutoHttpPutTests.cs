@@ -11,8 +11,6 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpPutTest
 {
     public class ProdutoHttpPutTests
     {
-
-        private readonly Fixture _fixture = new();
         private readonly ILogger<ProdutoHttpService> _logger;
 
         public ProdutoHttpPutTests()
@@ -21,11 +19,9 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpPutTest
         }
 
         [Fact]
-        public async Task ServiceHttpClient_ObterProdutoPorId_ReturnUmProduto( )
+        public async Task ServiceHttpClient_AtualizaProdutoFavorito_ReturnUmProduto( )
         {
             //Arrange 
-            var generateId = _fixture.Create<Guid>();
-
             var produtoAtt = new ProdutoDto
             {
                 Nome = "Cafeteira Expresso",
@@ -36,9 +32,8 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpPutTest
                 IsFavorito = true,
                 CategoriaId = 1,
                 CategoriaNome = "Lanche"
-             };
+            };
 
-            int quantidade = 25;
             var handler = new HandlerHttp(HttpStatusCode.OK, produtoAtt);
 
             var client = new HttpClient(handler)
@@ -47,13 +42,13 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpPutTest
 
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
-            
 
             //Act
             await produtoClient.AtualizaProdutoFavorito(produtoAtt);
 
             //Assert
-
+            Assert.NotNull(client);
+            Assert.NotNull(produtoAtt);
         }
     }
 }
