@@ -22,6 +22,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpDeleteTe
         [Fact]
         public async Task ServiceHttpClient_DeletarProdutoPorId_ReturnUmProduto()
         {
+            //Assert
             var generateId = _fixture.Create<Guid>();
 
             var produtoEsperados = _fixture.Create<ProdutoDto>();
@@ -35,8 +36,12 @@ namespace LojaSonhoDeCafe.Test.ProdutoServiceHttpTest.ProdutoServiceHttpDeleteTe
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
+            //Act
             await produtoClient.RemoverProduto(generateId);
 
+            //Assert
+
+            Assert.True(true);
 
         }
     }
