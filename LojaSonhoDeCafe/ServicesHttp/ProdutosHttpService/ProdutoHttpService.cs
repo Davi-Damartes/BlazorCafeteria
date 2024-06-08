@@ -97,10 +97,19 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
                 var produtosFavoritosDto = await _httpClient.GetFromJsonAsync<IEnumerable<ProdutoDto>>
                                            ("api/Produtos/BuscarProdutoFavoritos");
 
-                if(produtosFavoritosDto != null)
-                    return produtosFavoritosDto;
+                var retornoProdutosFavoritos = new List<ProdutoDto>();
+                if (produtosFavoritosDto != null)
+                {
+                    foreach (var produtoFavorito in produtosFavoritosDto)
+                    {
+                        if (produtoFavorito.IsFavorito)
+                        {
+                            retornoProdutosFavoritos.Add(produtoFavorito);
+                        }
+                    }
+                }
 
-                return null!;
+                return retornoProdutosFavoritos;
             }
 
             catch (Exception)
@@ -146,19 +155,17 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
             {
                 var response = await _httpClient.PostAsJsonAsync("api/Produtos", produtoDto);
 
-                if (response.IsSuccessStatusCode)// status code entre 200 a 299
+                if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode == HttpStatusCode.NoContent)
                     {
                         return new ProdutoDto();
                     }
-                    //le o conteudo HTTP e retorna o valor resultante
-                    //da serialização do conteudo JSON para o objeto Dto
+
                     return await response.Content.ReadFromJsonAsync<ProdutoDto>();
                 }
                 else
                 {
-                    //serializa o conteudo HTTP como uma string
                     var message = await response.Content.ReadAsStringAsync();
                     throw new Exception($"{response.StatusCode} Message -{message}");
                 }
@@ -200,7 +207,7 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
                 if (!response.IsSuccessStatusCode)
                 {
                     _logger.LogError($"Erro ao atualizar produto favorito: {response.ReasonPhrase}");
-                    // Você pode lançar uma exceção customizada ou tratar o erro conforme necessário
+                   
                 }
 
             }
