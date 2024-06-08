@@ -59,14 +59,11 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
         public async Task<IEnumerable<Produto>> ObterProdutosFavoritos()
         {
-            var produtosFavoritos = await _bancoDeDados
-                                .Produtos.AsQueryable()
-                                .Include(a => a.Categoria)
-                                .Where(x => x.IsFavorito == true)
-                                .ToListAsync();
-
-            return produtosFavoritos;
-               
+            return await _bancoDeDados.Produtos
+                                      .AsQueryable()
+                                      .Include(a => a.Categoria)
+                                      .Where(x => x.IsFavorito == true)
+                                      .ToListAsync();            
         }
 
         public async Task AdicionarNovoProduto(Produto produto)
