@@ -32,6 +32,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
             var produtos = await _bancoDeDados
                                 .Produtos
                                 .Include(a => a.Categoria)
+                                .AsNoTracking()
                                 .ToListAsync();
 
             if (produtos.Count <= 0)
@@ -47,13 +48,16 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
             return await _bancoDeDados.Produtos
                                       .Include(a => a.Categoria)
                                       .Where(x => x.CategoriaId == id)
+                                      .AsNoTracking()
                                       .ToListAsync();
 
         }
 
         public async Task<IEnumerable<Categoria>> ObterCategorias()
         {
-            return await _bancoDeDados.Categorias.ToListAsync();
+            return await _bancoDeDados.Categorias
+                                      .AsNoTracking()
+                                      .ToListAsync();
 
         }
 
@@ -63,6 +67,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
                                       .AsQueryable()
                                       .Include(a => a.Categoria)
                                       .Where(x => x.IsFavorito == true)
+                                      .AsNoTracking()
                                       .ToListAsync();            
         }
 
@@ -112,7 +117,6 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
         {
             return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
         }
-
-      
+  
     }
 }
