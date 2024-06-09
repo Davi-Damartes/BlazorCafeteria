@@ -27,11 +27,12 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
             return produto;
         }
 
-        public async Task<IEnumerable<Produto>> ObterTodosOsProdutos()
+        public async Task<IEnumerable<Produto>> ObterTodosOsProdutos( )
         {
             var produtos = await _bancoDeDados
                                 .Produtos
                                 .Include(a => a.Categoria)
+                                .AsNoTracking()
                                 .ToListAsync();
 
             if (produtos.Count <= 0)
@@ -47,23 +48,27 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
             return await _bancoDeDados.Produtos
                                       .Include(a => a.Categoria)
                                       .Where(x => x.CategoriaId == id)
+                                      .AsNoTracking()
                                       .ToListAsync();
 
         }
 
-        public async Task<IEnumerable<Categoria>> ObterCategorias()
+        public async Task<IEnumerable<Categoria>> ObterCategorias( )
         {
-            return await _bancoDeDados.Categorias.ToListAsync();
+            return await _bancoDeDados.Categorias
+                                      .AsNoTracking()
+                                      .ToListAsync();
 
         }
 
-        public async Task<IEnumerable<Produto>> ObterProdutosFavoritos()
+        public async Task<IEnumerable<Produto>> ObterProdutosFavoritos( )
         {
             return await _bancoDeDados.Produtos
                                       .AsQueryable()
                                       .Include(a => a.Categoria)
                                       .Where(x => x.IsFavorito == true)
-                                      .ToListAsync();            
+                                      .AsNoTracking()
+                                      .ToListAsync();
         }
 
         public async Task AdicionarNovoProduto(Produto produto)
@@ -77,7 +82,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
         {
             var produto = await ObterProdutoPorId(Id);
 
-            if(produto != null && Quantidade > 0 && produto.QuantidadeEmEstoque == 0)
+            if (produto != null && Quantidade > 0 && produto.QuantidadeEmEstoque == 0)
             {
                 produto.QuantidadeEmEstoque = Quantidade;
                 await _bancoDeDados.SaveChangesAsync();
@@ -87,9 +92,9 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
         public async Task AtualizaProdutoFavorito(Produto produto)
         {
-            var produtoBd = await _bancoDeDados.Produtos.SingleOrDefaultAsync(x => x.Id == produto.Id); 
-             if(produtoBd != null)
-            { 
+            var produtoBd = await _bancoDeDados.Produtos.SingleOrDefaultAsync(x => x.Id == produto.Id);
+            if (produtoBd != null)
+            {
                 produtoBd.IsFavorito = produto.IsFavorito;
                 await _bancoDeDados.SaveChangesAsync();
             }
@@ -104,7 +109,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
                 _bancoDeDados.Produtos.Remove(produtoExclusao);
                 await _bancoDeDados.SaveChangesAsync();
 
-            }          
+            }
         }
 
 
@@ -113,6 +118,5 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
             return await _bancoDeDados.Produtos.AnyAsync(p => p.Id == produtoId);
         }
 
-      
     }
 }
