@@ -1,6 +1,7 @@
 ﻿using LojaSonhoDeCafe.Api.Repositories.Carrinho;
 using LojaSonhoDeCafe.Api.Repositories.Produtos;
 using LojaSonhoDeCafe.Models.Dtos;
+using LojaSonhoDeCafe.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SonhoDeCafe.Server.MapeandoDto;
@@ -14,20 +15,20 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
         private readonly ICarrinhoCompraRepositoryApi _carrinhoCompraRepository;
         private readonly IProdutoRepositoryApi _produtoRepository;
 
-        private ILogger<CarrinhoController> _logger;
+        //private ILogger<CarrinhoController> _logger;
 
         public CarrinhoController(ICarrinhoCompraRepositoryApi carrinhoCompraRepository,
-                                  IProdutoRepositoryApi produtoRepository,
-                                  ILogger<CarrinhoController> logger)
+                                  IProdutoRepositoryApi produtoRepository)
+                                 //ILogger<CarrinhoController> logger)
         {
             _carrinhoCompraRepository = carrinhoCompraRepository;
             _produtoRepository = produtoRepository;
-            _logger = logger;
+           // _logger = logger;
         }
 
         [HttpGet]
         [Route("{usuarioId}/ObterItensCarrinhoDoUsuario")]
-        public async Task<ActionResult<IEnumerable<ProdutoDto>>> ObterItensCarrinhoDoUsuario(string usuarioId)
+        public async Task<ActionResult<IEnumerable<CarrinhoItemDto>>> ObterItensCarrinhoDoUsuario(string usuarioId)
         {
             try
             {
@@ -35,13 +36,13 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
 
                 if (carrinhoItens == null)
                 {
-                    return NoContent();
+                    return NotFound("Itens do Carrinho não encontrados!");
                 }
 
                 var produtos = await _produtoRepository.ObterTodosOsProdutos();
                 if (produtos == null)
                 {
-                    throw new Exception("Não existem produtos...");
+                    return NotFound("Produtos do Carrinho não encontrados!");
                 }
 
                 var carrinhoItensDto = carrinhoItens.ConverterCarrinhoItensParaDto(produtos);
@@ -49,17 +50,17 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
             }
             catch (Exception ex)
             {
-                _logger.LogError("## Erro ao obter itens do carrinho");
+                //_logger.LogError("## Erro ao obter itens do carrinho");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<CarrinhoItemDto>> ObterItemCarrinhoId(int id)
+        public async Task<ActionResult<CarrinhoItemDto>> ObterItemCarrinhoId(int Id)
         {
             try
             {
-                var carrinhoItem = await _carrinhoCompraRepository.ObtemItemDoCarrinhoPorId(id);
+                var carrinhoItem = await _carrinhoCompraRepository.ObtemItemDoCarrinhoPorId(Id);
                 if (carrinhoItem == null)
                 {
                     return NotFound($"Item não encontrado"); //404 status code
@@ -71,25 +72,25 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
                 {
                     return NotFound($"Item não existe na fonte de dados");
                 }
-                var cartItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
 
-                return Ok(cartItemDto);
+                return Ok(carrinhoItemDto);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"## Erro ao obter o item ={id} do carrinho");
+                //_logger.LogError($"## Erro ao obter o item ={id} do carrinho");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
 
         [HttpPatch("{id:int}")]
-        public async Task<ActionResult<CarrinhoItemDto>> AtualizaQuantidadeItemNoCarrinho(int id,
+        public async Task<ActionResult<CarrinhoItemDto>> AtualizaQuantidadeItemNoCarrinho(int Id,
                                                                     CarrinhoItemAtualizaQuantidadeDto carrinhoItemAtualizaQuantidadeDto)
         {
             try
             {
-                var carrinhoItem = await _carrinhoCompraRepository.AtualizaQuantidade(id, carrinhoItemAtualizaQuantidadeDto);
+                var carrinhoItem = await _carrinhoCompraRepository.AtualizaQuantidade(Id, carrinhoItemAtualizaQuantidadeDto);
 
                 if (carrinhoItem == null)
                 {
@@ -110,14 +111,14 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
             }
             catch (Exception ex)
             {
-                _logger.LogError("## Erro Ao atulizar Quantidade do Item no Carrinho");
+                //_logger.LogError("## Erro Ao atulizar Quantidade do Item no Carrinho");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
 
         [HttpPost]
-        public async Task<ActionResult<CarrinhoItemDto>> AdicionarItemCarrinho([FromBody]
+        public async Task<ActionResult<CarrinhoItemDto>> AdicionarItemCarrinho(
                                                         CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
         {
             try
@@ -126,25 +127,25 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
 
                 if (novoCarrinhoItem == null)
                 {
-                    return NoContent(); //Status 204
+                    return NotFound("Erro ao adicionar item ao carrinho"); 
                 }
 
                 var produto = await _produtoRepository.ObterProdutoPorId(novoCarrinhoItem.ProdutoId);
 
                 if (produto == null)
                 {
-                    throw new Exception($"Produto não localizado (Id:({carrinhoItemAdicionaDto.ProdutoId})");
+                    return NotFound("Erro ao obter Produto do carrinho");
                 }
 
                 var novoCarrinhoItemDto = novoCarrinhoItem.ConverterCarrinhoItemParaDto(produto);
 
                 return CreatedAtAction(nameof(ObterItemCarrinhoId), new { id = novoCarrinhoItemDto.Id },
-               novoCarrinhoItemDto);
+                                        novoCarrinhoItemDto);
 
             }
             catch (Exception ex)
             {
-                _logger.LogError("## Erro criar um novo item no carrinho");
+                //_logger.LogError("## Erro criar um novo item no carrinho");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -161,7 +162,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
                     return BadRequest("Erro ao excluir itens do Carrinho de Compra");
                 }
 
-                return Ok("Carrinho de compras esvaziado com Sucesso!");
+                return Ok("Carrinho de compras Limpo com Sucesso!");
 
             }
             catch (Exception ex)
