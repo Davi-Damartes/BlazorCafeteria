@@ -20,7 +20,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
         }
 
         [Fact]
-        public async Task CarrinhoController_AdicionarItemCarrinho_RetunrCreatedAtAction201( )
+        public async Task CarrinhoController_AdicionarItemCarrinho_ReturnCreatedAtAction201( )
         {
             var carrinhoItemAddDto = A.Fake<CarrinhoItemAdicionaDto>();
             var carrinhoItem = A.Fake<CarrinhoItem>();
@@ -48,7 +48,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
         }
 
         [Fact]
-        public async Task CarrinhoController_AdicionarItemCarrinho_RetunrNotFound404( )
+        public async Task CarrinhoController_AdicionarItemCarrinho_ReturnNotFound404( )
         {
             var carrinhoItemAddDto = A.Fake<CarrinhoItemAdicionaDto>();
             var carrinhoItem = A.Fake<CarrinhoItem>();
@@ -70,13 +70,13 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<CarrinhoItemDto>>(result);
             var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-            notFoundObjectResult.Value.Should().BeOfType<CarrinhoItemDto>();
+            notFoundObjectResult.Value.Should().Be("Erro ao adicionar item ao carrinho");
             notFoundObjectResult.StatusCode.Should().Be(404);
 
         }
 
         [Fact]
-        public async Task CarrinhoController_AdicionarItemCarrinho_RetunrException500( )
+        public async Task CarrinhoController_AdicionarItemCarrinho_ReturnException500( )
         {
             var carrinhoItemAddDto = A.Fake<CarrinhoItemAdicionaDto>();
             var carrinhoItem = A.Fake<CarrinhoItem>();
