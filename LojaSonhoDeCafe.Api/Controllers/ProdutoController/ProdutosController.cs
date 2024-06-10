@@ -125,16 +125,16 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
         }
 
 
-        [HttpPatch]
-        public async Task<IActionResult> AtualizarProdutoFavoritoPorId(Guid Id)
+        [HttpPatch("{Id:guid}/favorito")]
+        public async Task<IActionResult> AtualizarProdutoFavoritoPorId(ProdutoDto produtoExistente)
         {
             try
-            {
-                var produtoExiste = await _produtoRepository.ObterProdutoPorId(Id);
-                if (produtoExiste == null)
+            {              
+                if (produtoExistente == null)
                     return NotFound("Produto não encontrado!");
-                
-                await _produtoRepository.AtualizaProdutoFavorito(produtoExiste);
+
+                var produto = produtoExistente.ConvertProdutoDtoParaProduto();
+                await _produtoRepository.AtualizaProdutoFavorito(produto);
                 return Ok("Produto Atualizado com Sucesso!");
             }
             catch (Exception)
@@ -158,6 +158,11 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 {
                     return BadRequest("Quantidade Inválida");
                 }
+                if (produtoExistente.QuantidadeEmEstoque != 0)
+                {
+                    return BadRequest("Produto ainda possui Estoque!");
+                }
+
 
                 await _produtoRepository.AdicionarEstoqueAoProduto(Id, Quantidade);
                 return Ok($"Produto Reabastecido com sucesso!");
