@@ -202,7 +202,7 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
         {
             try
             {
-                var response = await _httpClient.PatchAsJsonAsync("api/Produtos/", produtoDto);
+                var response = await _httpClient.PatchAsJsonAsync($"api/Produtos/{produtoDto.Id}/favorito", produtoDto);
 
                 if (!response.IsSuccessStatusCode)
                 {
