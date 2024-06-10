@@ -170,6 +170,12 @@ else @if (ModoExibicao == "maior")
         }
     }
 
+    public async Task AttProdutoFavorito(ProdutoDto Produto)
+    {
+        await ProdutoHttpService!.AtualizaProdutoFavorito(Produto);
+    }
+
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -182,13 +188,6 @@ else @if (ModoExibicao == "maior")
         }
 
     }
-
-    public async Task AttProdutoFavorito(ProdutoDto Produto)
-    {
-        await ProdutoHttpService!.AtualizaProdutoFavorito(Produto);
-    }
-
-
 
 
     private string CreateWebPath(string relativePath)
