@@ -54,19 +54,19 @@ namespace LojaSonhoDeCafe.Api.Banco
 
             });
 
-            //Criando Carrinho para Usuarios
-            modelBuilder.Entity<Carrinho>().HasData(new Carrinho
-            {
-                Id = 1,
-                UsuarioId = "1",
+            ////Criando Carrinho para Usuarios
+            //modelBuilder.Entity<Carrinho>().HasData(new Carrinho
+            //{
+            //    Id = 1,
+            //    UsuarioId = "1",
 
-            });
-            modelBuilder.Entity<Carrinho>().HasData(new Carrinho
-            {
-                Id = 2,
-                UsuarioId = "2",
+            //});
+            //modelBuilder.Entity<Carrinho>().HasData(new Carrinho
+            //{
+            //    Id = 2,
+            //    UsuarioId = "2",
 
-            });
+            //});
 
             //modelBuilder.Entity<PagamentoProduto>()
             //            .HasOne(pp => pp.PagamentoDiario)
