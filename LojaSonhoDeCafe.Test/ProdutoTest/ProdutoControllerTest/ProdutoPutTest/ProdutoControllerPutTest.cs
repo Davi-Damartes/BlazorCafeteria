@@ -2,7 +2,9 @@
 using FluentAssertions;
 using LojaSonhoDeCafe.Api.Controllers.ProdutoControllers;
 using LojaSonhoDeCafe.Api.Repositories.Produtos;
+using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Models.Entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -19,10 +21,12 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPutTest
 
 
         [Fact]
-        public async Task ProdutosController_AtualizarProdutoFavorito_ReturnOk()
+        public async Task ProdutosController_AtualizarProdutoFavorito_ReturnOk200()
         {
             //Arrange
             var produto = A.Fake<Produto>();
+
+            var produtoDto = A.Fake<ProdutoDto>();
 
 
             A.CallTo(() => _produtoRepository.ObterProdutoPorId(produto.Id))
@@ -34,41 +38,45 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPutTest
 
             var controler = new ProdutosController(_produtoRepository);
             //Act
-            var result = await controler.AtualizarProdutoFavoritoPorId(produto.Id);
+            var result = await controler.AtualizarProdutoFavoritoPorId(produtoDto);
 
             //Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<OkObjectResult>(result);
             actionResult.Value.Should().Be("Produto Atualizado com Sucesso!");
+            actionResult.StatusCode.Should().Be(200);
 
         }
 
         [Fact]
-        public async Task ProdutosController_AtualizarProdutoFavorito_ReturnNotFound()
+        public async Task ProdutosController_AtualizarProdutoFavorito_ReturnNotFound404()
         {
             //Arrange
             var produto = A.Fake<Produto>();
+            var produtoDto = A.Fake<ProdutoDto>();
+            produtoDto = null!;
 
             A.CallTo(() => _produtoRepository.ObterProdutoPorId(produto.Id))
             .Returns(Task.FromResult<Produto>(null!));
 
 
             A.CallTo(() => _produtoRepository.AtualizaProdutoFavorito(produto))
-            .Returns(Task.FromResult(produto));
+            .Returns(null!);
 
             var controler = new ProdutosController(_produtoRepository);
             //Act
-            var result = await controler.AtualizarProdutoFavoritoPorId(produto.Id);
+            var result = await controler.AtualizarProdutoFavoritoPorId(produtoDto);
 
             //Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<NotFoundObjectResult>(result);
             actionResult.Value.Should().Be("Produto não encontrado!");
+            actionResult.StatusCode.Should().Be(404);
 
         }
 
         [Fact]
-        public async Task ProdutosController_AdicionarEstoqueAoProduto_ReturnOk()
+        public async Task ProdutosController_AdicionarEstoqueAoProduto_ReturnOk200()
         {
             //Arrange
             var produto = A.Fake<Produto>();
@@ -91,12 +99,13 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPutTest
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<OkObjectResult>(result);
             actionResult.Value.Should().Be("Produto Reabastecido com sucesso!");
+            actionResult.StatusCode.Should().Be(200);
 
 
         }
 
         [Fact]
-        public async Task ProdutosController_AdicionarEstoque_QuantidadesInvalidas_ReturnBadRequest()
+        public async Task ProdutosController_AdicionarEstoque_QuantidadesInvalidas_ReturnBadRequest400()
         {
             //Arrange
             var produto = A.Fake<Produto>();
@@ -121,16 +130,18 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPutTest
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<BadRequestObjectResult>(result);
             actionResult.Value.Should().Be("Quantidade Inválida");
+            actionResult.StatusCode.Should().Be(StatusCodes.Status400BadRequest);
 
             result2.Should().NotBeNull();
             var actionResult2 = Assert.IsType<BadRequestObjectResult>(result);
             actionResult.Value.Should().Be("Quantidade Inválida");
+            actionResult.StatusCode.Should().Be(400);
 
         }
 
 
         [Fact]
-        public async Task ProdutosController_AdicionarEstoque_DeveRetornarInternalServerError()
+        public async Task ProdutosController_AdicionarEstoque_DeveRetornarInternalServerError500()
         {
             //Arrange
             var produtoId = Guid.NewGuid();
@@ -150,6 +161,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPutTest
             var actionResult = Assert.IsType<ObjectResult>(result);
             actionResult.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
             actionResult.Value.Should().Be("Erro ao acessar a base de dados");
+            actionResult.StatusCode.Should().Be(500);
 
         }
 
