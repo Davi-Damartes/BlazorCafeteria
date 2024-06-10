@@ -7,50 +7,16 @@ namespace LojaSonhoDeCafe.ServicesHttp.CarrinhoComprasHttpService
 {
     public class CarrinhoCompraHttpService : ICarrinhoCompraHttpService
     {
-        private readonly ILogger<CarrinhoCompraHttpService> _logger;
         private readonly HttpClient _httpClient;
+        private readonly ILogger<CarrinhoCompraHttpService> _logger;
         public event Action<int>? OnCarrinhoCompraChanged;
 
-        public CarrinhoCompraHttpService(ILogger<CarrinhoCompraHttpService> logger,
-                                        HttpClient httpClient)
+        public CarrinhoCompraHttpService(HttpClient httpClient, 
+                                         ILogger<CarrinhoCompraHttpService> logger)
         {
-            _logger = logger;
             _httpClient = httpClient;
+            _logger = logger;
         }
-
-        public async Task<CarrinhoItemDto> AdicionaItemCarrinhoDto(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
-        {
-            try
-            {
-                var response = await _httpClient
-                              .PostAsJsonAsync<CarrinhoItemAdicionaDto>("api/Carrinho",
-                               carrinhoItemAdicionaDto);
-
-                if (response.IsSuccessStatusCode)// status code entre 200 a 299
-                {
-                    if (response.StatusCode == HttpStatusCode.NoContent)
-                    {
-                        // retorna o valor "padrão" ou vazio
-                        // para uma objeto do tipo carrinhoItemDto
-                        return default(CarrinhoItemDto);
-                    }
-                    //le o conteudo HTTP e retorna o valor resultante
-                    //da serialização do conteudo JSON para o objeto Dto
-                    return await response.Content.ReadFromJsonAsync<CarrinhoItemDto>();
-                }
-                else
-                {
-                    //serializa o conteudo HTTP como uma string
-                    var message = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"{response.StatusCode} Message -{message}");
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
 
         public async Task<List<CarrinhoItemDto>> ObterItensCarrinho(string usuarioId)
         {
@@ -59,10 +25,11 @@ namespace LojaSonhoDeCafe.ServicesHttp.CarrinhoComprasHttpService
                 var response = await _httpClient.GetAsync($"api/Carrinho/{usuarioId}/ObterItensCarrinhoDoUsuario");
                 if (response.IsSuccessStatusCode)
                 {
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    if (response.StatusCode == HttpStatusCode.NoContent)
                     {
                         return Enumerable.Empty<CarrinhoItemDto>().ToList();
                     }
+
                     return await response.Content.ReadFromJsonAsync<List<CarrinhoItemDto>>();
                 }
                 else
@@ -78,7 +45,7 @@ namespace LojaSonhoDeCafe.ServicesHttp.CarrinhoComprasHttpService
             }
 
         }
-
+       
         public async Task<CarrinhoItemDto> AtualizarQuantidade(int id, CarrinhoItemAtualizaQuantidadeDto atualizaQuantidadeDto)
         {
             try
@@ -98,6 +65,36 @@ namespace LojaSonhoDeCafe.ServicesHttp.CarrinhoComprasHttpService
             catch (Exception)
             {
                 _logger.LogError("Erros ao Atualizar Item do Carrinho");
+                throw;
+            }
+        }
+    
+        public async Task<CarrinhoItemDto> AdicionaItemCarrinhoDto(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto)
+        {
+            try
+            {
+                var response = await _httpClient
+                              .PostAsJsonAsync<CarrinhoItemAdicionaDto>("api/Carrinho",
+                               carrinhoItemAdicionaDto);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        return default(CarrinhoItemDto)!;
+                    }                 
+                    return await response.Content.ReadFromJsonAsync<CarrinhoItemDto>();
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"{response.StatusCode} Message -{message}");
+                }
+            }
+            catch (Exception)
+            {
+
+                _logger.LogError("Erros ao Adcionar Item no Carrinho");
                 throw;
             }
         }
