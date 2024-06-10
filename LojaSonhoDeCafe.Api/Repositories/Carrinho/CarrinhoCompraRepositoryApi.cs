@@ -80,7 +80,6 @@ namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
 
         }
 
-
         public async Task<Usuario> ObterUsuario(Guid id)
         {
             return await _context.Usuarios.FirstOrDefaultAsync(i => i.Id == id) ?? null!;
@@ -127,7 +126,6 @@ namespace LojaSonhoDeCafe.Api.Repositories.Carrinho
 
             if (item is not null)
             {
-
                 _context.CarrinhoItens.Remove(item);
                 await _context.SaveChangesAsync();
             }
