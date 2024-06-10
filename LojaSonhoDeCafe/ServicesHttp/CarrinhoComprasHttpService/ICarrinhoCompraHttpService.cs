@@ -6,13 +6,14 @@ namespace LojaSonhoDeCafe.ServicesHttp.CarrinhoComprasHttpService
     {
         Task<List<CarrinhoItemDto>> ObterItensCarrinho(string usuarioId);
 
+        Task<CarrinhoItemDto> AtualizarQuantidade(int id, CarrinhoItemAtualizaQuantidadeDto atualizaQuantidadeDto);
+
         Task<CarrinhoItemDto> AdicionaItemCarrinhoDto(CarrinhoItemAdicionaDto carrinhoItemAdicionaDto);
 
         Task<CarrinhoItemDto> DeletaItemDoCarrinho(int id);
 
         Task LimpaItensCarrinhoDeCompra();
 
-        Task<CarrinhoItemDto> AtualizarQuantidade(int id, CarrinhoItemAtualizaQuantidadeDto atualizaQuantidadeDto);
 
         //event Action<int> OnCarrinhoCompraChanged;
         //void RaiseEventCarrinhoCompraChanged(int totalQuantidade);
