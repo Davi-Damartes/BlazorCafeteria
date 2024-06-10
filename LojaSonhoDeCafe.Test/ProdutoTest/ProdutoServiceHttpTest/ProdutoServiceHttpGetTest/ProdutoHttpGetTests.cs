@@ -32,7 +32,6 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
             var client = new HttpClient(handler)
             {
                 BaseAddress = new Uri("https://www.example.com")
-
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
@@ -72,7 +71,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
 
 
         [Fact]
-        public async Task ServiceHttpClient_ObterProdutos_DeveReturnarIenumerableProdutos()
+        public async Task ServiceHttpClient_ObterProdutos_DeveReturnarIEnumerableProdutos()
         {
             // Arrange
             var produtosEsperados = _fixture.CreateMany<ProdutoDto>();

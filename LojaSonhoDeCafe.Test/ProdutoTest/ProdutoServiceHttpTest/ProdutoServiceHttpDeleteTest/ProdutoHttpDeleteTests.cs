@@ -40,7 +40,6 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
             await produtoClient.RemoverProduto(generateId);
 
             //Assert
-
             Assert.True(true);
 
         }
