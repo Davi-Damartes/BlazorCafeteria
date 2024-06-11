@@ -22,12 +22,12 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
         {
             try
             {
-                var pagamentos = await _pagamentoRepository.BucarTodosOsPagamentosXXX();
+                var pagamentos = await _pagamentoRepository.BucarTodosOsPagamentos();
                 if (pagamentos != null)
                 {
-                    var pagamentoDto = pagamentos.ConverteListPagamentosParaListPagamentosDtoNOVO();
+                    var pagamentosDto = pagamentos.ConverteListPagamentosParaListPagamentosDtoNOVO();
 
-                    return Ok(pagamentoDto);
+                    return Ok(pagamentosDto);
                 }
                 return NoContent();
             }
@@ -41,16 +41,16 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
 
         [HttpGet]
         [Route("BuscarTodosPagamentosProd")]
-        public async Task<ActionResult<IEnumerable<PagamentoProduto>>> BuscarTodosPagamentosProd( )
+        public async Task<ActionResult<IEnumerable<PagamentoProduto>>> BuscarTodosPagamentosProdutos( )
         {
             try
             {
-                var pagamento = await _pagamentoRepository.BucarTodosOsPagamentosProdutos();
+                var pagamento = await _pagamentoRepository.BucarTodosOsPagamentosDeProdutos();
                 if (pagamento != null)
                 {
                     return Ok(pagamento);
                 }
-                return BadRequest("Erro ----------");
+                return BadRequest("Erro ao acessar Pagamentos");
             }
 
             catch (Exception)
@@ -68,7 +68,8 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
                 var pagamento = await _pagamentoRepository.BucarPagamentoPorId(Id);
                 if (pagamento != null)
                 {
-                    //Cria metodo para Converter PAGAMETNODIARIO PARA DTO
+                   
+                    //Cria metodo para Converter PAGAMENTO DIARIO PARA DTO
                     return Ok(pagamento);
                 }
                 return BadRequest("Pagamento não Encontrado!!!");
@@ -87,9 +88,9 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
         {
             try
             {
-                if (mes <= 0)
+                if (mes <= 0 || mes > 12)
                 {
-                    return NoContent();
+                    return BadRequest("Mês inválido");
                 }
 
                 var pagamentosDoMês = await _pagamentoRepository.BucarTodosPagamentosPeloMes(mes);
@@ -109,15 +110,9 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
             }
         }
 
-
         [HttpPost]
         public async Task<ActionResult<bool>> RealizarPagamento(PagamentoDiarioDto pagamentoDiarioDto)
         {
-
-            if (!ValidarDataPagamento(pagamentoDiarioDto))
-            {
-                return BadRequest("A loja está fechada. O pagamento não pôde ser processado.");
-            }
 
             try
             {
@@ -125,7 +120,12 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
 
                 if (pagamentoRealizado == false)
                 {
-                    return NoContent();
+                    return BadRequest("Erro ao realizar Pagamento");
+                }
+
+                if (!ValidarDataPagamento(pagamentoDiarioDto))
+                {
+                    return BadRequest("A loja está fechada. O pagamento não pôde ser processado.");
                 }
 
                 return Ok(pagamentoDiarioDto);
@@ -158,7 +158,6 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
                 "Erro ao acessar a base de dados");
             }
         }
-
 
         private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
         {
