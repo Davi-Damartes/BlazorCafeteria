@@ -25,7 +25,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
         [Fact]
         public async Task CarrinhoController_ObterItensCarrinhoDoUsuario_ReturnOK200( )
         {
-            //Arrange
+            // Arrange
             string usuarioId = "1";
 
             var carrinhosItens = A.Fake<IEnumerable<CarrinhoItem>>();
@@ -40,10 +40,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
 
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.ObterItensCarrinhoDoUsuario(usuarioId);
 
-            //Assert
+            // Assert
             Assert.NotNull(result);
             var actionResult = Assert.IsType<ActionResult<IEnumerable<CarrinhoItemDto>>>(result);
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
@@ -53,7 +53,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
         [Fact]
         public async Task CarrinhoController_ObterItensCarrinhoDoUsuario_ReturnNotFound404( )
         {
-            //Arrange
+            // Arrange
             string usuarioId = "1";
 
             var carrinhosItens = A.Fake<IEnumerable<CarrinhoItem>>();
@@ -68,10 +68,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
 
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.ObterItensCarrinhoDoUsuario(usuarioId);
 
-            //Assert
+            // Assert
 
             Assert.NotNull(result);
             var actionResult = Assert.IsType<ActionResult<IEnumerable<CarrinhoItemDto>>>(result);
@@ -84,7 +84,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
         [Fact]
         public async Task CarrinhoController_ObterItemCarrinhoIdo_ReturnOK200( )
         {
-            //Arrange
+            // Arrange
             int Id = 1;
 
             var produtoId = Guid.NewGuid();
@@ -101,10 +101,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
 
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.ObterItemCarrinhoId(Id);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<CarrinhoItemDto>>(result);
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);

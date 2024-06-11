@@ -23,7 +23,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
         [Fact]
         public async Task CarrinhoController_DeletarItemCarrinho_ReturnOK200( )
         {
-            //Arrange
+            // Arrange
             int IdCarrinho = 1;
             var carrinhoItem = A.Fake<CarrinhoItem>();
             var produto = A.Fake<Produto>();
@@ -36,10 +36,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
 
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.DeletarItemCarrinho(IdCarrinho);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<CarrinhoItemDto>>(result);
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -52,7 +52,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
         [Fact]
         public async Task CarrinhoController_DeletarItemCarrinho_ReturnNotFound404( )
         {
-            //Arrange
+            // Arrange
             int IdCarrinho = 1;
             var carrinhoItem = A.Fake<CarrinhoItem>();
             var produto = A.Fake<Produto>();
@@ -65,10 +65,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
 
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.DeletarItemCarrinho(IdCarrinho);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<CarrinhoItemDto>>(result);
             var okResult = Assert.IsType<NotFoundObjectResult>(result.Result);
@@ -81,7 +81,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
         [Fact]
         public async Task CarrinhoController_DeletarItemCarrinho_ReturnException500( )
         {
-            //Arrange
+            // Arrange
             int IdCarrinho = 1;
             var carrinhoItem = A.Fake<CarrinhoItem>();
             var produto = A.Fake<Produto>();
@@ -94,10 +94,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
 
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.DeletarItemCarrinho(IdCarrinho);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<CarrinhoItemDto>>(result);
             var okResult = Assert.IsType<ObjectResult>(result.Result);

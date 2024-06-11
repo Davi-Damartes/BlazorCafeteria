@@ -26,7 +26,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
             var carrinhoItem = A.Fake<CarrinhoItem>();
 
             var produto = A.Fake<Produto>();
-            //Arrange
+            // sArrange
             A.CallTo(( ) => _carrinhoRepository.AdicionaItem(carrinhoItemAddDto))
                             .Returns(Task.FromResult(carrinhoItem));
 
@@ -35,10 +35,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
                             .Returns(Task.FromResult(produto));
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.AdicionarItemCarrinho(carrinhoItemAddDto);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<CarrinhoItemDto>>(result);
             var createdObjectResult = Assert.IsType<CreatedAtActionResult>(result.Result);
@@ -54,7 +54,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
             var carrinhoItem = A.Fake<CarrinhoItem>();
 
             var produto = A.Fake<Produto>();
-            //Arrange
+            // sArrange
             A.CallTo(( ) => _carrinhoRepository.AdicionaItem(carrinhoItemAddDto))
                             .Returns(Task.FromResult<CarrinhoItem>(null!));
 
@@ -63,10 +63,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
                             .Returns(Task.FromResult(produto));
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.AdicionarItemCarrinho(carrinhoItemAddDto);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<CarrinhoItemDto>>(result);
             var notFoundObjectResult = Assert.IsType<NotFoundObjectResult>(result.Result);
@@ -82,7 +82,7 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
             var carrinhoItem = A.Fake<CarrinhoItem>();
 
             var produto = A.Fake<Produto>();
-            //Arrange
+            // sArrange
             A.CallTo(( ) => _carrinhoRepository.AdicionaItem(carrinhoItemAddDto))
                             .Throws(new Exception("Erro ao acessar base de Dados!"));
 
@@ -91,10 +91,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoControllerTest.Carrinh
                             .Returns(Task.FromResult(produto));
             var carrinhoController = new CarrinhoController(_carrinhoRepository, _produtoRepository);
 
-            //Act
+            // Act
             var result = await carrinhoController.AdicionarItemCarrinho(carrinhoItemAddDto);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<CarrinhoItemDto>>(result);
             var objectResult = Assert.IsType<ObjectResult>(result.Result);

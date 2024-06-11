@@ -17,9 +17,9 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoDeleteTe
         }
 
         [Fact]
-        public async Task ProdutosController_DeletarProduto_DeveRetornarOk()
+        public async Task ProdutosController_DeletarProduto_DeveRetornarOk200()
         {
-            //Arragne
+            // Arrange
             var produto = A.Fake<Produto>();
             var produtoId = Guid.NewGuid();
 
@@ -29,20 +29,20 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoDeleteTe
             var controller = new ProdutosController(_produtoRepository);
 
 
-            //Act
+            // Act
             var result = await controller.DeletarProduto(produtoId);
 
-
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<OkObjectResult>(result);
+            actionResult.StatusCode.Should().Be(200);
             actionResult.Value.Should().Be("Produto Excluído com sucesso!");
         }
 
         [Fact]
-        public async Task ProdutosController_DeletarProduto_DeveRetornarNotFound()
+        public async Task ProdutosController_DeletarProduto_DeveRetornarNotFound404()
         {
-            //Arragne
+            // Arrange
             var produto = A.Fake<Produto>();
             var produtoId = Guid.NewGuid();
 
@@ -52,13 +52,14 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoDeleteTe
             var controller = new ProdutosController(_produtoRepository);
 
 
-            //Act
+            // Act
             var result = await controller.DeletarProduto(produtoId);
 
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<OkObjectResult>(result);
+            actionResult.StatusCode.Should().Be(404);
             actionResult.Value.Should().Be("Produto Excluído com sucesso!");
 
         }

@@ -11,14 +11,14 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoRepositoriesTest.ProdutoReposi
         [Fact]
         public async Task ProdutoRepository_ObterProdutoPorId_ReturnarUmProduto()
         {
-            //Arange
+            // Arange
             var produtoId = Guid.NewGuid();
 
             var dbContext = await BancoDeDadosInMemory.GetBancoDeDado();
 
             var repository = new ProdutoRepositoryApi(dbContext);
 
-            //Act
+            // Act
             var result = repository.ObterProdutoPorId(produtoId);
 
             // Assert
