@@ -19,7 +19,7 @@ namespace LojaSonhoDeCafe.Models.Dtos
         public string? Email { get; set; }
 
         [Required]
-         [Name("Quantidade de Produtos Vendidos Dia")]   
+        [Name("Quantidade de Produtos Vendidos Dia")]   
         public int TotalQuantDiaria { get; set; }
 
         [Required]
@@ -33,8 +33,7 @@ namespace LojaSonhoDeCafe.Models.Dtos
 
         [Required]
         [Name("Hora Do Pagamento")]   
-        public DateTime HoraDoPagamento { get; set; } = DateTime.Now;
-
+        public DateTime HoraDoPagamento { get; set; }
 
         public List<PagamentoProdutoDto> ProdutosDoPagamento { get; set; } = new List<PagamentoProdutoDto>();
 

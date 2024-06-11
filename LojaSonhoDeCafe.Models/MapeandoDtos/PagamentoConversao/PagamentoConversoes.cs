@@ -20,7 +20,7 @@ namespace LojaSonhoDeCafe.Models.MapeandoDtos.PagamentoConversao
 
             };
         }
-
+      
         public static IEnumerable<PagamentoDiarioDto> ConvertListPagamentosParaListPagamentosDto(
                                                 this IEnumerable<PagamentoDiario> pagamentos)
         {
