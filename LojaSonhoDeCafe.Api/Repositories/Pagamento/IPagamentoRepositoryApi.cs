@@ -1,5 +1,4 @@
-﻿using LojaSonhoDeCafe.Components.CarrinhoPages;
-using LojaSonhoDeCafe.Models.Dtos;
+﻿using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Models.Entity;
 
 namespace LojaSonhoDeCafe.Api.Repositories.Pagamento
@@ -10,9 +9,9 @@ namespace LojaSonhoDeCafe.Api.Repositories.Pagamento
 
         Task<PagamentoDiario> BucarPagamentoPorId(Guid Id);
 
-        Task<IEnumerable<PagamentoDiario>> BucarTodosOsPagamentosXXX();
+        Task<IEnumerable<PagamentoDiario>> BucarTodosOsPagamentos();
 
-        Task<IEnumerable<PagamentoProduto>> BucarTodosOsPagamentosProdutos();
+        Task<IEnumerable<PagamentoProduto>> BucarTodosOsPagamentosDeProdutos();
 
         Task<bool> AdicionarPagamento(PagamentoDiarioDto pagamentoDiario);
 
