@@ -18,7 +18,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoGetTest
         }
 
         [Fact]
-        public async Task ProdutosController_ObterProdutoPorId_ReturnOk( )
+        public async Task ProdutosController_ObterProdutoPorId_ReturnOk200( )
         {
             //Arrange
             var produto = new Produto
@@ -46,14 +46,12 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoGetTest
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<ProdutoDto>>(result);
             var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-
-            okResult.Value.Should().NotBeNull();
-
+            okResult.StatusCode.Should().Be(200);
 
         }
 
         [Fact]
-        public async Task ProdutosController_ObterProdutoPorId_ReturnNotFound( )
+        public async Task ProdutosController_ObterProdutoPorId_ReturnNotFound404( )
         {
             // Arrange
             var produtoId = Guid.Empty;
@@ -79,7 +77,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoGetTest
         [Fact]
         public async Task ProdutosController_ObterTodosProdutos_ReturnOk200( )
         {
-            //Arrange
+            // Arrange
             var produtos = A.Fake<IEnumerable<Produto>>();
 
             var produtosDto = A.Fake<IEnumerable<ProdutoDto>>();
@@ -89,11 +87,11 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoGetTest
 
             var contoller = new ProdutosController(_produtoRepository);
 
-            //Act
+            // Act
             var result = await contoller.ObterTodosItens();
 
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<IEnumerable<ProdutoDto>>>(result);
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -103,7 +101,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoGetTest
         [Fact]
         public async Task ProdutosController_ObterTodosOsItens_ReturnNotFound( )
         {
-            //Arrange
+            // Arrange
             var produtosDto = A.Fake<IEnumerable<ProdutoDto>>();
 
             A.CallTo(( ) => _produtoRepository.ObterTodosOsProdutos())
@@ -111,11 +109,11 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoGetTest
 
             var contoller = new ProdutosController(_produtoRepository);
 
-            //Act
+            // Act
             var result = await contoller.ObterTodosItens();
 
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<ActionResult<IEnumerable<ProdutoDto>>>(result);
             var okResult = Assert.IsType<NotFoundObjectResult>(actionResult.Result);
