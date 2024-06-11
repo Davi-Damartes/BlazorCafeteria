@@ -4,6 +4,7 @@ using LojaSonhoDeCafe.Api.Controllers.ProdutoControllers;
 using LojaSonhoDeCafe.Api.Repositories.Produtos;
 using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Models.Entity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -21,9 +22,9 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPostTest
 
 
         [Fact]
-        public async Task ProdutosController_CrirNovoProduto_ReturnCreated()
+        public async Task ProdutosController_CrirNovoProduto_ReturnCreated201()
         {
-            //Arrange
+            // Arrange
 
             var produtoDto = new ProdutoDto { Id = Guid.NewGuid(), Nome = "Novo Produto" };
 
@@ -32,21 +33,22 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPostTest
 
             var controller = new ProdutosController(_produtoRepository);
 
-            //Act
+            // Act
             var result = await controller.CriarNovoProduto(produtoDto);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
 
             var actionResult = Assert.IsType<ActionResult<ProdutoDto>>(result);
             var createdResult = Assert.IsType<CreatedResult>(actionResult.Result);
-            var resultValeue = Assert.IsType<ProdutoDto>(createdResult.Value);
+            createdResult.StatusCode.Should().Be(201);
+            Assert.IsType<ProdutoDto>(createdResult.Value);
         }
 
         [Fact]
-        public async Task ProdutosController_CrirNovoProduto_ReturnConflict()
+        public async Task ProdutosController_CrirNovoProduto_ReturnConflict409()
         {
-            //Arrange
+            // Arrange
 
             var produto = A.Fake<Produto>();
             var produtoDto = A.Fake<ProdutoDto>();
@@ -56,21 +58,22 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPostTest
 
             var controller = new ProdutosController(_produtoRepository);
 
-            //Act
+            // Act
             var result = await controller.CriarNovoProduto(produtoDto);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
 
             var actionResult = Assert.IsType<ActionResult<ProdutoDto>>(result);
             var createdResult = Assert.IsType<ConflictObjectResult>(actionResult.Result);
+            createdResult.StatusCode.Should().Be(409);
             createdResult.Value.Should().Be("Produto já existe!");
         }
 
         [Fact]
-        public async Task ProdutosController_CrirNovoProduto_ReturnInternalServerError()
+        public async Task ProdutosController_CrirNovoProduto_ReturnInternalServerError500()
         {
-            //Arrange
+            // Arrange
 
             var produto = A.Fake<Produto>();
             var produtoDto = A.Fake<ProdutoDto>();
@@ -80,14 +83,15 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPostTest
 
             var controller = new ProdutosController(_produtoRepository);
 
-            //Act
+            // Act
             var result = await controller.CriarNovoProduto(produtoDto);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull();
 
             var actionResult = Assert.IsType<ObjectResult>(result.Result);
             actionResult.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            actionResult.StatusCode.Should().Be(500);
             actionResult.Value.Should().Be("Erro ao acessar a base de dados");
         }
     }
