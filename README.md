@@ -10,11 +10,20 @@ Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blaz
 - Promoções: Carousel dinâmico exibindo produtos em promoção.
 - Gerenciamento de Produtos: Cadastro incluindo a opção de colocar imagem com validação de tamanho, reabastecimento, favoritamento e exclusão de produtos com validação de campos.
 - Carrinho de Compras: Adição, remoção e ajuste de quantidade de itens no carrinho.
--Simulador de Pagamento: Processamento de compras com opções de pagamento via cartão, boleto ou dinheiro, refletindo na quantidade de estoque. Além de realizar a busca de endereço por CEP através de uma API externa.
+- Simulador de Pagamento: Processamento de compras com opções de pagamento via cartão, boleto ou dinheiro, refletindo na quantidade de estoque. Além de realizar a busca de endereço por CEP através de uma API externa.
 -Local Storage para armazenamento de informações no Browser do Cliente.
 - Controle de Funcionamento: Restrições de pagamento fora do horário de funcionamento da loja.
-- Relatório de Faturamento: Tabela de faturamento mensal com opção de download em formato do Excel (.csv).
+- Relatório de Faturamento: Tabela de faturamento mensal com opção de download em formato do Excel (.csv).  
 
+## Testes Unitários com xUnit
+- Utilizando uma variedade de ferramentas e técnicas para garantir a qualidade do código:
+ 
+- Repositório: Implementação de testes para validar as operações de persistência de dados, simulando o comportamento do banco de dados com um banco em memória.
+- Serviço com Chamada HTTP: Desenvolvendo testes para verificar a integração adequada com serviços externos (Api), utilizando simulações de chamadas HTTP com Mocks.
+- Controlador: Testando as rotas e ações do controlador, verificando os diferentes resultados HTTP (200, 201, 400, 404, 500) para garantir o comportamento correto da API. 
+
+
+ 🔗Bibliotecas utilizadas: FluentAssertions, Mock, AutoFixture, FakeItEasy e Banco em Memória (Microsoft.EntityFrameworkCore.InMemory). 
 
 ## Demonstração
 
