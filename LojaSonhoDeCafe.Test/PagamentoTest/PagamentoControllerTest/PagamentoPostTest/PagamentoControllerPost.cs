@@ -138,7 +138,7 @@ namespace LojaSonhoDeCafe.Test.PagamentoTest.PagamentoControllerTest.PagamentoPo
             // Arrange
             var listaPagamentosProduto = A.Fake<List<PagamentoProdutoDto>>();
 
-            var horaAntes07 = new DateTime(2024, 06, 11, 06, 59, 59);
+            var horaAntes07 = new DateTime(2024, 06, 11, 15, 30, 47);
             var pagamentoDiario = new PagamentoDiarioDto
             {
                 Usuario = "UsuarioTeste",
