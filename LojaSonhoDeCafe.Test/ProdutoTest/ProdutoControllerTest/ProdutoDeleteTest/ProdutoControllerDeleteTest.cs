@@ -47,7 +47,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoDeleteTe
             var produtoId = Guid.NewGuid();
 
             A.CallTo(() => _produtoRepository.ObterProdutoPorId(produtoId))
-                .Returns(Task.FromResult(produto));
+                .Returns(Task.FromResult<Produto>(null!));
 
             var controller = new ProdutosController(_produtoRepository);
 
@@ -58,9 +58,9 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoDeleteTe
 
             // Assert
             result.Should().NotBeNull();
-            var actionResult = Assert.IsType<OkObjectResult>(result);
+            var actionResult = Assert.IsType<NotFoundObjectResult>(result);
             actionResult.StatusCode.Should().Be(404);
-            actionResult.Value.Should().Be("Produto Excluído com sucesso!");
+            actionResult.Value.Should().Be("Produto não encontrado");
 
         }
     }
