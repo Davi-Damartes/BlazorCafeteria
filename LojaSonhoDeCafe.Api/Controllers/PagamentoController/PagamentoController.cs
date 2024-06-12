@@ -116,16 +116,15 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
 
             try
             {
+                if (!ValidarDataDePagamento(pagamentoDiarioDto))
+                {
+                    return BadRequest("A loja está fechada. O pagamento não pôde ser processado.");
+                }
                 var pagamentoRealizado = await _pagamentoRepository.AdicionarPagamento(pagamentoDiarioDto);
 
                 if (pagamentoRealizado == false)
                 {
                     return BadRequest("Erro ao realizar Pagamento");
-                }
-
-                if (!ValidarDataPagamento(pagamentoDiarioDto))
-                {
-                    return BadRequest("A loja está fechada. O pagamento não pôde ser processado.");
                 }
 
                 return Ok(pagamentoDiarioDto);
@@ -159,7 +158,10 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
             }
         }
 
-        private bool ValidarDataPagamento(PagamentoDiarioDto pagamento)
+
+
+
+        private static bool ValidarDataDePagamento(PagamentoDiarioDto pagamento)
         {
             var horaAbertura = new TimeSpan(07, 00, 00);
             var horaFechamento = new TimeSpan(22, 00, 00);
