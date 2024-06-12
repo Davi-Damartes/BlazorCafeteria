@@ -21,10 +21,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoServiceHttpTest.Carrin
         [Fact]
         public async Task CarrinhoServiceHttp_AdicionaItemCarrinhoDto_ReturnCarrinhoItemDto( )
         {
-            //Arrange
+            // Arrange
             var CarrinhoItem = _fixture.Create<CarrinhoItemAdicionaDto>();
 
-            var handlerClient = new HandlerHttp(HttpStatusCode.OK, CarrinhoItem);
+            var handlerClient = new HandlerSimularHttpCall(HttpStatusCode.OK, CarrinhoItem);
 
             var client = new HttpClient(handlerClient)
             {
@@ -32,10 +32,10 @@ namespace LojaSonhoDeCafe.Test.CarrinhoCompraTest.CarrinhoServiceHttpTest.Carrin
             };
             var carrinhoService = new CarrinhoCompraHttpService(client, _logger);
 
-            //Act
+            // Act
             var result = await carrinhoService.AdicionaItemCarrinhoDto(CarrinhoItem);
 
-            //Assert
+            // Assert
             result.Should().NotBeNull(); 
             Assert.IsType<CarrinhoItemDto>(result);
             result.CarrinhoId.Should().Be(CarrinhoItem.CarrinhoId);
