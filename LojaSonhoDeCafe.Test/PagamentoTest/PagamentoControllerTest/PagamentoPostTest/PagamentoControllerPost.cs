@@ -2,10 +2,7 @@
 using FluentAssertions;
 using LojaSonhoDeCafe.Api.Controllers.PagamentoController;
 using LojaSonhoDeCafe.Api.Repositories.Pagamento;
-using LojaSonhoDeCafe.Components.Account.Pages.Manage;
-using LojaSonhoDeCafe.Components.PagamentoPage;
 using LojaSonhoDeCafe.Models.Dtos;
-using LojaSonhoDeCafe.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaSonhoDeCafe.Test.PagamentoTest.PagamentoControllerTest.PagamentoPostTest
@@ -19,7 +16,7 @@ namespace LojaSonhoDeCafe.Test.PagamentoTest.PagamentoControllerTest.PagamentoPo
         }
 
         [Fact]
-        public async Task PagamenetoController_RealizarPagamento_ReturnOk200( )
+        public async Task RealizarPagamento_DeveRetornarOk200_QuandoPagamento_ForRealizado( )
         {
             // Arrange
             var pagamentoDiario = A.Fake<PagamentoDiarioDto>();
@@ -41,11 +38,11 @@ namespace LojaSonhoDeCafe.Test.PagamentoTest.PagamentoControllerTest.PagamentoPo
         }
 
         [Fact]
-        public async Task RealizarPagamento_DeveRetornarBadRequest_QuandoPagamentoForNulo()
+        public async Task RealizarPagamento_DeveRetornarBadRequest400_QuandoPagamento_NAOForRealizado()
         {
             // Arrange
             var listaPagamentosProduto = A.Fake<List<PagamentoProdutoDto>>();
-            var HoraTeste = new DateTime(2024, 06, 11, 06, 59, 59);
+            var HoraTeste = new DateTime(2024, 06, 11, 07, 59, 59);
             var pagamentoDiario = new PagamentoDiarioDto
             {
                 Usuario = "UsuarioTeste",
@@ -57,7 +54,6 @@ namespace LojaSonhoDeCafe.Test.PagamentoTest.PagamentoControllerTest.PagamentoPo
                 ProdutosDoPagamento = listaPagamentosProduto
             };
 
-            pagamentoDiario = null!;
 
             A.CallTo(()=> _pagamentoRepositoryApi.AdicionarPagamento(pagamentoDiario))
                 .Returns(Task.FromResult(false));
@@ -76,7 +72,7 @@ namespace LojaSonhoDeCafe.Test.PagamentoTest.PagamentoControllerTest.PagamentoPo
         }
         
         [Fact]
-        public async Task RealizarPagamento_DeveRetornarBadRequest400_QuandoForaDoHorarioComercial()
+        public async Task RealizarPagamento_DeveRetornarBadRequest400_QuandoPagamento_ForaDoHorarioComercial( )
         {
             // Arrange
             var listaPagamentosProduto = A.Fake<List<PagamentoProdutoDto>>();
