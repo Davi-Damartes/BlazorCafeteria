@@ -46,7 +46,7 @@ namespace LojaSonhoDeCafe.Test.PagamentoTest.PagamentoRepositorioTest.PagamentoR
         }
 
         [Fact]
-        public async Task PagRepositorio_BucarTodosOsPagamentosXXX_ReturnListPagamentoDiario( )
+        public async Task PagRepositorio_BucarTodosOsPagamentosXXX_Returnar_ListaPagamentoDiario( )
         {
             // Arrange
             var dbContext = await BancoDeDadosInMemoryPag.GetBancoDeDadoPag();
@@ -93,7 +93,7 @@ namespace LojaSonhoDeCafe.Test.PagamentoTest.PagamentoRepositorioTest.PagamentoR
             result.Should().BeOfType<List<PagamentoDiario>>();
             result.Count().Should().BeGreaterThanOrEqualTo(0);
             result.Count().Should().Be(contador);
-            result.FirstOrDefault()?.Usuario.Should().Be("UsuarioTeste");
+            result.FirstOrDefault()?.Usuario.Should().Be("UsuarioTeste2");
 
         }
         
