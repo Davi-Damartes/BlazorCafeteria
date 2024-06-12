@@ -1,6 +1,4 @@
 ﻿using LojaSonhoDeCafe.Models.Dtos;
-using LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService;
-using Microsoft.Extensions.Logging;
 using System.Net;
 
 namespace LojaSonhoDeCafe.ServicesHttp.PagamentoHttpService
@@ -10,30 +8,24 @@ namespace LojaSonhoDeCafe.ServicesHttp.PagamentoHttpService
         private readonly HttpClient _httpClient;
 
         private readonly ILogger<PagamentoHttpService> _logger;
-        public PagamentoHttpService(ILogger<PagamentoHttpService> logger, HttpClient httpClient)
+        public PagamentoHttpService(HttpClient httpClient, ILogger<PagamentoHttpService> logger)
         {
-            _logger = logger;
             _httpClient = httpClient;
+            _logger = logger;
         }
 
-        public async Task<bool> AdicionarPagamento(PagamentoDiarioDto pagamentoDiarioDto)
+        public async Task<IEnumerable<PagamentoDiarioDto>> ObterTodosPagamentosPorMes(int mes)
         {
-            if (!ValidarDataPagamento(pagamentoDiarioDto))
-            {
-                _logger.LogError("Pagamento Inválido: a loja está fechada.");
-                return false;
-            }
-
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/Pagamento", pagamentoDiarioDto);
+                var response = await _httpClient.GetAsync($"api/Pagamento/{mes}");
                 if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode == HttpStatusCode.NoContent)
                     {
-                        return false;
+                        return Enumerable.Empty<PagamentoDiarioDto>();
                     }
-                    return true;
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<PagamentoDiarioDto>>();
                 }
                 else
                 {
@@ -49,18 +41,24 @@ namespace LojaSonhoDeCafe.ServicesHttp.PagamentoHttpService
             }
         }
 
-        public async Task<IEnumerable<PagamentoDiarioDto>> ObterTodosPagamentosPorMes(int mes)
+        public async Task<bool> AdicionarPagamento(PagamentoDiarioDto pagamentoDiarioDto)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"api/Pagamento/{mes}");
+                if (!ValidarDataPagamento(pagamentoDiarioDto))
+                {
+                    _logger.LogError("Pagamento Inválido: A loja está fechada.");
+                    return false;
+                }
+
+                var response = await _httpClient.PostAsJsonAsync("api/Pagamento", pagamentoDiarioDto);
                 if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode == HttpStatusCode.NoContent)
                     {
-                        return Enumerable.Empty<PagamentoDiarioDto>();
+                        return false;
                     }
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<PagamentoDiarioDto>>();
+                    return true;
                 }
                 else
                 {

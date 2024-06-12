@@ -4,8 +4,9 @@ namespace LojaSonhoDeCafe.ServicesHttp.PagamentoHttpService
 {
     public interface IPagamentoHttpService
     {
+        Task<IEnumerable<PagamentoDiarioDto>> ObterTodosPagamentosPorMes(int mes);
+
         Task<bool> AdicionarPagamento(PagamentoDiarioDto pagamentoDiarioDto);
 
-        Task<IEnumerable<PagamentoDiarioDto>> ObterTodosPagamentosPorMes(int mes);
     }
 }
