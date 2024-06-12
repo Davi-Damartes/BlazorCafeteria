@@ -22,12 +22,12 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         [Fact]
         public async Task ServiceHttpClient_ObterProdutoPorId_DeveReturnarUmProduto()
         {
-            //Arrange
+            // Arrange
             var generateId = _fixture.Create<Guid>();
 
             var produtoEsperados = _fixture.Create<ProdutoDto>();
 
-            var handler = new HandlerHttp(HttpStatusCode.OK, produtoEsperados);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, produtoEsperados);
 
             var client = new HttpClient(handler)
             {
@@ -35,10 +35,10 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
-            //Act
+            // Act
             var produtoAtual = await produtoClient.ObterUmProduto(generateId);
 
-            //Assert
+            // Assert
             produtoAtual.Should().NotBeNull();
             produtoAtual.Should().BeOfType<ProdutoDto>();
             produtoAtual.Should().BeEquivalentTo(produtoEsperados);
@@ -49,7 +49,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         {
             // Arrange
             var ProdutosFavoritosEsperados = _fixture.CreateMany<ProdutoDto>();
-            var handler = new HandlerHttp(HttpStatusCode.OK, ProdutosFavoritosEsperados);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, ProdutosFavoritosEsperados);
             var client = new HttpClient(handler)
             {
                 BaseAddress = new Uri("https://www.example.com")
@@ -69,13 +69,12 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         }
 
 
-
         [Fact]
         public async Task ServiceHttpClient_ObterProdutos_DeveReturnarIEnumerableProdutos()
         {
             // Arrange
             var produtosEsperados = _fixture.CreateMany<ProdutoDto>();
-            var handler = new HandlerHttp(HttpStatusCode.OK, produtosEsperados);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, produtosEsperados);
             var client = new HttpClient(handler)
             {
                 BaseAddress = new Uri("https://www.example.com")
@@ -96,7 +95,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         {
             // Arrange
             var categoriaEsperadas = _fixture.CreateMany<CategoriaDto>();
-            var handler = new HandlerHttp(HttpStatusCode.OK, categoriaEsperadas);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, categoriaEsperadas);
             var client = new HttpClient(handler)
             {
                 BaseAddress = new Uri("https://www.example.com")

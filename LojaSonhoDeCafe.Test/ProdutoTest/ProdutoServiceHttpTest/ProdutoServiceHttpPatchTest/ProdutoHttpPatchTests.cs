@@ -20,7 +20,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         [Fact]
         public async Task ServiceHttpClient_AtualizaProdutoFavorito_ReturnUmProduto()
         {
-            //Arrange 
+            // Arrange 
             var produtoAtt = new ProdutoDto
             {
                 Nome = "Cafeteira Expresso",
@@ -33,7 +33,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
                 CategoriaNome = "Lanche"
             };
 
-            var handler = new HandlerHttp(HttpStatusCode.OK, produtoAtt);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, produtoAtt);
 
             var client = new HttpClient(handler)
             {
@@ -42,10 +42,10 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
-            //Act
+            // Act
             await produtoClient.AtualizaProdutoFavorito(produtoAtt);
 
-            //Assert
+            // Assert
             Assert.NotNull(client);
             Assert.NotNull(produtoAtt);
         }

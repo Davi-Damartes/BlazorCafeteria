@@ -22,12 +22,12 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         [Fact]
         public async Task ServiceHttpClient_DeletarProdutoPorId_ReturnUmProduto()
         {
-            //Assert
+            // Assert
             var generateId = _fixture.Create<Guid>();
 
             var produtoEsperados = _fixture.Create<ProdutoDto>();
 
-            var handler = new HandlerHttp(HttpStatusCode.OK, produtoEsperados);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, produtoEsperados);
 
             var client = new HttpClient(handler)
             {
@@ -36,10 +36,10 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
-            //Act
+            // Act
             await produtoClient.RemoverProduto(generateId);
 
-            //Assert
+            // Assert
             Assert.True(true);
 
         }

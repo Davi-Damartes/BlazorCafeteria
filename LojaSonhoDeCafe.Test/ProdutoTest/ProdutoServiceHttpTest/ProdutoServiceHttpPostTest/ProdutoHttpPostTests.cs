@@ -21,10 +21,10 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         [Fact]
         public async Task ServiceHttpClient_AdicionarProduto_ReturnUmProduto()
         {
-            //Arrange
+            // Arrange
             var produtoDto = _fixture.Create<ProdutoDto>();
 
-            var handler = new HandlerHttp(HttpStatusCode.OK, produtoDto);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, produtoDto);
 
             var client = new HttpClient(handler)
             {
@@ -33,11 +33,11 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
-            //Act
+            // Act
             var produtoAtual = await produtoClient.AdicionarNovoProduto(produtoDto);
 
 
-            //Assert
+            // Assert
             Assert.Equal(produtoDto.Nome, produtoAtual.Nome);
             produtoAtual.Should().BeOfType<ProdutoDto>();
             produtoAtual.Should().NotBeNull();
@@ -48,10 +48,10 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         [Fact]
         public async Task ServiceHttpClient_AdicionarEstoqueAoProduto_ReturnTrue()
         {
-            //Arrange
+            // Arrange
             var produtoDto = _fixture.Create<ProdutoDto>();
             int quantidade = 10;
-            var handler = new HandlerHttp(HttpStatusCode.OK, produtoDto);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, produtoDto);
 
             var client = new HttpClient(handler)
             {
@@ -60,11 +60,11 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
-            //Act
+            // Act
             await produtoClient.AdicionarEstoqueAoProduto(produtoDto.Id, quantidade);
 
 
-            //Assert
+            // Assert
             Assert.True(true);
 
         }
@@ -72,10 +72,10 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
         [Fact]
         public async Task ServiceHttpClient_AtualizaProdutoFavorito_ReturnTrue()
         {
-            //Arrange
+            // Arrange
             var produtoDto = _fixture.Create<ProdutoDto>();
 
-            var handler = new HandlerHttp(HttpStatusCode.OK, produtoDto);
+            var handler = new HandlerSimularHttpCall(HttpStatusCode.OK, produtoDto);
 
             var client = new HttpClient(handler)
             {
@@ -84,11 +84,11 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest.ProdutoService
             };
             var produtoClient = new ProdutoHttpService(client, _logger);
 
-            //Act
+            // Act
             await produtoClient.AtualizaProdutoFavorito(produtoDto);
 
 
-            //Assert
+            // Assert
             Assert.True(true);
 
         }
