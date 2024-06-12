@@ -3,12 +3,12 @@ using System.Net;
 
 namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoServiceHttpTest
 {
-    public class HandlerHttp : HttpMessageHandler
+    public class HandlerSimularHttpCall : HttpMessageHandler
     {
         private readonly HttpStatusCode _statusCode;
         private readonly object? _responseContent;
 
-        public HandlerHttp(HttpStatusCode statusCode, object? responseContent = null)
+        public HandlerSimularHttpCall(HttpStatusCode statusCode, object? responseContent = null)
         {
             _statusCode = statusCode;
             _responseContent = responseContent;
