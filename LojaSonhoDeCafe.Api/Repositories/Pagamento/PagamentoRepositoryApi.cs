@@ -2,8 +2,7 @@
 using LojaSonhoDeCafe.Models.Entity;
 using LojaSonhoDeCafe.Api.Banco;
 using LojaSonhoDeCafe.Models.Dtos;
-using LojaSonhoDeCafe.Enum;
-using LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao;
+using LojaSonhoDeCafe.Models.MapeandoDtos.PagamentoConversao;
 
 namespace LojaSonhoDeCafe.Api.Repositories.Pagamento
 {
