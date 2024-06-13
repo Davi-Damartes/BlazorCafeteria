@@ -25,7 +25,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 if (produtos is null)               
                     return NotFound("Produtos não encontrados!");
  
-                var produtoDtos = produtos.ConvertProdutosParaDto();
+                var produtoDtos = produtos.ConverterProdutosParaProdutosDto();
                 return Ok(produtoDtos);
                 
             }
@@ -46,7 +46,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 if (produto is null)
                     return NotFound("Produto não encontrado!");
                 
-                var produtoDto = produto.ConvertProdutoParaDto();
+                var produtoDto = produto.ConverterProdutoParaDto();
                 return Ok(produtoDto);
                 
             }
@@ -68,7 +68,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 if (produtosPorCategoria is null)
                     return NotFound("Produtos não encotrados");
 
-                var produtosDto = produtosPorCategoria.ConvertProdutosParaDto();
+                var produtosDto = produtosPorCategoria.ConverterProdutosParaProdutosDto();
                 return Ok(produtosDto);
             }
             catch (Exception)
@@ -89,7 +89,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 {
                     return NotFound("Categorias não encontradas");
                 }
-                var categoriasDto = categorias.ConverterCategoriasParaDto();
+                var categoriasDto = categorias.ConverterCategoriasParaCategoriasDto();
                 return Ok(categoriasDto);
             }
             catch (Exception)
@@ -112,7 +112,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 }
                 else
                 {
-                    var produtoFavoritosDtos = produtosFavoritos.ConvertProdutosParaDto();
+                    var produtoFavoritosDtos = produtosFavoritos.ConverterProdutosParaProdutosDto();
                     return Ok(produtoFavoritosDtos);
                 }
             }
@@ -133,7 +133,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 if (produtoExistente == null)
                     return NotFound("Produto não encontrado!");
 
-                var produto = produtoExistente.ConvertProdutoDtoParaProduto();
+                var produto = produtoExistente.ConverterProdutoDtoParaProduto();
                 await _produtoRepository.AtualizaProdutoFavorito(produto);
                 return Ok("Produto Atualizado com Sucesso!");
             }
@@ -185,7 +185,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 {
                     return Conflict("Produto já existe!");
                 }
-                var produto = produtoDto.ConvertProdutoDtoParaProduto();
+                var produto = produtoDto.ConverterProdutoDtoParaProduto();
                 await _produtoRepository.AdicionarNovoProduto(produto);
 
                 return Created($"Produto Criado com sucesso!", produtoDto);

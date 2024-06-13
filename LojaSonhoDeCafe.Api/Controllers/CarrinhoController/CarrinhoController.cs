@@ -1,10 +1,8 @@
 ﻿using LojaSonhoDeCafe.Api.Repositories.Carrinho;
 using LojaSonhoDeCafe.Api.Repositories.Produtos;
 using LojaSonhoDeCafe.Models.Dtos;
-using LojaSonhoDeCafe.Models.Entity;
+using LojaSonhoDeCafe.Models.MapeandoDtos.CarrinhoCompraMapping;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using SonhoDeCafe.Server.MapeandoDto;
 
 namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
 {
@@ -45,7 +43,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
                     return NotFound("Produtos do Carrinho não encontrados!");
                 }
 
-                var carrinhoItensDto = carrinhoItens.ConverterCarrinhoItensParaDto(produtos);
+                var carrinhoItensDto = carrinhoItens.ConverterCarrinhoItensParaCarrinhoItensDto(produtos);
                 return Ok(carrinhoItensDto);
             }
             catch (Exception ex)
@@ -72,7 +70,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
                 {
                     return NotFound($"Item não existe na fonte de dados");
                 }
-                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemProdParaCarrinhoItemDto(produto);
 
                 return Ok(carrinhoItemDto);
             }
@@ -104,7 +102,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
                     return NotFound("Produto do Carrinho não encontrado!");
                 }
 
-                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemProdParaCarrinhoItemDto(produto);
 
                 return Ok(carrinhoItemDto); 
 
@@ -137,7 +135,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
                     return NotFound("Erro ao obter Produto do carrinho");
                 }
 
-                var novoCarrinhoItemDto = novoCarrinhoItem.ConverterCarrinhoItemParaDto(produto);
+                var novoCarrinhoItemDto = novoCarrinhoItem.ConverterCarrinhoItemProdParaCarrinhoItemDto(produto);
 
                 return CreatedAtAction(nameof(ObterItemCarrinhoId), new { id = novoCarrinhoItemDto.Id },
                                         novoCarrinhoItemDto);
@@ -188,7 +186,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.CarrinhoController
                 if (produto is null)
                     return NotFound("Produto do Carrinho não encotrado");
 
-                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemProdParaCarrinhoItemDto(produto);
                 return Ok(carrinhoItemDto);
 
             }

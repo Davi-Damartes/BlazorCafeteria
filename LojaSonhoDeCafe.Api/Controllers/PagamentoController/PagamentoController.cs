@@ -1,7 +1,7 @@
 ﻿using LojaSonhoDeCafe.Api.Repositories.Pagamento;
-using LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao;
 using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Models.Entity;
+using LojaSonhoDeCafe.Models.MapeandoDtos.PagamentoConversao;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
@@ -25,7 +25,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
                 var pagamentos = await _pagamentoRepository.BucarTodosOsPagamentos();
                 if (pagamentos != null)
                 {
-                    var pagamentosDto = pagamentos.ConverteListPagamentosParaListPagamentosDtoNOVO();
+                    var pagamentosDto = pagamentos.ConverteListPagamentosParaListPagamentosDto();
 
                     return Ok(pagamentosDto);
                 }
@@ -96,7 +96,7 @@ namespace LojaSonhoDeCafe.Api.Controllers.PagamentoController
                 var pagamentosDoMês = await _pagamentoRepository.BucarTodosPagamentosPeloMes(mes);
                 if (pagamentosDoMês != null)
                 {
-                    var pagamentoDto = pagamentosDoMês.ConverteListPagamentosParaListPagamentosDtoNOVO();
+                    var pagamentoDto = pagamentosDoMês.ConverteListPagamentosParaListPagamentosDto();
 
                     return Ok(pagamentoDto);
                 }
