@@ -1,6 +1,7 @@
 ﻿using LojaSonhoDeCafe.Models.Dtos;
+using LojaSonhoDeCafe.Models.MapeandoDtos.ProdutosMapping;
 using LojaSonhoDeCafe.Repositories.Produtos;
-using SonhoDeCafe.Server.MapeandoDto;
+
 
 namespace LojaSonhoDeCafe.Services.ProdutoServices
 {
@@ -56,7 +57,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
             {
                 var categorias = await _produtoRepository.ObterCategorias();
 
-                var categoriasDto = categorias.ConverterCategoriasParaDto();
+                var categoriasDto = categorias.ConverterCategoriasParaCategoriasDto();
 
                 return categoriasDto;
             }
@@ -81,7 +82,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
                     return Enumerable.Empty<ProdutoDto>();
                 }
 
-                var itensPorCategoriaDto = itensPorCategoria!.ConvertProdutosParaDto();
+                var itensPorCategoriaDto = itensPorCategoria!.ConverterProdutosParaProdutosDto();
                 
                 return itensPorCategoriaDto;
 
@@ -106,7 +107,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
                     return Enumerable.Empty<ProdutoDto>();
                 }
 
-                var produtosDto = produtos!.ConvertProdutosParaDto();
+                var produtosDto = produtos!.ConverterProdutosParaProdutosDto();
                 return produtosDto;
             }
 
@@ -130,7 +131,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
                     return Enumerable.Empty<ProdutoDto>();
                 }
 
-                var produtosDto = produtos.ConvertProdutosParaDto();
+                var produtosDto = produtos.ConverterProdutosParaProdutosDto();
                 return produtosDto ?? Enumerable.Empty<ProdutoDto>();
 
             }
@@ -153,7 +154,7 @@ namespace LojaSonhoDeCafe.Services.ProdutoServices
                     return null!;
                 }
 
-                var produtoDto = produto.ConvertProdutoParaDto();
+                var produtoDto = produto.ConverterProdutoParaDto();
                 return produtoDto;
             }
 

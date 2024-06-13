@@ -1,4 +1,4 @@
-﻿using LojaSonhoDeCafe.MapeandoDtos.PagamentoConversao;
+﻿using LojaSonhoDeCafe.Models.MapeandoDtos.PagamentoConversao;
 using LojaSonhoDeCafe.Models.Dtos;
 using LojaSonhoDeCafe.Repositories.Pagamento;
 
@@ -48,7 +48,7 @@ namespace LojaSonhoDeCafe.Services.PagamentoServices
             try
             {
                 var pagamentos = await _pagamentoRepository.BucarTodosPagamentosPeloMes(mes);
-                var pagamentosDto = pagamentos.ConvertListPagamentosParaListPagamentosDto();
+                var pagamentosDto = pagamentos.ConverteListPagamentosParaListPagamentosDto();
                 return pagamentosDto;
             }
             catch (Exception ex)

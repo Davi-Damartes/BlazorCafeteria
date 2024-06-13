@@ -1,6 +1,6 @@
 ﻿using LojaSonhoDeCafe.Models.Dtos;
+using LojaSonhoDeCafe.Models.MapeandoDtos.CarrinhoCompraMapping;
 using LojaSonhoDeCafe.Repositories.Carrinho;
-using SonhoDeCafe.Server.MapeandoDto;
 using SonhoDeCafe.Server.Repositories.Produtos;
 
 namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
@@ -33,7 +33,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
                     _logger.LogError("Erro ao Adicionar Produto");
                 }
 
-                var itemAdicionadoDto = itemAdicionado!.ConverterCarrinhoItemParaDto(produto);
+                var itemAdicionadoDto = itemAdicionado!.ConverterCarrinhoItemProdParaCarrinhoItemDto(produto);
 
                 return itemAdicionadoDto;
             }
@@ -61,7 +61,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
             foreach (var carrinhoItem in carrinhoItens!)
             {
                 var produto = produtos.FirstOrDefault(p => p.Id == carrinhoItem.ProdutoId);
-                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto!);
+                var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemProdParaCarrinhoItemDto(produto!);
                 carrinhoItemDtos.Add(carrinhoItemDto);
             }
 
@@ -105,7 +105,7 @@ namespace LojaSonhoDeCafe.Services.CarrinhoCompraServices
             }
             var produto = await _produtoRepository.ObterProdutoPorId(carrinhoItem!.ProdutoId);
 
-            var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemParaDto(produto);
+            var carrinhoItemDto = carrinhoItem.ConverterCarrinhoItemProdParaCarrinhoItemDto(produto);
 
             return carrinhoItemDto;
 
