@@ -49,20 +49,20 @@
     </div>
 
     <div class="mb-2">
-        <label for="CategoriaId" class="form-label"><b>Categoria:</b></label>
-        <select id="CategoriaId" class="form-control" @bind="ProdutoDto.CategoriaId">
-            <option disabled value="0" selected><b>Escolha uma Categoria</b></option>
-            @foreach (var categoria in Categorias!)
+        <label for="CategoriaId" class="form-label"><b>Categoria:</b> </label>
+        <InputSelect id="CategoriaId" class="form-control" @bind-Value="ProdutoDto.CategoriaId">
+            <option disabled value="0">Escolha uma Categoria</option>
+            @foreach (var categoria in Categorias)
             {
                 <option value="@categoria.Id">@categoria.Nome</option>
             }
-        </select>
+        </InputSelect>
     </div>
-
 
     <button type="submit" class="btn btn-lg btn-primary mb-4 mt-1" 
             disabled="@EnableBtn" @onclick="DesableBtn">Criar
-      </button>
+    </button>
+ 
 </EditForm>
 
  
@@ -73,15 +73,10 @@
     public NavigationManager? NavigationManager { get; set; }
 
     [Inject]
-    public IProdutoService? ProdutoService { get; set; }
-
-
-    [Inject]
     public IProdutoHttpService? ProdutoHttpService { get; set; }
 
 
     public IEnumerable<CategoriaDto>? Categorias { get; set; } = new List<CategoriaDto>();
-
 
     public ProdutoDto? ProdutoDto = new();
 
@@ -90,36 +85,22 @@
     private IBrowserFile? file;     
     private List<string> erros = new();
 
-
     public bool EnableBtn { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-       // Categorias = await ProdutoService!.BuscarCategorias();
         Categorias = await ProdutoHttpService!.BuscaCategorias();
-
     }
 
-    private async Task DesableBtn()
-    {
-        EnableBtn = true;
-        await Task.Delay(1500);
-        EnableBtn = false;
-    }
-
-
+ 
     private async Task SubmitForm()
     {
         try
         {
-            if(ProdutoDto!.CategoriaId == 0)
+            if(ProdutoDto != null)
             {
-                erros.Add("O campo categoria não pode ser nullo!");
-            }
-
-            if(ProdutoDto.FotoUrl != null)
-            {
+                AddCategoria(ProdutoDto.CategoriaId);
                 var resultado = await ProdutoHttpService!.AdicionarNovoProduto(ProdutoDto);
                 StateHasChanged();
                 NavigationManager!.NavigateTo($"/ProdutosPorCategoria/{ProdutoDto.CategoriaId}");
@@ -133,6 +114,25 @@
         }
     }
 
+    private void AddCategoria(int Id)
+    {
+        var categoria = Categorias!.FirstOrDefault(x => x.Id == Id);
+        if (categoria != null && ProdutoDto != null)
+        {
+            ProdutoDto.CategoriaId = categoria.Id;
+            ProdutoDto.CategoriaNome = categoria.Nome;
+
+        }
+    }
+    
+    private async Task DesableBtn()
+    {
+        EnableBtn = true;
+        await Task.Delay(1500);
+        EnableBtn = false;
+    }
+
+    
     private async void LoadFiles(InputFileChangeEventArgs evento)
     {
         file = evento.File;
@@ -144,41 +144,41 @@
     private async Task<string> CaputurarImagem()
     {
 
-    if(file is null)
-    {
-        return "";
-    }
+        if(file is null)
+        {
+            return "";
+        }
 
-    try
-    {
-        // string imagemCript = Guid.NewGuid() + "_";
-        string newFileName = Path.ChangeExtension(
-                                Path.GetRandomFileName(),
-                                Path.GetFileName(file.Name));
+        try
+        {
+            // string imagemCript = Guid.NewGuid() + "_";
+            string newFileName = Path.ChangeExtension(
+                                    Path.GetRandomFileName(),
+                                    Path.GetFileName(file.Name));
 
-        string path = Path.Combine(
-            config.GetValue<string>("ArmazenamentoProdutoImg")!,
-            "ImagensCafeteria",
-            newFileName);
+            string path = Path.Combine(
+                config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                "ImagensCafeteria",
+                newFileName);
 
-        string relativePath = Path.Combine("ImagensCafeteria", newFileName);
+            string relativePath = Path.Combine("ImagensCafeteria", newFileName);
 
 
-        Directory.CreateDirectory(Path.Combine(
-                    config.GetValue<string>("ArmazenamentoProdutoImg")!,
-                    "ImagensCafeteria"));
+            Directory.CreateDirectory(Path.Combine(
+                        config.GetValue<string>("ArmazenamentoProdutoImg")!,
+                        "ImagensCafeteria"));
 
-        await using FileStream fs = new(path, FileMode.Create);
-        await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+            await using FileStream fs = new(path, FileMode.Create);
+            await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
 
-        return relativePath;
-    }
+            return relativePath;
+        }
 
-    catch (Exception ex)
-    {
-        erros.Add($"File: {file.Name} Erro:{ex.Message}");
-        throw;
-    }
-}
+        catch (Exception ex)
+        {
+            erros.Add($"File: {file.Name} Erro:{ex.Message}");
+            throw;
+        }
+    }   
 
 }
