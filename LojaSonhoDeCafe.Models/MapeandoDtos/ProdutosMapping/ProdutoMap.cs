@@ -26,17 +26,16 @@ namespace LojaSonhoDeCafe.Models.MapeandoDtos.ProdutosMapping
         {
             return new Produto
             {
-                    Id = produtoDto.Id,
                     Nome = produtoDto.Nome,
                     Descricao = produtoDto.Descricao,
                     FotoUrl = produtoDto.FotoUrl,
                     Preco = produtoDto.Preco,
                     QuantidadeEmEstoque = produtoDto.QuantidadeEmEstoque,
                     IsFavorito = produtoDto.IsFavorito,
-                    CategoriaId = produtoDto.CategoriaId,
-                    Categoria = produtoDto.CategoriaNome != null ? new Categoria { Id = produtoDto.CategoriaId, Nome = produtoDto.CategoriaNome } : null
-            
+                    CategoriaId = produtoDto.CategoriaId
+
             };
+
         }
 
         public static IEnumerable<ProdutoDto> ConverterProdutosParaProdutosDto(this IEnumerable<Produto> produtos)
