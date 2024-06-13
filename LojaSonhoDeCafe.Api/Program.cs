@@ -21,14 +21,10 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IProdutoRepositoryApi, ProdutoRepositoryApi>();
 
-
 builder.Services.AddScoped<ICarrinhoCompraRepositoryApi, CarrinhoCompraRepositoryApi>();
 
 builder.Services.AddScoped<IPagamentoRepositoryApi, PagamentoRepositoryApi>();
 
-
-//builder.Services.AddScoped<IPagamentoRepository, PagamentoRepository>();
-//builder.Services.AddScoped<IPagamentoService, PagamentoService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
