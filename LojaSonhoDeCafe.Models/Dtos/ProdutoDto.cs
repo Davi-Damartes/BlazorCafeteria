@@ -15,20 +15,21 @@ namespace LojaSonhoDeCafe.Models.Dtos
         public string? Descricao { get; set; }
 
 
-        [Required(ErrorMessage = "O campo foto é obrigatório!!!")]
+        [Required(ErrorMessage = "O campo Foto é obrigatório!!!")]
         public string? FotoUrl { get; set; }
 
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!!!")]
         public decimal Preco { get; set; }
 
-        [Required(ErrorMessage = "O campo quantidade em estoque é obrigatório!!!")]
-        [Range(1, 150, ErrorMessage = "O campo quantidade em estoque deve estar entre {1} e {2}.")]
+        [Required(ErrorMessage = "O campo Quantidade em estoque é obrigatório!!!")]
+        [Range(1, 150, ErrorMessage = "O campo Quantidade em estoque deve estar entre {1} e {2}.")]
         public int QuantidadeEmEstoque { get; set; }
 
         public bool IsFavorito { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório!!!")]
+        [Range(1, int.MaxValue, ErrorMessage = "O campo Categoria é obrigatório!!!")]
         public int CategoriaId { get; set; }
         public string? CategoriaNome { get; set; }
 
