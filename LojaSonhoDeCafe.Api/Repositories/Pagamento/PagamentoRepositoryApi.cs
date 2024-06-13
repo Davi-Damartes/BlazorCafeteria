@@ -127,30 +127,3 @@ namespace LojaSonhoDeCafe.Api.Repositories.Pagamento
        
     }
 }
-
-//var pagamento = new PagamentoDiario
-//{
-//    Usuario = pagamentoDiarioDto.Usuario,
-//    Email = pagamentoDiarioDto.Email,
-//    TotalQuantDiaria = pagamentoDiarioDto.TotalQuantDiaria,
-//    TotalPrecoDiaria = pagamentoDiarioDto.TotalPrecoDiaria,
-//    EPagamento = (ETipoPagamento)pagamentoDiarioDto.EPagamento,
-//    HoraDoPagamento = pagamentoDiarioDto.HoraDoPagamento,
-
-//};
-
-
-//public async Task<IEnumerable<Categoria>> ObterCategorias( )
-//{
-//    return await _bancoDeDados.Categorias.ToListAsync();
-
-//}
-
-//public async Task<IEnumerable<Produto>> ObterTodosProdutosPorCategoria(int id)
-//{
-//    return await _bancoDeDados.Produtos
-//                              .Include(a => a.Categoria)
-//                              .Where(x => x.CategoriaId == id)
-//                              .ToListAsync();
-
-//}
