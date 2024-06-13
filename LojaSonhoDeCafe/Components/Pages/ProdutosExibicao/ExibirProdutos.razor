@@ -137,13 +137,13 @@ else @if (ModoExibicao == "maior")
         get
         {
             var produtos = Produtos;
-            Produtos = produtos.ToList();
+            Produtos = produtos!.ToList();
             itemsQueryable = Produtos.AsQueryable();
             var result = itemsQueryable;
 
             if (!string.IsNullOrEmpty(nameFilter))
             {
-                result = result.Where(c => c.Nome.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
+                result = result.Where(c => c.Nome!.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
 
             }
 

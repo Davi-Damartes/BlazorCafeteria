@@ -126,7 +126,6 @@ else
         {
 
             //CarrinhoCompraItens = await GerenciaCarrinhoLocalStorage!.GetCollection();
-            //CarrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
             CarrinhoCompraItens = await CarrinhoCompraHttpService.ObterItensCarrinho(UsuarioLogado.UsuarioId);
 
             //CalculaResumoCarrinhoTotal();
