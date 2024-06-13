@@ -73,10 +73,12 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
         public async Task AdicionarNovoProduto(Produto produto)
         {
-            await _bancoDeDados.Produtos.AddAsync(produto);
-            await _bancoDeDados.SaveChangesAsync();
-        }
 
+            await _bancoDeDados.Produtos.AddAsync(produto);
+
+            await _bancoDeDados.SaveChangesAsync();
+
+        }
 
         public async Task AdicionarEstoqueAoProduto(Guid Id, int Quantidade)
         {
