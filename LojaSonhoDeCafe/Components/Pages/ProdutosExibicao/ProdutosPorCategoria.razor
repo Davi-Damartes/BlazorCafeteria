@@ -2,9 +2,9 @@
 
 @attribute [Authorize]
 
-@if (@ProdutosPorCategoriaDto is null && MensagemErro is null)
+@if (ProdutosPorCategoriaDto is null && MensagemErro is null)
 {
-   <ExibirSpinner />
+    <ExibirSpinner />
 }
 else if (MensagemErro is not null)
 {
@@ -18,7 +18,7 @@ else
         <div class="row">
             <ExibirProdutos Produtos="@ProdutosPorCategoriaDto"></ExibirProdutos>
         </div>
-    }   
+    }
 }
 
 
@@ -44,23 +44,18 @@ else
     public string? NomeCategoria { get; set; }
     public string? MensagemErro { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync( )
     {
         try
         {
-
-            await LimpaLocalStorage();
-
             ProdutosPorCategoriaDto = await ProdutoHttpService!.BuscarItensPorCategoria(CategoriaId);
-            //ProdutosPorCategoriaDto = await GetColecaoProdutosPorCategoria(CategoriaId);
-
 
             if (ProdutosPorCategoriaDto != null && ProdutosPorCategoriaDto.Count() > 0)
             {
                 var produtoDto = ProdutosPorCategoriaDto
                             .FirstOrDefault(s => s.CategoriaId == CategoriaId);
 
-                if(produtoDto != null)
+                if (produtoDto != null)
                 {
                     NomeCategoria = produtoDto.CategoriaNome;
                 }
@@ -72,22 +67,28 @@ else
         }
     }
 
-    private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
-    {
-        var listaDeProdutos = await GerenciaProdutoLocalStorage!.GetCollection();
 
-        if(listaDeProdutos != null)
-        {
-            return listaDeProdutos.Where(p => p.CategoriaId == categoriaId);
-        }
-        else
-        {
-            return await ProdutoHttpService!.BuscarItensPorCategoria(categoriaId);
-        }
-    }
 
-    private async Task LimpaLocalStorage( )
-    {
-        await GerenciaProdutoLocalStorage!.RemoveCollection();
-    }
+
+
+    // private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
+    // {
+    //     var listaDeProdutos = await GerenciaProdutoLocalStorage!.GetCollection();
+
+    //     if (listaDeProdutos != null)
+    //     {
+    //         return listaDeProdutos.Where(p => p.CategoriaId == categoriaId);
+    //     }
+    //     else
+    //     {
+    //         return await ProdutoHttpService!.BuscarItensPorCategoria(categoriaId);
+    //     }
+    // }
+
+    // private async Task LimpaLocalStorage( )
+    // {
+    //     await GerenciaProdutoLocalStorage!.RemoveCollection();
+    // }
+
+
 }
