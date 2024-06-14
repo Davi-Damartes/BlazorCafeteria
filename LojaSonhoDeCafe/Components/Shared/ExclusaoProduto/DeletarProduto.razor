@@ -1,4 +1,3 @@
-
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize]
 @inject IJSRuntime jsruntime
@@ -44,9 +43,9 @@
             await IProdutoHttpService!.RemoverProduto(_produtoToDelete!.Id);
             await ShowSuccessToastr();
 
-
             await Task.Delay(1500);
             NavigationManager!.NavigateTo($"/ ");
+            StateHasChanged();
 
         }
         AbrirDialogModal = false;
