@@ -1,5 +1,6 @@
 ﻿@inject IConfiguration config
 @inject IJSRuntime Js
+@implements IAsyncDisposable
 
 <div class="col-12 d-flex justify-content-between align-items-center mb-4">
     <div class="col-12 col-md-5">
@@ -63,7 +64,7 @@ else @if (ModoExibicao == "maior")
     <div class="col-12 d-flex col-md-6 col-lg-3 mb-4">
         <div class="card text-center bg-light d-block" title="Detalhes do Produto">
             <div class="btn-group position-absolute end-0" title="Favoritar Produto">
-                <button @onclick="(() => MudarCorDoBotao_Click(produto.Id))" class="btn shadow-none" id="btn-@produto.Id">
+                <button @onclick="(() => MudarCorDoBotao_Click_AddProdFavorito(produto.Id))" class="btn shadow-none" id="btn-@produto.Id">
                     <i class="fa-solid fa-heart icone-coracao shadow-none"></i>
                 </button>
             </div>
@@ -122,11 +123,12 @@ else @if (ModoExibicao == "maior")
     public NavigationManager? NavigationManager { get; set; }
 
     private string? ModoExibicao { get; set; }
-    
+
     public bool AbrirDialogModal { get; set; }
 
     private string? BuscarPorNome { get; set; } = string.Empty;
 
+    private IJSObjectReference? module;
 
     IQueryable<ProdutoDto>? itemsQueryable;
 
@@ -157,17 +159,35 @@ else @if (ModoExibicao == "maior")
         nameFilter = null;
     }
 
-
-
-    protected async Task MudarCorDoBotao_Click(Guid produtoId)
+    protected async Task MudarCorDoBotao_Click_AddProdFavorito(Guid produtoId)
     {
         var produto = Produtos?.SingleOrDefault(p => p.Id == produtoId);
         if (produto != null)
         {
             produto.IsFavorito = !produto.IsFavorito;
-            await Js.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
+            MudarCorBotaoFavorito(produto.Id, produto.IsFavorito);
             await AttProdutoFavorito(produto!);
         }
+    }
+
+    private async void MudarCorBotaoFavorito(Guid Id, bool favorito)
+    {
+        await Js.InvokeVoidAsync("mudarCorButao", Id, favorito);
+    }
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await Js.InvokeAsync<IJSObjectReference>("import", "./Components/Pages/ProdutosExibicao/ExibirProdutos.razor.js");
+            foreach (var produto in Produtos!)
+            {
+                await Js.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
+            }
+        }
+
     }
 
     public async Task AttProdutoFavorito(ProdutoDto Produto)
@@ -176,39 +196,19 @@ else @if (ModoExibicao == "maior")
     }
 
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            foreach (var produto in Produtos)
-            {
-                await Js.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
-            }
-
-        }
-
-    }
-
-
     private string CreateWebPath(string relativePath)
     {
         return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath!);
     }
 
-
-    private void DeletaItemEFechaDialog(bool acao)
+    //Dispose of the js module
+    async ValueTask IAsyncDisposable.DisposeAsync( )
     {
-        AbrirDialogModal = false;
-        NavigationManager!.NavigateTo("/CadastroProduto");
-        StateHasChanged();
+        if (module is not null)
+        {
+            await module.DisposeAsync();
+        }
     }
-
-    private void OpenDialog()
-    {
-        AbrirDialogModal = true;
-        StateHasChanged();
-    }
-
 
 }
 
