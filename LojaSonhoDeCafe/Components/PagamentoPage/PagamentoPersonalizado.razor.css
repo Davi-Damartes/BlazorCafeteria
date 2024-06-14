@@ -12,19 +12,10 @@ label .text-dark {
     transition: color 0.2s ease;
 }
 
-/* complementado para compatibilizar com Bootstrap >5.3.x mantendo o mesmo efeito de hover */
-.btn-check:checked + .btn-outline-danger h3,
-.btn-check:active + .btn-outline-danger h3,
-.btn-check:hover + .btn-outline-danger h3,
-.btn-check:checked + .btn-outline-danger hr,
-.btn-check:active + .btn-outline-danger hr,
-.btn-check:hover + .btn-outline-danger hr,
-.btn-check:checked + .btn-outline-danger h4,
-.btn-check:active + .btn-outline-danger h4,
-.btn-check:hover + .btn-outline-danger h4,
-.btn-check:checked + .btn-outline-danger p,
-.btn-check:active + .btn-outline-danger p,
-.btn-check:hover + .btn-outline-danger p,
+.text-white {
+    color: white !important;
+}
+
 .btn-check:checked + .btn-outline-danger .text-dark,
 .btn-check:active + .btn-outline-danger .text-dark,
 .btn-check:hover + .btn-outline-danger .text-dark {
@@ -32,7 +23,6 @@ label .text-dark {
     color: white !important;
 }
 
-/* adicionado para compatibilizar com Bootstrap >5.3.x mantendo o mesmo efeito de hover */
 .btn-check:checked + .btn-outline-danger,
 .btn-check:active + .btn-outline-danger,
 .btn-check:hover + .btn-outline-danger {
