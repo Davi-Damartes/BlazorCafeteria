@@ -3,9 +3,6 @@
 @using Microsoft.AspNetCore.Authorization
 @attribute [AllowAnonymous]
 
-@inject IConfiguration config
-@inject IJSRuntime Js
-
 <PageTitle>Home</PageTitle>
 
 <CarouselSlides></CarouselSlides>
@@ -30,37 +27,9 @@
 
     private IEnumerable<ProdutoDto>? Produtos { get; set; }
 
-
-    // IQueryable<ProdutoDto>? itemsQueryable;
-
-    // string? nameFilter;
-
-    // IQueryable<ProdutoDto> BuscandoProdutos
-    // {
-    //     get
-    //     {      
-    //         var result = itemsQueryable;
-
-    //         if (!string.IsNullOrEmpty(nameFilter))
-    //         {
-    //             result = result.Where(c => c.Nome.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
-
-    //         }
-
-    //         return result;
-    //     }
-    // }
-
-
     protected override async Task OnInitializedAsync()
     {
         Produtos = await ProdutoServiceHttp!.ObterProdutos();
     }
-
-
-
-
-
-
 }
 
