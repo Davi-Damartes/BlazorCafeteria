@@ -36,11 +36,11 @@ else
                     </h3>
                     <hr>
                     <div class="form-floating mb-3">
-                        <InputText id="txtNome" type="text" class="form-control" @bind-Value="PagamentoDiarioPag!.Usuario" placeholder="" />
+                        <InputText id="txtNome" type="text" name="text" class="form-control" @bind-Value="PagamentoDiarioPag!.Usuario" placeholder="" />
                         <label for="txtNome" class="text-black-50">Nome</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <InputText id="txtEmail" type="text" class="form-control" @bind-Value="PagamentoDiarioPag!.Email" placeholder="" />
+                        <InputText id="txtEmail" name="txtEmail" type="text" class="form-control" @bind-Value="PagamentoDiarioPag!.Email" placeholder="" />
                         <label for="txtEmail" class="text-black-50">Email</label>
                     </div>
 
@@ -70,9 +70,9 @@ else
             </div>
 
 
-            <div class="mb-4 mx-2 flex-even">
-                <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pag2">
-                <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag2">
+            <div class="mb-4 mx-2 flex-even" id="divPagamentoCartao">
+                <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pagamento2">
+                <label class="btn btn-outline-danger p-4 h-100 w-100" for="pagamento2">
                     <h3>
                         <b class="text-dark">Pagamento Cartão</b>
                     </h3>
@@ -144,10 +144,10 @@ else
             </div>
 
 
-            <div class="mb-4 mx-2 flex-even">
+            <div class="mb-4 mx-2 flex-even" id="divPagamentoDinheiro">
                 <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiarioPag.EPagamento">
-                    <InputRadio Name="EPagamento" class="btn-check" autocomplete="off" id="pag3" Value="EPagamentoDto.Dinheiro"/>
-                    <label class="btn btn-outline-danger p-4 h-100 w-100" for="pag3">
+                    <InputRadio Name="EPagamento" class="btn-check" autocomplete="off" id="pagamento3" Value="EPagamentoDto.Dinheiro"/>
+                    <label class="btn btn-outline-danger p-4 h-100 w-100" for="pagamento3">
                         <h3>
                             <b class="text-dark">Dinheiro</b>
                         </h3>
@@ -227,10 +227,11 @@ else
 
     public bool EnableBtn { get; set; }
 
-
-
+    
+    private IJSObjectReference? module;
 
     private string formattedValue = "0,00";
+
 
     private void OnInput(ChangeEventArgs e)
     {
@@ -356,6 +357,16 @@ else
     }
 
 
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            module = await jsruntime.InvokeAsync<IJSObjectReference>("import", "./Components/PagamentoPage/PagamentoPersonalizado.razor.js");
+            await module.InvokeVoidAsync("escolherOpcaoPagamento");
+        }
+    }
 
 
 
