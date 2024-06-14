@@ -26,6 +26,7 @@ namespace LojaSonhoDeCafe.Models.MapeandoDtos.ProdutosMapping
         {
             return new Produto
             {
+                    Id = produtoDto.Id,
                     Nome = produtoDto.Nome,
                     Descricao = produtoDto.Descricao,
                     FotoUrl = produtoDto.FotoUrl,
