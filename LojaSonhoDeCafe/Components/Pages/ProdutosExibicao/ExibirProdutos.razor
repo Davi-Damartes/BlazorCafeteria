@@ -165,26 +165,25 @@ else @if (ModoExibicao == "maior")
         if (produto != null)
         {
             produto.IsFavorito = !produto.IsFavorito;
-            MudarCorBotaoFavorito(produto.Id, produto.IsFavorito);
+            await MudarCorBotaoFavoritoJs(produto.Id, produto.IsFavorito);
             await AttProdutoFavorito(produto!);
         }
     }
 
-    private async void MudarCorBotaoFavorito(Guid Id, bool favorito)
+    private async Task MudarCorBotaoFavoritoJs(Guid Id, bool favorito)
     {
-        await Js.InvokeVoidAsync("mudarCorButao", Id, favorito);
+        await module!.InvokeVoidAsync("mudarCorButao", Id, favorito);
     }
-
-
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             module = await Js.InvokeAsync<IJSObjectReference>("import", "./Components/Pages/ProdutosExibicao/ExibirProdutos.razor.js");
+           
             foreach (var produto in Produtos!)
             {
-                await Js.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
+                await module.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
             }
         }
 
@@ -202,7 +201,7 @@ else @if (ModoExibicao == "maior")
     }
 
     //Dispose of the js module
-    async ValueTask IAsyncDisposable.DisposeAsync( )
+    async ValueTask IAsyncDisposable.DisposeAsync()
     {
         if (module is not null)
         {
