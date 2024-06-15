@@ -1,37 +1,22 @@
-﻿export function escolherOpcaoPagamento() {
-    const divPagamentoCartao = document.getElementById('divPagamentoCartao');
-    const divPagamentoDinheiro = document.getElementById('divPagamentoDinheiro');
+﻿export function aplicarEstilos(divIdSelecionada, divIdOutra) {
+    const divSelecionada = document.getElementById(divIdSelecionada);
+    const divOutra = document.getElementById(divIdOutra);
 
-    function handleDivClick(event) {
-        divPagamentoCartao.classList.remove('active');
-        divPagamentoDinheiro.classList.remove('active');
+    if (divSelecionada && divOutra) {
+        const btnSelecionada = divSelecionada.querySelector('.btn-outline-danger');
+        const btnOutra = divOutra.querySelector('.btn-outline-danger');
 
-
-
-        divPagamentoCartao.onclick()
-        {
-            var labelPag1 = divPagamentoCartao.querySelector('label');
-            labelPag1.style.backgroundColor = 'red';
-        
-
-            var labelPag1 = divPagamentoCartao.querySelector('label');
-            labelPag1.style.backgroundColor = 'green';
+        if (btnSelecionada) {
+            btnSelecionada.style.transition = 'background-color 0.2s ease';
+            btnSelecionada.style.backgroundColor = 'var(--bs-danger)';
+            btnSelecionada.style.color = 'white';
         }
 
-        event.currentTarget.classList.add('active');
-
-        const inputRadio = event.currentTarget.querySelector('.btn-check');
-        inputRadio.checked = true;
-
-        if (event.currentTarget === divPagamentoCartao) {
-            divPagamentoDinheiro.querySelector('label').classList.remove('text-white');
-            divPagamentoCartao.querySelector('label').classList.add('text-white');
-        } else if (event.currentTarget === divPagamentoDinheiro) {
-            divPagamentoCartao.querySelector('label').classList.remove('text-white');
-            divPagamentoDinheiro.querySelector('label').classList.add('text-white');
+        if (btnOutra) {
+            btnOutra.style.transition = 'color 0.2s ease';
+            btnOutra.style.color = 'white';
         }
+    } else {
+        console.error('Elementos não encontrados:', divIdSelecionada, divIdOutra);
     }
-
-    divPagamentoCartao.addEventListener('click', handleDivClick);
-    divPagamentoDinheiro.addEventListener('click', handleDivClick);
-};
+}
