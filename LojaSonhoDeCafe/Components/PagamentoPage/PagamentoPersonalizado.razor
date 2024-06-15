@@ -76,7 +76,7 @@ else
             </div>
 
 
-            <div class="mb-4 mx-2 flex-even" id="divPagamentoCartao" @onclick="() => SelecionarPagamento(divPagamentoCartao, divPagamentoDinheiro)">
+            <div class="mb-4 mx-2 flex-even" id="divPagamentoCartao">
                 <input type="radio" class="btn-check" name="pagamento" autocomplete="off" id="pagamento2">
                 <label class="btn btn-outline-danger p-4 h-100 w-100" for="pagamento2">
                     <h3>
@@ -150,7 +150,7 @@ else
             </div>
 
 
-            <div class="mb-4 mx-2 flex-even" id="divPagamentoDinheiro" @onclick="() => SelecionarPagamento('divPagamentoDinheiro', 'divPagamentoCartao')">
+            <div class="mb-4 mx-2 flex-even" id="divPagamentoDinheiro">
                 <InputRadioGroup Name="EPagamento" @bind-Value="PagamentoDiarioPag.EPagamento">
                     <InputRadio Name="EPagamento" class="btn-check" autocomplete="off" id="pagamento3" Value="EPagamentoDto.Dinheiro"/>
                     <label class="btn btn-outline-danger p-4 h-100 w-100" for="pagamento3">
