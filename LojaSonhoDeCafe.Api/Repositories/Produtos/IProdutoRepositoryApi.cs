@@ -19,7 +19,7 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
 
         Task AdicionarEstoqueAoProduto(Guid Id, int Quantidade);
 
-        Task AtualizaProdutoFavorito(Produto produto);
+        Task AtualizaProdutoFavorito(Guid produtoId);
 
         Task ExcluirProduto(Guid Id);
 
