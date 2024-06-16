@@ -75,43 +75,33 @@ namespace LojaSonhoDeCafe.Api.Repositories.Produtos
         {
 
             await _bancoDeDados.Produtos.AddAsync(produto);
-
             await _bancoDeDados.SaveChangesAsync();
 
         }
 
         public async Task AdicionarEstoqueAoProduto(Guid Id, int Quantidade)
         {
-            var produto = await ObterProdutoPorId(Id);
-
-            if (produto != null && Quantidade > 0 && produto.QuantidadeEmEstoque == 0)
-            {
-                produto.QuantidadeEmEstoque = Quantidade;
-                await _bancoDeDados.SaveChangesAsync();
-            }
-
+            await _bancoDeDados.Produtos
+                                .Where(x => x.Id == Id)
+                                 .ExecuteUpdateAsync(s => s.SetProperty(
+                                     p => p.QuantidadeEmEstoque, Quantidade));
         }
 
-        public async Task AtualizaProdutoFavorito(Produto produto)
+        public async Task AtualizaProdutoFavorito(Guid produtoId)
         {
-            var produtoBd = await _bancoDeDados.Produtos.SingleOrDefaultAsync(x => x.Id == produto.Id);
-            if (produtoBd != null)
-            {
-                produtoBd.IsFavorito = produto.IsFavorito;
-                await _bancoDeDados.SaveChangesAsync();
-            }
+            await _bancoDeDados.Produtos
+                       .Where(x => x.Id == produtoId)
+                       .ExecuteUpdateAsync(s => s.SetProperty(
+                        favorito => favorito.IsFavorito, favorito => !favorito.IsFavorito));
         }
 
 
         public async Task ExcluirProduto(Guid Id)
         {
             var produtoExclusao = await ObterProdutoPorId(Id);
-            if (produtoExclusao != null)
-            {
-                _bancoDeDados.Produtos.Remove(produtoExclusao);
-                await _bancoDeDados.SaveChangesAsync();
-
-            }
+              await _bancoDeDados.Produtos
+                   .Where(x => x.Id == produtoExclusao.Id)
+                     .ExecuteDeleteAsync();
         }
 
 
