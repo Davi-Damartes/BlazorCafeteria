@@ -33,7 +33,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPutTest
             .Returns(Task.FromResult(produto));
 
 
-            A.CallTo(() => _produtoRepository.AtualizaProdutoFavorito(produto))
+            A.CallTo(() => _produtoRepository.AtualizaProdutoFavorito(produto.Id))
             .Returns(Task.FromResult(produto));
 
             var controler = new ProdutosController(_produtoRepository);
@@ -43,7 +43,7 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPutTest
             //Assert
             result.Should().NotBeNull();
             var actionResult = Assert.IsType<OkObjectResult>(result);
-            actionResult.Value.Should().Be("Produto Atualizado com Sucesso!");
+            actionResult.Value.Should().Be("Produto Atualizado com Sucesso!!!");
             actionResult.StatusCode.Should().Be(200);
 
         }
@@ -52,15 +52,14 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoControllerTest.ProdutoPutTest
         public async Task ProdutosController_AtualizarProdutoFavorito_ReturnNotFound404()
         {
             //Arrange
-            var produto = A.Fake<Produto>();
             var produtoDto = A.Fake<ProdutoDto>();
-            produtoDto = null!;
+           
 
-            A.CallTo(() => _produtoRepository.ObterProdutoPorId(produto.Id))
-            .Returns(Task.FromResult<Produto>(null!));
+            A.CallTo(() => _produtoRepository.ObterProdutoPorId(produtoDto.Id))
+            .Returns(Task.FromResult<Produto>(null));
 
 
-            A.CallTo(() => _produtoRepository.AtualizaProdutoFavorito(produto))
+            A.CallTo(() => _produtoRepository.AtualizaProdutoFavorito(produtoDto.Id))
             .Returns(null!);
 
             var controler = new ProdutosController(_produtoRepository);
