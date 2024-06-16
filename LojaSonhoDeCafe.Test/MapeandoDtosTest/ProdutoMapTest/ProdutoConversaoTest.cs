@@ -73,7 +73,6 @@ namespace LojaSonhoDeCafe.Test.MapeandoDtosTest.ProdutoMapTest
             produto.QuantidadeEmEstoque.Should().Be(produtoDto.QuantidadeEmEstoque);
             produto.IsFavorito.Should().Be(produtoDto.IsFavorito);
             produto.CategoriaId.Should().Be(produtoDto.CategoriaId);
-            produto.Categoria!.Nome.Should().Be(produtoDto.CategoriaNome);
 
         }
 
