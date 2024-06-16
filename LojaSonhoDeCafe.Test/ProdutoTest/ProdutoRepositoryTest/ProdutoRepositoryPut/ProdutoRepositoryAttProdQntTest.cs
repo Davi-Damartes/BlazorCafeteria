@@ -36,11 +36,12 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoRepositoriesTest.ProdutoReposi
             Assert.Equal(0, qntAntes);
 
 
-            var result = repository.AdicionarEstoqueAoProduto(produto.Id, quantidade);
-            var qntDepois = dbContext.Produtos.Where(p => p.Id == produto.Id).Select(p => p.QuantidadeEmEstoque).FirstOrDefault();
+            await repository.AdicionarEstoqueAoProduto(produto.Id, quantidade);
+            var qntDepois = dbContext.Produtos.Where(p => p.Id == produto.Id)
+                                                .Select(p => p.QuantidadeEmEstoque)
+                                                 .FirstOrDefault();
 
             // Assert
-            result.Should().NotBeNull();
             Assert.Equal(10, qntDepois);
         }
 
