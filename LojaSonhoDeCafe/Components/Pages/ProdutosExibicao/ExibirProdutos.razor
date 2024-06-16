@@ -70,7 +70,6 @@ else @if (ModoExibicao == "maior")
             </div>
             <a href="/ProdutosDetalhes/@produto.Id">
                 <div class="card-body">
-                    <a href="/ProdutosDetalhes/@produto.Id">
                         @if (!File.Exists(produto.FotoUrl))
                         {
                             <img src="@CreateWebPath(produto.FotoUrl!)" class="card-img-top" alt="Imagem do Produto">
@@ -79,7 +78,6 @@ else @if (ModoExibicao == "maior")
                         {
                             <img src="@produto.FotoUrl" class="card-img-top" alt="Imagem do Produto">
                         }
-                    </a>
                     <div class="card-header card-preco">
                         <h5><b>@produto.Preco.ToString("C")</b></h5>
                     </div>
@@ -169,21 +167,30 @@ else @if (ModoExibicao == "maior")
             await AttProdutoFavorito(produto!);
         }
     }
+    
+    protected async Task MudarCorDoBotao_Click_AddProdFavorito2(Guid produtoId)
+    {
+        var produto = Produtos?.SingleOrDefault(p => p.Id == produtoId);
+        if (produto != null)
+        {
+            produto.IsFavorito = !produto.IsFavorito;
+            await MudarCorBotaoFavoritoJs(produto.Id, produto.IsFavorito);
+            await AttProdutoFavorito(produto!);
+        }
+    }
 
     private async Task MudarCorBotaoFavoritoJs(Guid Id, bool favorito)
     {
-        await module!.InvokeVoidAsync("mudarCorButao", Id, favorito);
+        await Js!.InvokeVoidAsync("mudarCorButao", Id, favorito);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            module = await Js.InvokeAsync<IJSObjectReference>("import", "./Components/Pages/ProdutosExibicao/ExibirProdutos.razor.js");
-           
             foreach (var produto in Produtos!)
             {
-                await module.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
+                await Js.InvokeVoidAsync("mudarCorButao", produto.Id, produto.IsFavorito);
             }
         }
 
@@ -193,7 +200,7 @@ else @if (ModoExibicao == "maior")
     {
         await ProdutoHttpService!.AtualizaProdutoFavorito(Produto);
     }
-
+     
 
     private string CreateWebPath(string relativePath)
     {
