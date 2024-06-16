@@ -34,11 +34,10 @@ namespace LojaSonhoDeCafe.Test.ProdutoTest.ProdutoRepositoriesTest.ProdutoReposi
             var qntAntesExclusao = dbContext.Produtos.Count();
             Assert.Equal(4, qntAntesExclusao);
             //Act
-            var result = repository.ExcluirProduto(produto.Id);
+            await repository.ExcluirProduto(produto.Id);
             var qntDepoisExclusao = await dbContext.Produtos.CountAsync();
 
             //Assert
-            result.Should().NotBeNull();
             Assert.Equal(3, qntDepoisExclusao);
 
         }
