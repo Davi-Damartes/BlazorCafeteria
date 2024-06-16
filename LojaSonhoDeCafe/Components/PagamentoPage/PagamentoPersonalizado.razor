@@ -257,12 +257,10 @@ else
 
 
 
-    private async Task SelecionarPagamento(string divIdSelecionada, string divIdOutra)
+    private async Task SelecionarPagamento()
     {
-        await module!.InvokeVoidAsync("aplicarEstilos", divIdSelecionada, divIdOutra);
+        await jsruntime!.InvokeVoidAsync("inicializarPagamento");
     }
-
-
 
 
     protected override async Task OnInitializedAsync()
@@ -286,7 +284,7 @@ else
                         PrecoTotal = item.PrecoTotal
                     };
 
-                // Adicione o PagamentoProduto à lista de PagamentoProdutos
+                // Adicionando o PagamentoProduto à lista de PagamentoProdutos
                 ListaProdutosPagamento.Add(pagamentoProduto);
             }
 
@@ -375,8 +373,8 @@ else
     {
         if (firstRender)
         {
-            module = await jsruntime.InvokeAsync<IJSObjectReference>("import", "./Components/PagamentoPage/PagamentoPersonalizado.razor.js");
-            await module.InvokeVoidAsync("escolherOpcaoPagamento");
+           
+            await jsruntime.InvokeVoidAsync("inicializarPagamento");
         }
     }
 
