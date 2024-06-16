@@ -216,6 +216,26 @@ namespace LojaSonhoDeCafe.ServicesHttp.ProdutosHttpService
                 _logger.LogError("Erro ao Adicionar novo Produto");
                 throw;
             }
+        } 
+        
+        public async Task AtualizaProdutoFavorito2(ProdutoDto produtoDto)
+        {
+            try
+            {
+                var response = await _httpClient.PatchAsJsonAsync($"api/Produtos/{produtoDto.Id}/favorito", produtoDto);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    _logger.LogError($"Erro ao atualizar produto favorito: {response.ReasonPhrase}");
+                   
+                }
+
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Erro ao Adicionar novo Produto");
+                throw;
+            }
         }
 
 
