@@ -123,19 +123,21 @@ namespace LojaSonhoDeCafe.Api.Controllers.ProdutoControllers
                 "Erro ao acessar a base de dados");
             }
         }
-
-
+        
         [HttpPatch("{Id:guid}/favorito")]
         public async Task<IActionResult> AtualizarProdutoFavoritoPorId(ProdutoDto produtoExistente)
         {
             try
-            {              
-                if (produtoExistente == null)
+            {             
+                var produtoExiste = await _produtoRepository.ObterProdutoPorId(produtoExistente.Id);
+                
+                if(produtoExiste == null)
+                {
                     return NotFound("Produto não encontrado!");
+                }
 
-                var produto = produtoExistente.ConverterProdutoDtoParaProduto();
-                await _produtoRepository.AtualizaProdutoFavorito(produto);
-                return Ok("Produto Atualizado com Sucesso!");
+                await _produtoRepository.AtualizaProdutoFavorito(produtoExistente.Id);
+                return Ok("Produto Atualizado com Sucesso!!!");
             }
             catch (Exception)
             {
