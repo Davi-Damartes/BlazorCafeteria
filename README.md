@@ -15,16 +15,14 @@ Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blaz
 - Relatório de Faturamento: Tabela de faturamento mensal com opção de download em formato do Excel (.csv).  
 
 ## Testes Unitários com xUnit
-- Utilizando uma variedade de ferramentas e técnicas para garantir a qualidade do código:
- 
-- Repositório: Implementação de testes para validar as operações de persistência de dados, simulando o comportamento do banco de dados com um banco em memória.
-- Serviço com Chamada HTTP: Desenvolvendo testes para verificar a integração adequada com serviços externos (Api), utilizando simulações de chamadas HTTP com Mocks.
-- Controlador: Testando as rotas e ações do controlador, verificando os diferentes resultados HTTP (200, 201, 400, 404, 500) para garantir o comportamento correto da API. 
+### Foram realizados Testes Unitários para aumentar a confiabilidade e a qualidade do código. Os testes foram realizados no:
+- Repositório: Implementação de testes para validar as operações de persistência de dados, simulando o comportamento do banco de dados com um Banco de Dados em memória.
+- Services: No Serviços que fazem  chamadas HTTP: Desenvolvendo testes para verificar a integração adequada com serviços externos (Api), utilizando simulações de chamadas HTTP com Mocks.
+- Controladores: Testando as rotas e ações do controlador, verificando os diferentes resultados HTTP (200, 201, 400, 404, 500) para garantir o comportamento correto da API. 
 
+ ⚙️🛠 🔗Bibliotecas Utilizadas: FluentAssertions, Mock, AutoFixture, FakeItEasy e Banco em Memória (Microsoft.EntityFrameworkCore.InMemory). 
 
- 🔗Bibliotecas utilizadas: FluentAssertions, Mock, AutoFixture, FakeItEasy e Banco em Memória (Microsoft.EntityFrameworkCore.InMemory). 
-
-## Demonstração
+## Demonstração dos Layouts e Funcionalidades
 
 - Listagem dos Produtos
  
