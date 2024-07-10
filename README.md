@@ -1,4 +1,3 @@
-
 # Loja Sonho de Café é um E-commerce Simplificado de uma Cafeteria.
 
 Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blazor web app, utilizando EF Core e um banco de dados SQL Server. A aplicação inclui componentes modernos como QuickGrid para exibição de dados e Blazored. LocalStorage para armazenamento local. A API web subjacente, construída com ASP.NET Core, permite operações CRUD completas refletindo diretamente no banco de dados, enquanto a biblioteca CsvHelper facilita a exportação de dados csv.
@@ -102,3 +101,4 @@ ou através da tecla de Depuração:
   F5
 ```
 
+## Observação!!! É necessário inicilizar tanto a api quanto o blazor server para o funcionamento do Projeto.
