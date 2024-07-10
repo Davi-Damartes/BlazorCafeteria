@@ -22,31 +22,37 @@ Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blaz
 
  ⚙️🛠 🔗Bibliotecas Utilizadas: FluentAssertions, Mock, AutoFixture, FakeItEasy e Banco em Memória (Microsoft.EntityFrameworkCore.InMemory). 
 
+
 ## Demonstração dos Layouts e Funcionalidades
 
-- Listagem dos Produtos
+###  Listagem dos Produtos
  
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/c5932993-70c8-454b-91dc-f8a61014eb02
 
 
-- Produtos Separados pela Categoria.
+
+###  Produtos Separados pela Categoria.
   
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/394a505c-e4e8-4a66-b8fd-f54f48074ce0
 
-- Produtos Favoritos
+
+###  Produtos Favoritos
 
   https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/ad764168-95ce-45e1-bfd5-4c0e29995456
 
 
-- Simulação de Pagamento.
+
+###  Simulação de Pagamento.
 
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/2fabb9d2-0787-4387-8310-63575fe0c892
 
-- Reabastecendo Produto
+
+###  Reabastecendo Produto
 
   https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/3e3e94a2-da82-47e9-96ce-31a780667a7f
 
-- Download faturamento:
+
+###  Download faturamento:
 
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/f9e40ecb-4fe8-4d50-b622-ca84db7e9c76
 
