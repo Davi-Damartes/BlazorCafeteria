@@ -233,7 +233,7 @@ else
 
     public bool EnableBtn { get; set; }
 
-    
+
     private IJSObjectReference? module;
 
     private string formattedValue = "0,00";
@@ -257,36 +257,29 @@ else
 
 
 
-    private async Task SelecionarPagamento()
-    {
-        await jsruntime!.InvokeVoidAsync("inicializarPagamento");
-    }
-
-
     protected override async Task OnInitializedAsync()
     {
         try
         {
             CarrinhoCompraItens = await CarrinhoCompraHttpService!.ObterItensCarrinho(UsuarioLogado.UsuarioId);
             AtualizarPrecoEQuantidade();
+            AdicionarListaProdNoPagamento();
+            // ListaProdutosPagamento = new List<PagamentoProdutoDto>();
 
+            // // Para cada item no carrinho de compras, crie um novo PagamentoProduto
+            // foreach (var item in CarrinhoCompraItens)
+            // {
+            //     var pagamentoProduto = new PagamentoProdutoDto
+            //         {                               
+            //             ProdutoId = item.ProdutoId,
+            //             QuantidadeComprada = item.Quantidade,
+            //             ProdutoNome = item.ProdutoNome,
+            //             PrecoTotal = item.PrecoTotal
+            //         };
 
-            ListaProdutosPagamento = new List<PagamentoProdutoDto>();
-
-            // Para cada item no carrinho de compras, crie um novo PagamentoProduto
-            foreach (var item in CarrinhoCompraItens)
-            {
-                var pagamentoProduto = new PagamentoProdutoDto
-                    {                               
-                        ProdutoId = item.ProdutoId,
-                        QuantidadeComprada = item.Quantidade,
-                        ProdutoNome = item.ProdutoNome,
-                        PrecoTotal = item.PrecoTotal
-                    };
-
-                // Adicionando o PagamentoProduto à lista de PagamentoProdutos
-                ListaProdutosPagamento.Add(pagamentoProduto);
-            }
+            //     // Adicionando o PagamentoProduto à lista de PagamentoProdutos
+            //     ListaProdutosPagamento.Add(pagamentoProduto);
+            // }
 
 
             foreach (var item in CarrinhoCompraItens)
@@ -369,16 +362,6 @@ else
 
 
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-           
-            await jsruntime.InvokeVoidAsync("inicializarPagamento");
-        }
-    }
-
-
 
     private async Task BuscarCepBrasilApi_click( )
     {
@@ -436,7 +419,8 @@ else
         await jsruntime.ToastrFail("Tente novamente ou refaça o pedido!");
     }
 
-    //Dispose of the js module
+
+    //Dispose 
     async ValueTask IAsyncDisposable.DisposeAsync( )
     {
         if (module is not null)
