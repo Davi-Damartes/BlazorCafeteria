@@ -1,4 +1,3 @@
-
 # Loja Sonho de Café é um E-commerce Simplificado de uma Cafeteria.
 
 Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blazor web app, utilizando EF Core e um banco de dados SQL Server. A aplicação inclui componentes modernos como QuickGrid para exibição de dados e Blazored. LocalStorage para armazenamento local. A API web subjacente, construída com ASP.NET Core, permite operações CRUD completas refletindo diretamente no banco de dados, enquanto a biblioteca CsvHelper facilita a exportação de dados csv.
@@ -16,40 +15,44 @@ Este projeto é uma aplicação de e-commerce simplificada desenvolvida com Blaz
 - Relatório de Faturamento: Tabela de faturamento mensal com opção de download em formato do Excel (.csv).  
 
 ## Testes Unitários com xUnit
-- Utilizando uma variedade de ferramentas e técnicas para garantir a qualidade do código:
- 
-- Repositório: Implementação de testes para validar as operações de persistência de dados, simulando o comportamento do banco de dados com um banco em memória.
-- Serviço com Chamada HTTP: Desenvolvendo testes para verificar a integração adequada com serviços externos (Api), utilizando simulações de chamadas HTTP com Mocks.
-- Controlador: Testando as rotas e ações do controlador, verificando os diferentes resultados HTTP (200, 201, 400, 404, 500) para garantir o comportamento correto da API. 
+### Foram realizados Testes Unitários para aumentar a confiabilidade e a qualidade do código. Os testes foram realizados no:
+- Repositório: Implementação de testes para validar as operações de persistência de dados, simulando o comportamento do banco de dados com um Banco de Dados em memória.
+- Services: No Serviços que fazem  chamadas HTTP: Desenvolvendo testes para verificar a integração adequada com serviços externos (Api), utilizando simulações de chamadas HTTP com Mocks.
+- Controladores: Testando as rotas e ações do controlador, verificando os diferentes resultados HTTP (200, 201, 400, 404, 500) para garantir o comportamento correto da API. 
+
+ ⚙️🛠 🔗Bibliotecas Utilizadas: FluentAssertions, Mock, AutoFixture, FakeItEasy e Banco em Memória (Microsoft.EntityFrameworkCore.InMemory). 
 
 
- 🔗Bibliotecas utilizadas: FluentAssertions, Mock, AutoFixture, FakeItEasy e Banco em Memória (Microsoft.EntityFrameworkCore.InMemory). 
+## Demonstração dos Layouts e Funcionalidades
 
-## Demonstração
-
-- Listagem dos Produtos
+###  Listagem dos Produtos
  
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/c5932993-70c8-454b-91dc-f8a61014eb02
 
 
-- Produtos Separados pela Categoria.
+
+###  Produtos Separados pela Categoria.
   
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/394a505c-e4e8-4a66-b8fd-f54f48074ce0
 
-- Produtos Favoritos
+
+###  Produtos Favoritos
 
   https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/ad764168-95ce-45e1-bfd5-4c0e29995456
 
 
-- Simulação de Pagamento.
+
+###  Simulação de Pagamento.
 
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/2fabb9d2-0787-4387-8310-63575fe0c892
 
-- Reabastecendo Produto
+
+###  Reabastecendo Produto
 
   https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/3e3e94a2-da82-47e9-96ce-31a780667a7f
 
-- Download faturamento:
+
+###  Download faturamento:
 
 https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/f9e40ecb-4fe8-4d50-b622-ca84db7e9c76
 
@@ -64,7 +67,7 @@ https://github.com/Davi-Damartes/BlazorCafeteria/assets/167019873/f9e40ecb-4fe8-
 
 ## 🔗 Links
 [![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://github.com/Davi-Damartes?tab=repositories)
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/davi-lima-434605303/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/davi-lima-643870313/)
 
 ## Rodando localmente
 
@@ -102,3 +105,4 @@ ou através da tecla de Depuração:
   F5
 ```
 
+## Observação!!! É necessário inicilizar tanto a api quanto o blazor server para o funcionamento do Projeto.
