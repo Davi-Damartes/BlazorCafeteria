@@ -264,24 +264,6 @@ else
             CarrinhoCompraItens = await CarrinhoCompraHttpService!.ObterItensCarrinho(UsuarioLogado.UsuarioId);
             AtualizarPrecoEQuantidade();
             AdicionarListaProdNoPagamento();
-            // ListaProdutosPagamento = new List<PagamentoProdutoDto>();
-
-            // // Para cada item no carrinho de compras, crie um novo PagamentoProduto
-            // foreach (var item in CarrinhoCompraItens)
-            // {
-            //     var pagamentoProduto = new PagamentoProdutoDto
-            //         {                               
-            //             ProdutoId = item.ProdutoId,
-            //             QuantidadeComprada = item.Quantidade,
-            //             ProdutoNome = item.ProdutoNome,
-            //             PrecoTotal = item.PrecoTotal
-            //         };
-
-            //     // Adicionando o PagamentoProduto à lista de PagamentoProdutos
-            //     ListaProdutosPagamento.Add(pagamentoProduto);
-            // }
-
-
             foreach (var item in CarrinhoCompraItens)
             {
                 ObtemItemDoCarrinho(item.Id);
@@ -354,7 +336,6 @@ else
             ListaProdutosPagamento.Add(pagamentoProduto);
         }
 
-        // Define a lista de produtos do pagamento
         PagamentoDiarioPag!.TotalPrecoDiaria = PrecoTotal;
         PagamentoDiarioPag!.TotalQuantDiaria = QuantidadeTotal;
         PagamentoDiarioPag.ProdutosDoPagamento = ListaProdutosPagamento;
