@@ -66,29 +66,4 @@ else
             MensagemErro = ex.Message;
         }
     }
-
-
-
-
-
-    // private async Task<IEnumerable<ProdutoDto>> GetColecaoProdutosPorCategoria(int categoriaId)
-    // {
-    //     var listaDeProdutos = await GerenciaProdutoLocalStorage!.GetCollection();
-
-    //     if (listaDeProdutos != null)
-    //     {
-    //         return listaDeProdutos.Where(p => p.CategoriaId == categoriaId);
-    //     }
-    //     else
-    //     {
-    //         return await ProdutoHttpService!.BuscarItensPorCategoria(categoriaId);
-    //     }
-    // }
-
-    // private async Task LimpaLocalStorage( )
-    // {
-    //     await GerenciaProdutoLocalStorage!.RemoveCollection();
-    // }
-
-
 }

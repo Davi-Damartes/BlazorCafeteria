@@ -207,7 +207,7 @@ else @if (ModoExibicao == "maior")
         return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath!);
     }
 
-    //Dispose of the js module
+    // Dispose 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
         if (module is not null)

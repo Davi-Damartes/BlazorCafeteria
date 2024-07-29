@@ -60,15 +60,10 @@ else
         {
             await LimpaLocalStorage();
 
-            //Produtos = await ProdutoHttpService!.ObterProdutos();
             Produtos = await GerenciaProdutoLocalStorage!.GetCollection();
 
-
-             var carrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
-            //var carrinhoCompraItens = await GerenciaCarrinhoLocalStorage!
-                                           // .GetCollection();
-
-
+            var carrinhoCompraItens = await CarrinhoCompraService!.ObterItens(UsuarioLogado.UsuarioId);
+ 
             var totalQuantidade = carrinhoCompraItens.Sum(i => i.Quantidade);
 
             CarrinhoCompraService!.RaiseEventCarrinhoCompraChanged(totalQuantidade);
